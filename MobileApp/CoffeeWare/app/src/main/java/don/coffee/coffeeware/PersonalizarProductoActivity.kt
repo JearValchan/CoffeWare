@@ -9,4 +9,5 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personalizar_producto)
     }
+
 }

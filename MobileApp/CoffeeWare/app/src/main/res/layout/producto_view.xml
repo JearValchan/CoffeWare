@@ -4,11 +4,25 @@
     android:layout_height="match_parent"
     android:layout_marginVertical="10dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_nombre"
+        android:textAlignment="center"
+        android:text="Producto"/>
+
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:id="@+id/btn_producto"
         android:src="@drawable/image_icon"
         android:background="#fff"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_descripcion"
+        android:textAlignment="center"
+        android:text="Descripcion del producto..."/>
 
 </LinearLayout>
