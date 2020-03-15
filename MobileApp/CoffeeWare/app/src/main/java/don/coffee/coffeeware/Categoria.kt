@@ -1,3 +1,5 @@
 package don.coffee.coffeeware
 
-data class Categoria(var nombre: String)
+import java.io.Serializable
+
+data class Categoria(var nombre: String): Serializable

@@ -69,23 +69,6 @@ class MainActivity : AppCompatActivity() {
             desplegarTitulo(categoriaActual)
         }
 
-        //btn_producto.setOnClickListener{
-        //    var nombre = textview_nombre.text
-        //    val iterator = productos.iterator()
-
-        //    iterator.forEach {
-        //        println("The element is ${it.nombre}")
-
-        //        if(it.nombre.equals(nombre)){
-
-        //            var producto: Producto = it
-        //            val intent = Intent(this, PersonalizarProductoActivity::class.java)
-        //            intent.putExtra("producto",producto)
-        //            startActivity(intent)
-        //        }
-        //    }
-
-        //}
     }
 
     fun desplegarTitulo(index: Int) {
@@ -316,13 +299,27 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var producto = productos[position]
-            var inflater =
-                contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_view, null)
 
             vista.textview_nombre.setText(producto.nombre)
             vista.btn_producto.setImageResource(producto.image)
             vista.textview_descripcion.setText(producto.descripcion)
+
+            vista.btn_producto.setOnClickListener{
+                var nombre = vista.textview_nombre.text
+                val iterator = productos.iterator()
+
+                iterator.forEach {
+                    if(it.nombre.equals(nombre)){
+                        var prod: Producto = it
+                        val intent = Intent(contexto, PersonalizarProductoActivity::class.java)
+                        intent.putExtra("producto",prod)
+                        contexto!!.startActivity(intent)
+                    }
+                }
+
+            }
 
             return vista
         }

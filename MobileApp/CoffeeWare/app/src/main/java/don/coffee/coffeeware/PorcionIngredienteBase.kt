@@ -1,3 +1,5 @@
 package don.coffee.coffeeware
 
-class PorcionIngredienteBase(cantidad:Int, ingrediente:Ingrediente)
+import java.io.Serializable
+
+class PorcionIngredienteBase(cantidad:Int, ingrediente:Ingrediente) : Serializable

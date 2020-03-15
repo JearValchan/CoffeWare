@@ -1,3 +1,5 @@
 package don.coffee.coffeeware
 
-open class Ingrediente constructor (var nombre: String)
+import java.io.Serializable
+
+open class Ingrediente constructor (var nombre: String): Serializable
