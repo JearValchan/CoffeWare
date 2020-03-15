@@ -1,17 +1,13 @@
 package don.coffee.coffeeware
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.producto_view.*
 import kotlinx.android.synthetic.main.producto_view.view.*
 
 class MainActivity : AppCompatActivity() {
@@ -104,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                 "Panini",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -115,7 +110,6 @@ class MainActivity : AppCompatActivity() {
                 "Hamburguesa",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -126,7 +120,6 @@ class MainActivity : AppCompatActivity() {
                 "Bownless",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -137,7 +130,6 @@ class MainActivity : AppCompatActivity() {
                 "Sandwich",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -148,7 +140,6 @@ class MainActivity : AppCompatActivity() {
                 "Hot Dog",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -159,7 +150,6 @@ class MainActivity : AppCompatActivity() {
                 "Pan Frances",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[0],
                 25.50,
                 porciones,
                 extras
@@ -173,7 +163,6 @@ class MainActivity : AppCompatActivity() {
                 "Caffe Americano",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -184,7 +173,6 @@ class MainActivity : AppCompatActivity() {
                 "Caffe Late",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -195,7 +183,6 @@ class MainActivity : AppCompatActivity() {
                 "Malteada",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -206,7 +193,6 @@ class MainActivity : AppCompatActivity() {
                 "Frappe",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -217,7 +203,6 @@ class MainActivity : AppCompatActivity() {
                 "Licuado",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -228,7 +213,6 @@ class MainActivity : AppCompatActivity() {
                 "Chocomilk",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[1],
                 25.50,
                 porciones,
                 extras
@@ -242,7 +226,6 @@ class MainActivity : AppCompatActivity() {
                 "Brownie",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
@@ -253,7 +236,6 @@ class MainActivity : AppCompatActivity() {
                 "Dona",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
@@ -264,7 +246,6 @@ class MainActivity : AppCompatActivity() {
                 "Galletass",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
@@ -275,7 +256,6 @@ class MainActivity : AppCompatActivity() {
                 "Muffin",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
@@ -286,7 +266,6 @@ class MainActivity : AppCompatActivity() {
                 "Pan Dulce",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
@@ -297,7 +276,6 @@ class MainActivity : AppCompatActivity() {
                 "Rebanada de pastel",
                 R.drawable.image_icon,
                 "Descripcion producto",
-                categorias[2],
                 25.50,
                 porciones,
                 extras
