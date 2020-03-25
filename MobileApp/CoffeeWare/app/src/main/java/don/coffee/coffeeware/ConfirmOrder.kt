@@ -25,8 +25,8 @@ import java.text.FieldPosition
 class ConfirmOrder : AppCompatActivity() {
 
     var productosPersonalizados = ArrayList<ProductoPersonalizado>()
-    var ingredientesBase = ArrayList<IngredienteBase>()
-    var ingredientesExtra = ArrayList<IngredienteExtra>()
+    var ingredientesBase = ArrayList<PorcionIngredienteBase>()
+    var ingredientesExtra = ArrayList<PorcionIngredienteExtra>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +54,10 @@ class ConfirmOrder : AppCompatActivity() {
 
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()
-        var ingredientesBase = ArrayList<IngredienteBase>()
-        var ingredientesExtra = ArrayList<IngredienteExtra>()
+        var ingredientesBase = ArrayList<PorcionIngredienteBase>()
+        var ingredientesExtra = ArrayList<PorcionIngredienteExtra>()
 
-        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<IngredienteBase>, ingredientesExtra: ArrayList<IngredienteExtra>) {
+        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<PorcionIngredienteBase>, ingredientesExtra: ArrayList<PorcionIngredienteExtra>) {
             this.context = context
             this.productosPersonalizado = productosPersonalizado
             this.ingredientesBase = ingredientesBase
@@ -73,9 +73,12 @@ class ConfirmOrder : AppCompatActivity() {
 
             var listaIngredientes = vista.ingredientsList
 
-            for (ingrediente in productoPersonalizado.ingredientesExtra){
+            for (ingrediente in productoPersonalizado.ingredientesAgregar){
                 var ingr = inflator.inflate(R.layout.ingredient_view, null)
-                ingr.ingredientName.setText(ingrediente.nombre)
+                ingr.ingredientName.setText(ingrediente.ingrediente.nombre)
+                ingr.ingredientQuantity.setText(ingrediente.cantidad)
+
+                listaIngredientes.addView(ingr)
             }
 
             return vista
