@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CoffeeWare</string>
+    <string name="confirmation">Verifica la orden</string>
+    <string name="total">Total</string>
+    <string name="consumidor">Consumidor</string>
+    <string name="enviarOrden">Enviar orden</string>
+    <string name="editarOrden">Editar orden</string>
+    <string name="volverMenu">Volver al menú</string>
+    <string name="cancelarOrden">Cancelar orden</string>
 </resources>

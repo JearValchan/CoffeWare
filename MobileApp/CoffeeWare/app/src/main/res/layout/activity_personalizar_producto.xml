@@ -7,66 +7,226 @@
     tools:context=".PersonalizarProductoActivity"
     android:orientation="vertical">
 
+    <!-- Contenedor inferior -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_margin="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Ingredientes"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="Ingredientes"
+                    android:textStyle="bold"
+                    android:textSize="8sp"
+                    android:padding="4dp"/>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listview_ingsbase"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="Complementos"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:padding="4dp"/>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listview_ingsextra"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textview_nombreprod"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:text="Hamburguesa"
+                        android:textStyle="bold"
+                        android:textSize="8sp"
+                        android:padding="4dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageview_imagenprod"
+                        android:src="@drawable/image_icon"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textview_preciobase"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:text="Precio base $50"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textview_preciopzado"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:text="$58"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:text="Precio personalizado"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
+    </LinearLayout>
+
+    <!-- Contenedor inferior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_margin="15dp">
+
+        <!-- Subcontenedor superior -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:layout_weight="1">
 
-            <TextView
+                <!-- Sub-subcontenedor izquierdo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/nota"
+                    android:layout_marginHorizontal="10dp"
+                    android:padding="7dp">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/listview_productosorden"
+                        android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textview_total"
+                        android:text="TOTAL $102"
+                        android:layout_weight="4"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Sub-subcontenedor derecho -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Complementos"
-                android:textStyle="bold"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:background="@drawable/nota"
+                android:layout_marginHorizontal="10dp"
+                android:padding="7dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textview_notas"
+                    android:hint="Notas"
+                    android:gravity="center_horizontal"
+                    android:textSize="8sp"/>
+            </LinearLayout>
+
         </LinearLayout>
 
+        <!-- Subcontenedor inferior -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Hamburguesa"
-                android:textStyle="bold"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:id="@+id/button_añadiraorden"
+                android:text="Añadir a orden"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/image_icon"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Precio base $80"/>
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="80dp"
+                android:id="@+id/button_cancelar"
+                android:text="Cancelar"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
 
         </LinearLayout>
-
 
     </LinearLayout>
 
