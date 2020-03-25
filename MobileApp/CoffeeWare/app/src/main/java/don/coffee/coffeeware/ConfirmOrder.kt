@@ -17,9 +17,9 @@ import androidx.core.view.isGone
 import kotlinx.android.synthetic.main.activity_confirm_order.*
 import kotlinx.android.synthetic.main.activity_confirm_order.view.*
 import kotlinx.android.synthetic.main.activity_confirm_order.view.list_orden
+import kotlinx.android.synthetic.main.ingredient_view.view.*
 import kotlinx.android.synthetic.main.producto_orden.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
-import kotlinx.android.synthetic.main.producto_orden.view.list_ingredients
 import java.text.FieldPosition
 
 class ConfirmOrder : AppCompatActivity() {
@@ -46,7 +46,7 @@ class ConfirmOrder : AppCompatActivity() {
         }
 
         list_orden.setOnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-            if (list_ingredients.visibility == VISIBLE) list_ingredients.visibility = GONE else list_ingredients.visibility = VISIBLE
+            if (ingredientsList.visibility == VISIBLE) ingredientsList.visibility = GONE else ingredientsList.visibility = VISIBLE
         }
     }
 
@@ -70,6 +70,13 @@ class ConfirmOrder : AppCompatActivity() {
             var vista = inflator.inflate(R.layout.activity_confirm_order, null)
             vista.product_name.setText(productoPersonalizado.nombre)
             vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBase).toString())
+
+            var listaIngredientes = vista.ingredientsList
+
+            for (ingrediente in productoPersonalizado.ingredientesExtra){
+                var ingr = inflator.inflate(R.layout.ingredient_view, null)
+                ingr.ingredientName.setText(ingrediente.nombre)
+            }
 
             return vista
         }
