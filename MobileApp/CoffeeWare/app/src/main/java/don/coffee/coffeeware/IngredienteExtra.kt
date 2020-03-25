@@ -1,3 +1,6 @@
 package don.coffee.coffeeware
 
-class IngredienteExtra(nombre: String, var precio: Double): Ingrediente(nombre)
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class IngredienteExtra(var precio: Double, override var nombre: String?): Ingrediente(nombre)

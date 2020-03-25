@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     var ing = IngredienteBase("Pastel")
     var porcionIngre = PorcionIngredienteBase(2, ing)
     var porciones = ArrayList<PorcionIngredienteBase>()
-    var extra = IngredienteExtra("Leche", 5.0)
+    var extra = IngredienteExtra(5.0,"Leche")
     var extras = ArrayList<IngredienteExtra>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +36,6 @@ class MainActivity : AppCompatActivity() {
             extras.add(extra)
             extras.add(extra)
             extras.add(extra)
-
-            println("Ya se crearon todos los extra")
         }
 
         cargarCategorias()
@@ -54,6 +52,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             desplegarTitulo(categoriaActual)
+
+            if(categorias[categoriaActual].nombre.equals("Alimentos")){
+                cargarAlimentos()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
+            if(categorias[categoriaActual].nombre.equals("Bebidas")){
+                cargarBebidas()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
+            if(categorias[categoriaActual].nombre.equals("Postres")){
+                cargarPostres()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
         }
 
         btn_derecha.setOnClickListener {
@@ -63,25 +77,24 @@ class MainActivity : AppCompatActivity() {
             }
 
             desplegarTitulo(categoriaActual)
+
+            if(categorias[categoriaActual].nombre.equals("Alimentos")){
+                cargarAlimentos()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
+            if(categorias[categoriaActual].nombre.equals("Bebidas")){
+                cargarBebidas()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
+            if(categorias[categoriaActual].nombre.equals("Postres")){
+                cargarPostres()
+                adaptador = AdaptadorProductos(this, productos)
+                gridview_productos.adapter = adaptador
+            }
         }
 
-        //btn_producto.setOnClickListener{
-        //    var nombre = textview_nombre.text
-        //    val iterator = productos.iterator()
-
-        //    iterator.forEach {
-        //        println("The element is ${it.nombre}")
-
-        //        if(it.nombre.equals(nombre)){
-
-        //            var producto: Producto = it
-        //            val intent = Intent(this, PersonalizarProductoActivity::class.java)
-        //            intent.putExtra("producto",producto)
-        //            startActivity(intent)
-        //        }
-        //    }
-
-        //}
     }
 
     fun desplegarTitulo(index: Int) {
@@ -95,9 +108,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarAlimentos() {
+        productos.removeAll(productos)
+
         productos.add(
             Producto(
                 "Panini",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -108,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Hamburguesa",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -118,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Bownless",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -128,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Sandwich",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -138,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Hot Dog",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -148,6 +168,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Pan Frances",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -158,9 +179,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarBebidas() {
+        productos.removeAll(productos)
+
         productos.add(
             Producto(
                 "Caffe Americano",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -171,6 +195,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Caffe Late",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -181,6 +206,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Malteada",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -191,6 +217,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Frappe",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -201,6 +228,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Licuado",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -211,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Chocomilk",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -221,9 +250,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarPostres() {
+        productos.removeAll(productos)
+
         productos.add(
             Producto(
                 "Brownie",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -234,6 +266,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Dona",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -244,6 +277,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Galletass",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -254,6 +288,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Muffin",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -264,6 +299,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Pan Dulce",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -274,6 +310,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Rebanada de pastel",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -294,13 +331,30 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var producto = productos[position]
-            var inflater =
-                contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_view, null)
 
             vista.textview_nombre.setText(producto.nombre)
             vista.btn_producto.setImageResource(producto.image)
             vista.textview_descripcion.setText(producto.descripcion)
+
+            vista.btn_producto.setOnClickListener{
+                var nombre = vista.textview_nombre.text
+                val iterator = productos.iterator()
+
+                iterator.forEach {
+                    if(it.nombre?.equals(nombre)!!){
+                        var prod: Producto = it
+                        val intent = Intent(contexto, PersonalizarProductoActivity::class.java)
+                        intent.putExtra("nombre",prod.nombre)
+                        intent.putExtra("preciobase",prod.precioBase)
+                        intent.putParcelableArrayListExtra("ingsbase",prod.ingredientesBase)
+                        intent.putParcelableArrayListExtra("ingsextra",prod.ingredientesExtra)
+                        contexto!!.startActivity(intent)
+                    }
+                }
+
+            }
 
             return vista
         }
