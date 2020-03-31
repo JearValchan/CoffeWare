@@ -19,7 +19,7 @@
         android:layout_height="50dp"
         android:id="@+id/btn_producto"
         android:src="@drawable/image_icon"
-        android:background="#fff"/>
+        android:background="@color/lightGrey"/>
 
     <TextView
         android:layout_width="match_parent"
