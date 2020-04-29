@@ -7,4 +7,8 @@
     <string name="editarOrden">Editar orden</string>
     <string name="volverMenu">Volver al menú</string>
     <string name="cancelarOrden">Cancelar orden</string>
+    <string name="CuantoPaga">¿Con cuanto paga?</string>
+    <string name="cambio">Cambio</string>
+    <string name="cancelarPago">Cancelar pago</string>
+    <string name="pagarOrden">Pagar Orden</string>
 </resources>
