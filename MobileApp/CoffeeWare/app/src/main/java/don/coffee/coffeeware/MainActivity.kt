@@ -95,9 +95,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarAlimentos() {
+
+
+
         productos.add(
             Producto(
                 "Panini",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -108,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Hamburguesa",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -118,6 +123,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Bownless",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -128,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Sandwich",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -138,6 +145,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Hot Dog",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -148,6 +156,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Pan Frances",
+                categorias.get(0),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -161,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Caffe Americano",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -171,6 +181,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Caffe Late",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -181,6 +192,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Malteada",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -191,6 +203,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Frappe",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -201,6 +214,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Licuado",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -211,6 +225,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Chocomilk",
+                categorias.get(1),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -224,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Brownie",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -234,6 +250,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Dona",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -244,6 +261,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Galletass",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -254,6 +272,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Muffin",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -264,6 +283,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Pan Dulce",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
@@ -274,6 +294,7 @@ class MainActivity : AppCompatActivity() {
         productos.add(
             Producto(
                 "Rebanada de pastel",
+                categorias.get(2),
                 R.drawable.image_icon,
                 "Descripcion producto",
                 25.50,
