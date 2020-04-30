@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Test Application</string>
+    <string name="registroProducto">REGISTRO PRODUCTO</string>
+    <string name="id">ID</string>
+    <string name="buscar">BUSCAR</string>
+    <string name="nombre">Nombre</string>
+    <string name="tipo">Tipo</string>
+    <string name="precioBase">Precio base</string>
+    <string name="categoria">ID de categoria</string>
+    <string name="agregar">agregar</string>
+    <string name="editar">editar</string>
+    <string name="eliminar">eliminar</string>
+    <string name="lista">Lista de Productos</string>
+    <string name="consultaproductos">Consulta productos</string>
+</resources>
