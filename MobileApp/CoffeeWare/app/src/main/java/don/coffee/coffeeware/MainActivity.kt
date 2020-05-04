@@ -7,11 +7,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.producto_view.view.*
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.list
+import org.json.JSONArray
+import org.json.JSONObject
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
+
+    var JSON: JSONObject? = null
+    var JSONarray: JsonArray? = null
     val categorias = ArrayList<Categoria>()
     var productos = ArrayList<Producto>()
     var adaptador: AdaptadorProductos? = null
@@ -40,9 +56,9 @@ class MainActivity : AppCompatActivity() {
             println("Ya se crearon todos los extra")
         }
 
-        cargarCategorias()
+        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
         cargarAuxiliares()
-        cargarAlimentos()
+
 
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
@@ -88,10 +104,48 @@ class MainActivity : AppCompatActivity() {
         textview_titulo.text = categorias[index].nombre
     }
 
-    fun cargarCategorias() {
-        categorias.add(Categoria("Alimentos"))
-        categorias.add(Categoria("Bebidas"))
-        categorias.add(Categoria("Postres"))
+    fun cargarCategorias(URL:String) {
+
+        val jsonA = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
+
+            for(i in  0..(response.length()-1)) {
+                var JSON = response.getJSONArray("categoria")
+
+                for(i in 0..JSON.length()-1){
+                    var subC = JSON[i].toString()
+                    var penultima = subC.lastIndexOf(":")
+                    var ultima = subC.lastIndexOf("}")
+                    var  name = subC.subSequence((penultima+2),(ultima-1))
+                    categorias.add(Categoria(name.toString()))
+                }
+
+                textview_titulo.setText(categorias[0].nombre)
+
+            }
+
+            },Response.ErrorListener { error ->
+
+            Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
+        })
+
+     //  val jsonarray = JsonArrayRequest(URL,Response.Listener { response ->
+
+      //  for(i in  0..(response.length()-1)){
+
+         //   var array = response.getJSONArray(i)
+
+      //      textview_titulo.setText(array.toString())
+
+      //  }
+    //  },Response.ErrorListener { error ->
+     //      Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
+    //   })
+
+
+       var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(jsonA)
+
+
     }
 
     fun cargarAlimentos() {
