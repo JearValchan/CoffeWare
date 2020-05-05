@@ -5,26 +5,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:textColor="@color/deepGrey"
+        android:fontFamily="monospace"
+        android:id="@+id/textview_nombre"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="Producto"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textview_nombre"
-            android:textAlignment="center"
-            android:text="Producto"
-            android:textSize="15sp"/>
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btn_producto"
+        android:src="@drawable/image_icon"
+        android:background="@color/lightGrey"/>
 
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/btn_producto"
-            android:src="@drawable/image_icon"
-            android:background="#fff"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_descripcion"
+        android:fontFamily="monospace"
+        android:textColor="@color/deepGrey"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="Descripcion del producto..."/>
 
         <TextView
             android:layout_width="match_parent"

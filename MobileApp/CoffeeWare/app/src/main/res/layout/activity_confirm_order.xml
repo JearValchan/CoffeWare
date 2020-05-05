@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/confirmation"
-        android:textSize="18sp"
-        android:textColor="@color/defaultText"
-        android:paddingLeft="70dp"
+        android:textSize="22sp"
+        android:textColor="@color/deepGrey"
+        android:gravity="center"
         android:layout_marginTop="20dp" />
 
     <LinearLayout
@@ -43,6 +43,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="@color/deepGrey"
                 android:textSize="18sp"
                 android:text="@string/total"/>
 
@@ -51,6 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$150"
+                android:fontFamily="monospace"
+                android:textColor="@color/deepGrey"
                 android:textSize="18sp"
                 android:textDirection="rtl"
                 />
@@ -69,8 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:fontFamily="monospace"
             android:text="@string/consumidor"
-            android:textColor="@color/defaultText"
+            android:textColor="@color/deepGrey"
             />
         
         <EditText
@@ -93,6 +98,7 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textSize="11sp"
+            android:background="@drawable/round_button_green"
             android:textColor="@color/defaultText"
             android:text="@string/enviarOrden"
             android:layout_marginRight="25dp"/>
@@ -101,6 +107,8 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:textSize="11sp"
+            android:background="@drawable/round_button_green"
+            android:backgroundTint="#edff0f"
             android:textColor="@color/defaultText"
             android:text="@string/editarOrden"/>
     </LinearLayout>
@@ -130,6 +138,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/deepGrey"
                 android:text="@string/volverMenu"/>
         </LinearLayout>
 
@@ -143,16 +153,21 @@
                 android:id="@+id/cancelBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:textSize="11sp"
-                android:textColor="@color/defaultText"
+
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/ic_cancel_black_24dp"
-                />
+                android:background="@drawable/cancel_vector"
+                android:textColor="@color/defaultText"
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="14dp"
+                android:gravity="end"
+                android:textAlignment="textEnd"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+
                 android:text="@string/cancelarOrden"/>
         </LinearLayout>
     </LinearLayout>

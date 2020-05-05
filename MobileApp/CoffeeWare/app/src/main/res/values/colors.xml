@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="defaultText">#000000</color>
+    <color name="lightGrey">#F1F5F3</color>
+    <color name="lightGreen">#98E5B9</color>
+    <color name="indianRed">#CD5C5C</color>
+    <color name="darkGrey">#919BA3</color>
+    <color name="darkBrown">#592B0D</color>
+    <color name="deepGrey">#42474b</color>
 </resources>

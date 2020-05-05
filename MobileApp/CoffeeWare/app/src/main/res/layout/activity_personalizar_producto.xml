@@ -31,6 +31,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/deepGrey"
                     android:text="Ingredientes"
                     android:textStyle="bold"
                     android:textSize="8sp"
@@ -56,7 +58,8 @@
                     android:textAlignment="center"
                     android:gravity="center"
                     android:text="Complementos"
-                    android:textSize="8sp"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/deepGrey"
                     android:textStyle="bold"
                     android:padding="4dp"/>
 
@@ -85,6 +88,8 @@
                         android:id="@+id/textview_nombreprod"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:textColor="@color/deepGrey"
+                        android:fontFamily="monospace"
                         android:text="Hamburguesa"
                         android:textStyle="bold"
                         android:textSize="8sp"
@@ -156,7 +161,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:background="@drawable/nota"
+                    android:background="@drawable/note"
                     android:layout_marginHorizontal="10dp"
                     android:padding="7dp">
 
@@ -188,7 +193,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:background="@drawable/nota"
+                android:background="@drawable/note"
                 android:layout_marginHorizontal="10dp"
                 android:padding="7dp">
 
@@ -215,6 +220,7 @@
                 android:layout_height="80dp"
                 android:id="@+id/button_añadiraorden"
                 android:text="Añadir a orden"
+                android:background="@drawable/round_button_green"
                 android:layout_weight="1"
                 android:layout_margin="10dp"/>
 
@@ -223,6 +229,7 @@
                 android:layout_height="80dp"
                 android:id="@+id/button_cancelar"
                 android:text="Cancelar"
+                android:background="@drawable/round_button_red"
                 android:layout_weight="1"
                 android:layout_margin="10dp"/>
 
