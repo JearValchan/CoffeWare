@@ -22,6 +22,7 @@ import kotlinx.serialization.list
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.StringBuilder
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     var productos = ArrayList<Producto>()
     var adaptador: AdaptadorProductos? = null
     var categoriaActual = 1
+
 
     //Auxiliares
     var ing = IngredienteBase("Pastel")
@@ -58,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
         cargarAuxiliares()
+        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
 
 
         adaptador = AdaptadorProductos(this, productos)
@@ -77,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                 categorias.size - 1 -> categoriaActual = 0
                 else -> categoriaActual++
             }
-
             desplegarTitulo(categoriaActual)
         }
 
@@ -100,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         //}
     }
 
+
     fun desplegarTitulo(index: Int) {
         textview_titulo.text = categorias[index].nombre
     }
@@ -107,119 +110,71 @@ class MainActivity : AppCompatActivity() {
     fun cargarCategorias(URL:String) {
 
         val jsonA = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
+            var JSON = response.getJSONArray("categoria")
+            val gson = Gson()
+            for(i in 0..JSON.length()-1){
 
-            for(i in  0..(response.length()-1)) {
-                var JSON = response.getJSONArray("categoria")
-
-                for(i in 0..JSON.length()-1){
-                    var subC = JSON[i].toString()
-                    var penultima = subC.lastIndexOf(":")
-                    var ultima = subC.lastIndexOf("}")
-                    var  name = subC.subSequence((penultima+2),(ultima-1))
-                    categorias.add(Categoria(name.toString()))
+                    var categoriaJson = JSON[i].toString()
+                    var categoriaTemp:Categoria = gson.fromJson(categoriaJson,Categoria::class.java)
+                var id:Int = categoriaTemp.id
+                var nombre:String = categoriaTemp.nombre
+                    categorias.add(Categoria(nombre,id))
                 }
+            },Response.ErrorListener { error ->
+            Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
+        })
+       var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(jsonA)
+    }
 
-                textview_titulo.setText(categorias[0].nombre)
+    fun cargarAlimentos(URL:String) {
 
+        var lecturaProductos = ArrayList<String>()
+        val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
+
+            for( i in 0..response.length()-1) {
+                var jsonObj = response.getJSONArray("producto")
+                lecturaProductos.add(jsonObj[i].toString())
             }
 
-            },Response.ErrorListener { error ->
+            textview_numeroproductos.setText("Entro aca")
 
+
+        },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
 
-     //  val jsonarray = JsonArrayRequest(URL,Response.Listener { response ->
+        textview_numeroproductos.setText("2")
+        var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(jsonobject)
 
-      //  for(i in  0..(response.length()-1)){
+        var tam = (lecturaProductos.size)-1
+        textview_numeroproductos.setText(tam.toString())
+        for(i in 0..tam){
 
-         //   var array = response.getJSONArray(i)
+            val gson = Gson()
+            var ultimo:Int = (lecturaProductos[i].lastIndex)-2
+            var categoria:Categoria =Categoria("Alimentos",0)
 
-      //      textview_titulo.setText(array.toString())
+            when (lecturaProductos[ultimo].toInt()){
+                0 ->  categoria = Categoria("Alimentos",0)
+                1 ->  categoria = Categoria("Bebidas",1)
+                2 ->  categoria = Categoria("Postres",2)
+            }
+            val productoTemp:Producto =  gson.fromJson<Producto>(lecturaProductos[i],Producto::class.java)
+            productoTemp.categoria = categoria
+            productoTemp.image = R.drawable.image_icon
+            productoTemp.descripcion="Descripcion"
+            productoTemp.ingredientesBase = porciones
+            productoTemp.ingredientesExtra=extras
 
-      //  }
-    //  },Response.ErrorListener { error ->
-     //      Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
-    //   })
-
-
-       var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(jsonA)
+            textview_numeroproductos.setText(productoTemp.nombre)
+            productos.add(productoTemp)
+        }
 
 
     }
-
-    fun cargarAlimentos() {
-
-
-
-        productos.add(
-            Producto(
-                "Panini",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Hamburguesa",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Bownless",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Sandwich",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Hot Dog",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Pan Frances",
-                categorias.get(0),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-    }
-
+/*
     fun cargarBebidas() {
         productos.add(
             Producto(
@@ -357,7 +312,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
     }
-
+*/
     class AdaptadorProductos : BaseAdapter {
         var productos = ArrayList<Producto>()
         var contexto: Context? = null
