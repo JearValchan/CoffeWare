@@ -5,6 +5,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
+
 open class Producto(
     open var nombre: String?,
     open var categoria: Categoria?,
