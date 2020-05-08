@@ -62,7 +62,7 @@ class ConfirmOrder : AppCompatActivity() {
             var inflator = LayoutInflater.from(context)
             var vista = inflator.inflate(R.layout.activity_confirm_order, null)
             vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText((productoPersonalizado.precioExtraPersonalizado + productoPersonalizado.precioBasePersonalizado).toString())
+            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBasePersonalizado).toString())
 
             return vista
         }

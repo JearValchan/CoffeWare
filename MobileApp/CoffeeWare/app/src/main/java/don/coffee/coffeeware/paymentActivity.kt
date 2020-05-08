@@ -24,6 +24,9 @@ class paymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
+        val productoPersonalizado = intent.getParcelableExtra<ProductoPersonalizado>("productoPersonalizado")
+
+        precioTotal.setText(""+(productoPersonalizado.precioBase+productoPersonalizado.precioExtra))
 
         var adaptador = paymentActivity.paymentAdaptor(this, productosPersonalizados, ingredientesBase, ingredientesExtra
         )
@@ -66,7 +69,7 @@ class paymentActivity : AppCompatActivity() {
             var inflator = LayoutInflater.from(context)
             var vista = inflator.inflate(R.layout.activity_confirm_order, null)
             vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText((productoPersonalizado.precioExtraPersonalizado + productoPersonalizado.precioBasePersonalizado).toString())
+            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBasePersonalizado).toString())
 
             return vista
         }

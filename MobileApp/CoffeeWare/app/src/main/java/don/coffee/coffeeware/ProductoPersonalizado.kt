@@ -13,8 +13,12 @@ open class ProductoPersonalizado (
     var descripcionPersonalizado: String,
     var ingredientesBasePersonalizado: ArrayList<PorcionIngredienteBase>,
     var ingredientesExtraPersonalizado: ArrayList<IngredienteExtra>,
-    var ordenPersonalizado: Orden,
-    var notaPersonalizado: String,
-    var precioExtraPersonalizado: Double,
-    var cantidadPersonalizado: Int
-): Producto(idPersonalizado,tipoPersonalizado,nombrePersonalizado, precioBasePersonalizado,categoriaPersonalizado, imagePersonalizado, descripcionPersonalizado, ingredientesBasePersonalizado, ingredientesExtraPersonalizado)
+    var orden: Orden?,
+    var nota: String,
+    var precioExtra: Double,
+    var cantidad: Int
+): Producto(idPersonalizado,tipoPersonalizado,nombrePersonalizado, precioBasePersonalizado,categoriaPersonalizado, imagePersonalizado, descripcionPersonalizado, ingredientesBasePersonalizado, ingredientesExtraPersonalizado){
+    constructor(producto: Producto) : this(producto.id, producto.producto_type, producto.nombre, producto.precioBase, producto.categoria, producto.image, producto.descripcion, producto.ingredientesBase, producto.ingredientesExtra, null, "", 0.0, 1){
+
+    }
+}

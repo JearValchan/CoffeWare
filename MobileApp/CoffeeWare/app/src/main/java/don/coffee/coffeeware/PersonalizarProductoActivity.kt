@@ -1,5 +1,6 @@
 package don.coffee.coffeeware
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,9 +13,19 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_personalizar_producto)
 
         val producto = intent.getParcelableExtra<Producto>("producto")
-        nombreProducto.setText(producto.nombre)
-        precioBase.setText(""+producto.categoria.nombre)
-        precioTotal.setText(""+producto.precioBase)
+        val productoPersonalizado = ProductoPersonalizado(producto)
+        productoPersonalizado.precioExtra = 25.0
+        nombreProducto.setText(productoPersonalizado.nombrePersonalizado)
+        precioBase.setText(""+productoPersonalizado.precioBase)
+        precioTotal.setText(""+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra))
+
+        btn_anadirOrden.setOnClickListener {
+            val intent = Intent(this, paymentActivity::class.java)
+            intent.putExtra("productoPersonalizado",productoPersonalizado)
+            startActivity(intent)
+        }
     }
+
+
 
 }
