@@ -1,3 +1,7 @@
 package don.coffee.coffeeware
 
-class PorcionIngredienteBase(cantidad:Int, ingrediente:Ingrediente)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+class PorcionIngredienteBase(var cantidad:Int, var ingrediente:Ingrediente):Parcelable

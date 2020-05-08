@@ -1,6 +1,7 @@
 package don.coffee.coffeeware
 
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
-
-class IngredienteExtra(nombre: String, var precio: Double): Ingrediente(nombre)
+@Parcelize
+class IngredienteExtra(var nombreExtra: String, var precio: Double): Ingrediente(nombreExtra)

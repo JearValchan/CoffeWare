@@ -1,6 +1,7 @@
 package don.coffee.coffeeware
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
+
         fun cargarAuxiliares() {
             porciones.add(porcionIngre)
             porciones.add(porcionIngre)
@@ -56,11 +59,19 @@ class MainActivity : AppCompatActivity() {
             extras.add(extra)
 
             println("Ya se crearon todos los extra")
+
+            btn_ordenactual.setOnClickListener {
+                val intent = Intent(this, PersonalizarProductoActivity::class.java)
+                intent.putExtra("producto",producto)
+                startActivity(intent)
+            }
+
+
         }
 
-        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
         cargarAuxiliares()
-        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+        cargarAlimentos("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaProductos.php")
 
 
         adaptador = AdaptadorProductos(this, productos)
@@ -138,7 +149,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             textview_numeroproductos.setText("Entro aca")
-
 
         },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.BaseAdapter
-import kotlinx.android.synthetic.main.activity_confirm_order.*
 import kotlinx.android.synthetic.main.activity_confirm_order.list_orden
 import kotlinx.android.synthetic.main.activity_payment.*
 import kotlinx.android.synthetic.main.producto_orden.*
@@ -66,8 +65,8 @@ class paymentActivity : AppCompatActivity() {
             var productoPersonalizado = productosPersonalizado[position]
             var inflator = LayoutInflater.from(context)
             var vista = inflator.inflate(R.layout.activity_confirm_order, null)
-            vista.product_name.setText(productoPersonalizado.nombre)
-            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBase).toString())
+            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
+            vista.precio.setText((productoPersonalizado.precioExtraPersonalizado + productoPersonalizado.precioBasePersonalizado).toString())
 
             return vista
         }

@@ -1,10 +1,10 @@
 package don.coffee.coffeeware
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 open class Producto(
-
     var id:Int,
     var producto_type:String,
     var nombre: String,
@@ -14,4 +14,4 @@ open class Producto(
     var descripcion: String,
     var ingredientesBase: ArrayList<PorcionIngredienteBase>,
     var ingredientesExtra: ArrayList<IngredienteExtra>
-): Serializable
+): Parcelable

@@ -79,6 +79,7 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:id="@+id/nombreProducto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
@@ -96,6 +97,7 @@
                         android:layout_gravity="center"/>
 
                     <TextView
+                        android:id="@+id/precioBase"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
@@ -111,6 +113,7 @@
                     android:layout_gravity="center">
 
                     <TextView
+                        android:id="@+id/precioTotal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"

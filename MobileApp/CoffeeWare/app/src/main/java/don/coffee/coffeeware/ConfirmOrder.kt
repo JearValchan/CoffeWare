@@ -9,18 +9,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.BaseAdapter
-import android.widget.ListView
-import androidx.core.view.isGone
 import kotlinx.android.synthetic.main.activity_confirm_order.*
-import kotlinx.android.synthetic.main.activity_confirm_order.view.*
-import kotlinx.android.synthetic.main.activity_confirm_order.view.list_orden
 import kotlinx.android.synthetic.main.producto_orden.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
-import kotlinx.android.synthetic.main.producto_orden.view.list_ingredients
-import java.text.FieldPosition
 
 class ConfirmOrder : AppCompatActivity() {
 
@@ -68,8 +61,8 @@ class ConfirmOrder : AppCompatActivity() {
             var productoPersonalizado = productosPersonalizado[position]
             var inflator = LayoutInflater.from(context)
             var vista = inflator.inflate(R.layout.activity_confirm_order, null)
-            vista.product_name.setText(productoPersonalizado.nombre)
-            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBase).toString())
+            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
+            vista.precio.setText((productoPersonalizado.precioExtraPersonalizado + productoPersonalizado.precioBasePersonalizado).toString())
 
             return vista
         }

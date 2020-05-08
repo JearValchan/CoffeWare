@@ -1,20 +1,20 @@
 package don.coffee.coffeeware
 
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 open class ProductoPersonalizado (
-    id: Int,
-    tipo:String,
-    nombre: String,
-    precioBase: Double,
-    categoria: Categoria,
-    image: Int,
-    descripcion: String,
-    ingredientesBase: ArrayList<PorcionIngredienteBase>,
-    ingredientesExtra: ArrayList<IngredienteExtra>,
-    var orden: Orden,
-    var nota: String,
-    var precioExtra: Double,
-    var cantidad: Int
-): Producto(id,tipo,nombre, precioBase,categoria, image, descripcion, ingredientesBase, ingredientesExtra)
+    var idPersonalizado: Int,
+    var tipoPersonalizado:String,
+    var nombrePersonalizado: String,
+    var precioBasePersonalizado: Double,
+    var categoriaPersonalizado: Categoria,
+    var imagePersonalizado: Int,
+    var descripcionPersonalizado: String,
+    var ingredientesBasePersonalizado: ArrayList<PorcionIngredienteBase>,
+    var ingredientesExtraPersonalizado: ArrayList<IngredienteExtra>,
+    var ordenPersonalizado: Orden,
+    var notaPersonalizado: String,
+    var precioExtraPersonalizado: Double,
+    var cantidadPersonalizado: Int
+): Producto(idPersonalizado,tipoPersonalizado,nombrePersonalizado, precioBasePersonalizado,categoriaPersonalizado, imagePersonalizado, descripcionPersonalizado, ingredientesBasePersonalizado, ingredientesExtraPersonalizado)
