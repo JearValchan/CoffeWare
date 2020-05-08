@@ -12,7 +12,7 @@
         android:id="@+id/textview_nombre"
         android:textAlignment="center"
         android:gravity="center"
-        android:text="Producto">
+        android:text="Producto"/>
 
     <ImageButton
         android:layout_width="match_parent"
