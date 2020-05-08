@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     var ing = IngredienteBase("Pastel")
     var porcionIngre = PorcionIngredienteBase(2, ing)
     var porciones = ArrayList<PorcionIngredienteBase>()
-    var extra = IngredienteExtra(5.0,"Leche")
+    var extra = IngredienteExtra("Leche", 5.0)
     var extras = ArrayList<IngredienteExtra>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
             extras.add(extra)
             extras.add(extra)
             extras.add(extra)
+
+            println("Ya se crearon todos los extra")
         }
 
         cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
@@ -71,22 +73,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             desplegarTitulo(categoriaActual)
-
-            if(categorias[categoriaActual].nombre.equals("Alimentos")){
-                cargarAlimentos()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
-            if(categorias[categoriaActual].nombre.equals("Bebidas")){
-                cargarBebidas()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
-            if(categorias[categoriaActual].nombre.equals("Postres")){
-                cargarPostres()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
         }
 
         btn_derecha.setOnClickListener {
@@ -95,24 +81,25 @@ class MainActivity : AppCompatActivity() {
                 else -> categoriaActual++
             }
             desplegarTitulo(categoriaActual)
-
-            if(categorias[categoriaActual].nombre.equals("Alimentos")){
-                cargarAlimentos()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
-            if(categorias[categoriaActual].nombre.equals("Bebidas")){
-                cargarBebidas()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
-            if(categorias[categoriaActual].nombre.equals("Postres")){
-                cargarPostres()
-                adaptador = AdaptadorProductos(this, productos)
-                gridview_productos.adapter = adaptador
-            }
         }
 
+        //btn_producto.setOnClickListener{
+        //    var nombre = textview_nombre.text
+        //    val iterator = productos.iterator()
+
+        //    iterator.forEach {
+        //        println("The element is ${it.nombre}")
+
+        //        if(it.nombre.equals(nombre)){
+
+        //            var producto: Producto = it
+        //            val intent = Intent(this, PersonalizarProductoActivity::class.java)
+        //            intent.putExtra("producto",producto)
+        //            startActivity(intent)
+        //        }
+        //    }
+
+        //}
     }
 
 
@@ -189,8 +176,6 @@ class MainActivity : AppCompatActivity() {
     }
 /*
     fun cargarBebidas() {
-        productos.removeAll(productos)
-
         productos.add(
             Producto(
                 "Caffe Americano",
@@ -260,8 +245,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cargarPostres() {
-        productos.removeAll(productos)
-
         productos.add(
             Producto(
                 "Brownie",
@@ -341,30 +324,13 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var producto = productos[position]
-            var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var inflater =
+                contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_view, null)
 
             vista.textview_nombre.setText(producto.nombre)
             vista.btn_producto.setImageResource(producto.image)
             vista.textview_descripcion.setText(producto.descripcion)
-
-            vista.btn_producto.setOnClickListener{
-                var nombre = vista.textview_nombre.text
-                val iterator = productos.iterator()
-
-                iterator.forEach {
-                    if(it.nombre?.equals(nombre)!!){
-                        var prod: Producto = it
-                        val intent = Intent(contexto, PersonalizarProductoActivity::class.java)
-                        intent.putExtra("nombre",prod.nombre)
-                        intent.putExtra("preciobase",prod.precioBase)
-                        intent.putParcelableArrayListExtra("ingsbase",prod.ingredientesBase)
-                        intent.putParcelableArrayListExtra("ingsextra",prod.ingredientesExtra)
-                        contexto!!.startActivity(intent)
-                    }
-                }
-
-            }
 
             return vista
         }

@@ -1,6 +1,6 @@
 package don.coffee.coffeeware
 
-import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
-data class IngredienteBase(override var nombre: String?): Ingrediente(nombre)
+
+class IngredienteBase(nombre: String): Ingrediente(nombre)
