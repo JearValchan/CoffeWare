@@ -9,4 +9,10 @@ class listaOrdenes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
     }
+
+    fun cargarOrdenes(URL:String){
+
+    }
+
+
 }

@@ -26,7 +26,7 @@ class paymentActivity : AppCompatActivity() {
 
         val productoPersonalizado = intent.getParcelableExtra<ProductoPersonalizado>("productoPersonalizado")
 
-        precioTotal.setText(""+(productoPersonalizado.precioBase+productoPersonalizado.precioExtra))
+        precioTotal.setText(""+(productoPersonalizado.preciobase+productoPersonalizado.precioExtra))
 
         var adaptador = paymentActivity.paymentAdaptor(this, productosPersonalizados, ingredientesBase, ingredientesExtra
         )

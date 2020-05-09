@@ -25,7 +25,7 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         val productoPersonalizado = ProductoPersonalizado(producto)
         productoPersonalizado.precioExtra = 25.0
         nombreProducto.text = productoPersonalizado.nombrePersonalizado
-        precioBase.text = ""+productoPersonalizado.precioBase
+        precioBase.text = ""+productoPersonalizado.preciobase
         precioTotal.text = ""+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra)
 
         btn_anadirOrden.setOnClickListener {

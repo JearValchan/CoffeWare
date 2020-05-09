@@ -18,7 +18,7 @@ open class ProductoPersonalizado (
     var precioExtra: Double,
     var cantidad: Int
 ): Producto(idPersonalizado,tipoPersonalizado,nombrePersonalizado, precioBasePersonalizado,categoriaPersonalizado, imagePersonalizado, descripcionPersonalizado, ingredientesBasePersonalizado, ingredientesExtraPersonalizado){
-    constructor(producto: Producto) : this(producto.id, producto.producto_type, producto.nombre, producto.precioBase, producto.categoria, producto.image, producto.descripcion, producto.ingredientesBase, producto.ingredientesExtra, null, "", 0.0, 1){
+    constructor(producto: Producto) : this(producto.ID, producto.producto_type, producto.nombre, producto.preciobase, producto.categoria, producto.image, producto.descripcion, producto.ingredientesBase, producto.ingredientesExtra, null, "", 0.0, 1){
 
     }
 }
