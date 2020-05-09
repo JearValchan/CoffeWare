@@ -47,24 +47,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
+       // var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
 
         cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
         cargarAuxiliares()
         cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
 
-
+/*
         btn_ordenactual.setOnClickListener {
             val intent = Intent(this, PersonalizarProductoActivity::class.java)
             intent.putExtra("producto",producto)
             startActivity(intent)
         }
-
+*/
         btn_ordenes.setOnClickListener{
             val intent = Intent(this, listaOrdenes::class.java)
+            startActivity(intent)
         }
 
         btn_izquierda.setOnClickListener {
@@ -179,32 +181,7 @@ class MainActivity : AppCompatActivity() {
         },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
-/*
-        var tam = (lecturaProductos.size)-1
-        textview_numeroproductos.setText(tam.toString())
 
-        val gson = Gson()
-        for(i in 0..tam){
-
-            var ultimo:Int = (lecturaProductos[i].lastIndex)-2
-            var categoria:Categoria =Categoria("Alimentos",0)
-
-            when (lecturaProductos[ultimo].toInt()){
-                0 ->  categoria = Categoria("Alimentos",0)
-                1 ->  categoria = Categoria("Bebidas",1)
-                2 ->  categoria = Categoria("Postres",2)
-            }
-            val productoTemp:Producto =  gson.fromJson<Producto>(lecturaProductos[i],Producto::class.java)
-            productoTemp.categoria = categoria
-            productoTemp.image = R.drawable.image_icon
-            productoTemp.descripcion="Descripcion"
-            productoTemp.ingredientesBase = porciones
-            productoTemp.ingredientesExtra=extras
-
-            textview_numeroproductos.setText(productoTemp.nombre)
-            productos.add(productoTemp)
-        }
-*/
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
     }

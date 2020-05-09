@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginVertical="15dp"
+    android:background="@color/lightGrey">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/deepGrey"
+                android:layout_gravity="start"
+                android:fontFamily="monospace"
+                android:text="Orden de:"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_gravity="start"
+                android:textSize="18dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/deepGrey"
+                android:text="Nombre"
+                android:id="@+id/textview_nombreCliente"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="$15"
+                android:layout_gravity="end"
+                android:textColor="@color/deepGrey"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:id="@+id/textview_precioFinal"/>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:text="Estado:"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_gravity="start"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:text="Terminada"
+                android:id="@+id/textview_estado"/>
+
+
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
