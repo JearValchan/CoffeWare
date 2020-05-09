@@ -5,10 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 open class Producto(
-    var id:Int,
+    var ID:Int,
     var producto_type:String,
     var nombre: String,
-    var precioBase: Double,
+    var preciobase: Double,
     var categoria:Categoria,
     var image: Int,
     var descripcion: String,

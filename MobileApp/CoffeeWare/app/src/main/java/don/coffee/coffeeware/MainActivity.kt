@@ -49,33 +49,23 @@ class MainActivity : AppCompatActivity() {
 
         var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
-        fun cargarAuxiliares() {
-            porciones.add(porcionIngre)
-            porciones.add(porcionIngre)
-            porciones.add(porcionIngre)
 
-            extras.add(extra)
-            extras.add(extra)
-            extras.add(extra)
-
-            println("Ya se crearon todos los extra")
-
-            btn_ordenactual.setOnClickListener {
-                val intent = Intent(this, PersonalizarProductoActivity::class.java)
-                intent.putExtra("producto",producto)
-                startActivity(intent)
-            }
-
-
-        }
-
-        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
         cargarAuxiliares()
-        cargarAlimentos("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaProductos.php")
-
-
+        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
+
+
+        btn_ordenactual.setOnClickListener {
+            val intent = Intent(this, PersonalizarProductoActivity::class.java)
+            intent.putExtra("producto",producto)
+            startActivity(intent)
+        }
+
+        btn_ordenes.setOnClickListener{
+            val intent = Intent(this, listaOrdenes::class.java)
+        }
 
         btn_izquierda.setOnClickListener {
             when (categoriaActual) {
@@ -94,6 +84,24 @@ class MainActivity : AppCompatActivity() {
             desplegarTitulo(categoriaActual)
         }
 
+
+
+        }
+        fun cargarAuxiliares() {
+            porciones.add(porcionIngre)
+            porciones.add(porcionIngre)
+            porciones.add(porcionIngre)
+
+            extras.add(extra)
+            extras.add(extra)
+            extras.add(extra)
+
+            println("Ya se crearon todos los extra")
+
+        }
+
+
+
         //btn_producto.setOnClickListener{
         //    var nombre = textview_nombre.text
         //    val iterator = productos.iterator()
@@ -111,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         //    }
 
         //}
-    }
+
 
 
     fun desplegarTitulo(index: Int) {
@@ -140,29 +148,44 @@ class MainActivity : AppCompatActivity() {
 
     fun cargarAlimentos(URL:String) {
 
-        var lecturaProductos = ArrayList<String>()
+
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
 
-            for( i in 0..response.length()-1) {
-                var jsonObj = response.getJSONArray("producto")
-                lecturaProductos.add(jsonObj[i].toString())
+            var JSON = response.getJSONArray("producto")
+            val gson = Gson()
+            var tam = JSON.length()-1
+
+            for( i in 0..tam) {
+               var productoJson = JSON[i].toString()
+
+                    var ultimo:Int = (productoJson.lastIndex)-2
+                    var categoria:Categoria =Categoria("Alimentos",0)
+
+                    when (productoJson[ultimo].toInt()){
+                        0 ->  categoria = Categoria("Alimentos",0)
+                        1 ->  categoria = Categoria("Bebidas",1)
+                        2 ->  categoria = Categoria("Postres",2)
+                    }
+                    val productoTemp:Producto = gson.fromJson(productoJson,Producto::class.java)
+                    productoTemp.categoria = categoria
+                    productoTemp.image = R.drawable.image_icon
+                    productoTemp.descripcion="Descripcion"
+                    productoTemp.ingredientesBase = porciones
+                    productoTemp.ingredientesExtra=extras
+                    productos.add(productoTemp)
             }
 
-            textview_numeroproductos.setText("Entro aca")
 
         },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
-
-        textview_numeroproductos.setText("2")
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(jsonobject)
-
+/*
         var tam = (lecturaProductos.size)-1
         textview_numeroproductos.setText(tam.toString())
+
+        val gson = Gson()
         for(i in 0..tam){
 
-            val gson = Gson()
             var ultimo:Int = (lecturaProductos[i].lastIndex)-2
             var categoria:Categoria =Categoria("Alimentos",0)
 
@@ -181,8 +204,9 @@ class MainActivity : AppCompatActivity() {
             textview_numeroproductos.setText(productoTemp.nombre)
             productos.add(productoTemp)
         }
-
-
+*/
+        var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(jsonobject)
     }
 /*
     fun cargarBebidas() {
@@ -323,6 +347,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 */
+
     class AdaptadorProductos : BaseAdapter {
         var productos = ArrayList<Producto>()
         var contexto: Context? = null
