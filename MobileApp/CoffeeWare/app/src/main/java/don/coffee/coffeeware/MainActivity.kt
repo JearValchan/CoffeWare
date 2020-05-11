@@ -47,23 +47,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       // var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
+        var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
 
-        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
-        cargarAuxiliares()
-        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+
 
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
 
-/*
+        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarAuxiliares()
+        adaptador!!.notifyDataSetChanged()
+
+
+
         btn_ordenactual.setOnClickListener {
             val intent = Intent(this, PersonalizarProductoActivity::class.java)
             intent.putExtra("producto",producto)
             startActivity(intent)
         }
-*/
+
         btn_ordenes.setOnClickListener{
             val intent = Intent(this, listaOrdenes::class.java)
             startActivity(intent)
@@ -86,9 +90,8 @@ class MainActivity : AppCompatActivity() {
             desplegarTitulo(categoriaActual)
         }
 
-
-
         }
+
         fun cargarAuxiliares() {
             porciones.add(porcionIngre)
             porciones.add(porcionIngre)
@@ -101,8 +104,6 @@ class MainActivity : AppCompatActivity() {
             println("Ya se crearon todos los extra")
 
         }
-
-
 
         //btn_producto.setOnClickListener{
         //    var nombre = textview_nombre.text
@@ -146,11 +147,10 @@ class MainActivity : AppCompatActivity() {
         })
        var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonA)
+        adaptador!!.notifyDataSetChanged()
     }
 
     fun cargarAlimentos(URL:String) {
-
-
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
 
             var JSON = response.getJSONArray("producto")
@@ -175,6 +175,7 @@ class MainActivity : AppCompatActivity() {
                     productoTemp.ingredientesBase = porciones
                     productoTemp.ingredientesExtra=extras
                     productos.add(productoTemp)
+                adaptador!!.notifyDataSetChanged()
             }
 
 
@@ -184,6 +185,7 @@ class MainActivity : AppCompatActivity() {
 
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
+
     }
 /*
     fun cargarBebidas() {
