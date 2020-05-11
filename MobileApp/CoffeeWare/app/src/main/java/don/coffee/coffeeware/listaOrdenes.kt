@@ -24,11 +24,11 @@ class listaOrdenes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
 
-        cargarOrdenes("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaOrdenes.php")
 
         adaptador = adaptadorOrdenes(this,ordenes)
         listview_ordenes.adapter = adaptador
 
+        cargarOrdenes("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaOrdenes.php")
 
     }
 
@@ -43,6 +43,7 @@ class listaOrdenes : AppCompatActivity() {
 
                 var ordenTemp = gson.fromJson(lecturaOrdenes,Orden::class.java)
                 ordenes.add(ordenTemp)
+                adaptador!!.notifyDataSetChanged()
 
             }
 
