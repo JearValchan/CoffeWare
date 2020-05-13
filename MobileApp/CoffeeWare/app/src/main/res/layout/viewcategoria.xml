@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deepGrey"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="monospace"
+                android:textSize="15dp"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:text="Categoria: "/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:textSize="15dp"
+                android:id="@+id/textview_nombrecategoria"
+                android:text="Alimentos"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_black"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:onClick="editarCategoria"
+                android:id="@+id/btn_editarCategoria"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_black"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:onClick="eliminarCategoria"
+                android:id="@+id/btn_eliminarCategpria"/>
+
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deepGrey"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="monospace"
+                android:textSize="15dp"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:text="ID: "/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:textSize="15dp"
+                android:id="@+id/textview_categoriaid"
+                android:text="1"/>
+        </TableRow>
+
+
+
+    </TableLayout>
+
+</LinearLayout>

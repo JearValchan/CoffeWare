@@ -55,10 +55,13 @@ class MainActivity : AppCompatActivity() {
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
 
+        adaptador!!.notifyDataSetChanged()
+        cargarAuxiliares()
         cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
         cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
-        cargarAuxiliares()
+
         adaptador!!.notifyDataSetChanged()
+
 
 
 
@@ -74,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_izquierda.setOnClickListener {
+
             when (categoriaActual) {
                 0 -> categoriaActual = categorias.size - 1
                 else -> categoriaActual--
@@ -88,6 +92,16 @@ class MainActivity : AppCompatActivity() {
                 else -> categoriaActual++
             }
             desplegarTitulo(categoriaActual)
+        }
+        btn_productos.setOnClickListener{
+
+            val intent = Intent(this,listaProductos::class.java)
+            startActivity(intent)
+
+        }
+        btn_categorias.setOnClickListener{
+            val intent = Intent(this,manejarCategoria::class.java)
+            startActivity(intent)
         }
 
         }

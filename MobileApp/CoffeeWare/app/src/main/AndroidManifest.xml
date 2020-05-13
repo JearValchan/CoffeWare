@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".administrarProducto"></activity>
+        <activity android:name=".agregarCategoria"></activity>
+        <activity android:name=".manejarCategoria" />
+        <activity android:name=".listaProductos" />
+        <activity android:name=".administrarProducto" />
         <activity android:name=".agregarProducto" />
         <activity android:name=".paymentActivity" />
         <activity android:name=".listaOrdenes" />

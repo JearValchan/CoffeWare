@@ -30,6 +30,8 @@ class listaOrdenes : AppCompatActivity() {
     var ordenes = ArrayList<Orden>()
     var adaptador: adaptadorOrdenes? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
@@ -53,8 +55,6 @@ class listaOrdenes : AppCompatActivity() {
         var orden =  adaptador!!.getItem(view.verticalScrollbarPosition) as Orden
         var id = orden.ID
         var urlEliminar = "http://192.168.1.74:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
-        var estado:String = orden.ESTADO
-
 
             val eliminar = JsonObjectRequest(
                 Request.Method.POST,

@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".agregarProducto">
 
+
     <TextView
         android:id="@+id/textview_titulo"
         android:layout_width="wrap_content"
@@ -20,123 +21,66 @@
         app:fontFamily="monospace" />
 
 
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp">
-
-            <TableRow>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_icon"
-                    android:layout_weight="2"
-                    android:id="@+id/imagenProductoNuevo">
-                </ImageView>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:textSize="15dp"
-                    android:background="@drawable/round_button_green"
-                    android:id="@+id/btn_agregarFoto"
-                    android:text="Agregar Foto"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"/>
-
-            </TableRow>
-        </TableLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID del producto"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtId"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo del producto"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtTipo"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nombre del producto"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Precio del producto"
-            android:layout_weight="1"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripción del producto"
-            android:layout_weight="1"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elegir categoria"
-            android:gravity="center"
-
-            android:textSize="18dp"
-            android:textColor="@color/deepGrey"
-            android:layout_marginBottom="10dp"/>
-
-        <Spinner
-            android:id="@+id/combo_categorias"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_marginHorizontal="20dp"
-            android:spinnerMode="dialog"
-            android:tooltipText="Elegir categoria"
-            />
+            android:id="@+id/edtNombre"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Precio base del producto"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtPrecioBase"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID de categoria"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/edtCategoria"/>
+
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elegir Ingredientes Base"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:textColor="@color/deepGrey"
-            android:layout_marginBottom="10dp"/>
 
-      <ListView
-          android:layout_width="match_parent"
-          android:layout_height="100dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Elegir Ingredientes Extra"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:textColor="@color/deepGrey"
-            android:layout_marginBottom="10dp"/>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
 
     </LinearLayout>
+
+
 
 <TableLayout
     android:layout_width="match_parent"
@@ -156,15 +100,11 @@
             android:text="Agregar Producto"
             android:layout_marginHorizontal="5dp"
             android:layout_weight="1"
-            android:background="@drawable/round_button_green"/>
+            android:background="@drawable/round_button_green"
+            android:id="@+id/btn_aceptaragregar"/>
 
     </TableRow>
 </TableLayout>
-
-
-
-
-
 
 
 </LinearLayout>
