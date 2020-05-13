@@ -152,10 +152,11 @@ class MainActivity : AppCompatActivity() {
 
                     var categoriaJson = JSON[i].toString()
                     var categoriaTemp:Categoria = gson.fromJson(categoriaJson,Categoria::class.java)
-                var id:Int = categoriaTemp.id
+                var id:Int = categoriaTemp.ID
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
+            Toast.makeText(applicationContext, categorias.toString(), Toast.LENGTH_SHORT).show()
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
