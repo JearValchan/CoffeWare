@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Categoria(var nombre: String, var id:Int):Parcelable
+data class Categoria(var nombre: String, var ID:Int):Parcelable
