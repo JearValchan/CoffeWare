@@ -50,11 +50,16 @@ class MainActivity : AppCompatActivity() {
         var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
 
-        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
-        cargarAuxiliares()
-        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+
+
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
+
+        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarAuxiliares()
+        adaptador!!.notifyDataSetChanged()
+
 
 
         btn_ordenactual.setOnClickListener {
@@ -65,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         btn_ordenes.setOnClickListener{
             val intent = Intent(this, listaOrdenes::class.java)
+            startActivity(intent)
         }
 
         btn_izquierda.setOnClickListener {
@@ -84,9 +90,8 @@ class MainActivity : AppCompatActivity() {
             desplegarTitulo(categoriaActual)
         }
 
-
-
         }
+
         fun cargarAuxiliares() {
             porciones.add(porcionIngre)
             porciones.add(porcionIngre)
@@ -99,8 +104,6 @@ class MainActivity : AppCompatActivity() {
             println("Ya se crearon todos los extra")
 
         }
-
-
 
         //btn_producto.setOnClickListener{
         //    var nombre = textview_nombre.text
@@ -144,11 +147,10 @@ class MainActivity : AppCompatActivity() {
         })
        var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonA)
+        adaptador!!.notifyDataSetChanged()
     }
 
     fun cargarAlimentos(URL:String) {
-
-
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
 
             var JSON = response.getJSONArray("producto")
@@ -173,40 +175,17 @@ class MainActivity : AppCompatActivity() {
                     productoTemp.ingredientesBase = porciones
                     productoTemp.ingredientesExtra=extras
                     productos.add(productoTemp)
+                adaptador!!.notifyDataSetChanged()
             }
 
 
         },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
-/*
-        var tam = (lecturaProductos.size)-1
-        textview_numeroproductos.setText(tam.toString())
 
-        val gson = Gson()
-        for(i in 0..tam){
-
-            var ultimo:Int = (lecturaProductos[i].lastIndex)-2
-            var categoria:Categoria =Categoria("Alimentos",0)
-
-            when (lecturaProductos[ultimo].toInt()){
-                0 ->  categoria = Categoria("Alimentos",0)
-                1 ->  categoria = Categoria("Bebidas",1)
-                2 ->  categoria = Categoria("Postres",2)
-            }
-            val productoTemp:Producto =  gson.fromJson<Producto>(lecturaProductos[i],Producto::class.java)
-            productoTemp.categoria = categoria
-            productoTemp.image = R.drawable.image_icon
-            productoTemp.descripcion="Descripcion"
-            productoTemp.ingredientesBase = porciones
-            productoTemp.ingredientesExtra=extras
-
-            textview_numeroproductos.setText(productoTemp.nombre)
-            productos.add(productoTemp)
-        }
-*/
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
+
     }
 /*
     fun cargarBebidas() {
