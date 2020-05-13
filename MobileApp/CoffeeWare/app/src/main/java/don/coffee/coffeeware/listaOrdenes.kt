@@ -7,19 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
+import android.widget.ListView
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_lista_ordenes.*
+import kotlinx.android.synthetic.main.activity_lista_ordenes.view.*
+import kotlinx.android.synthetic.main.viewlistaordenes.*
 import kotlinx.android.synthetic.main.viewlistaordenes.view.*
+import org.json.JSONObject
+import don.coffee.coffeeware.Orden as Orden
 
 class listaOrdenes : AppCompatActivity() {
 
     var ordenes = ArrayList<Orden>()
     var adaptador: adaptadorOrdenes? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
@@ -32,6 +42,39 @@ class listaOrdenes : AppCompatActivity() {
 
     }
 
+
+    fun editarOrden(){
+
+    }
+
+    fun eliminarOrden(view: View){
+
+
+        var orden =  adaptador!!.getItem(view.verticalScrollbarPosition) as Orden
+        var id = orden.ID
+        var urlEliminar = "http://192.168.1.74:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
+        var estado:String = orden.ESTADO
+
+
+            val eliminar = JsonObjectRequest(
+                Request.Method.POST,
+                urlEliminar,
+                null,
+                Response.Listener<JSONObject?> {
+                    Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
+                },
+                Response.ErrorListener { error ->
+                    ordenes.remove(orden)
+                    adaptador!!.notifyDataSetChanged()
+                    Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
+
+                })
+            var requestQueue = Volley.newRequestQueue(this)
+            requestQueue.add(eliminar)
+
+
+
+    }
     fun cargarOrdenes(URL:String){
 
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null, Response.Listener { response ->
@@ -72,6 +115,8 @@ class listaOrdenes : AppCompatActivity() {
             vista.textview_nombreCliente.setText(orden.cliente)
             vista.textview_precioFinal.setText(orden.preciofinal.toString())
             vista.textview_estado.setText(orden.ESTADO.toString())
+            vista.textview_id.setText(orden.ID.toString())
+
 
             return vista
         }

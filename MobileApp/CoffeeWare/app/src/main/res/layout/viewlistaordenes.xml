@@ -26,7 +26,7 @@
                 android:fontFamily="monospace"
                 android:layout_gravity="start"
                 android:textSize="18dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/deepGrey"
                 android:text="Nombre"
                 android:id="@+id/textview_nombreCliente"/>
@@ -41,6 +41,29 @@
                 android:textSize="20dp"
                 android:id="@+id/textview_precioFinal"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_black"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:onClick="editarOrden"
+                android:id="@+id/btn_editarOrden"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_black"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:onClick="eliminarOrden"
+                android:id="@+id/btn_eliminarOrden"/>
+
+
         </TableRow>
 
         <TableRow>
@@ -50,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:layout_gravity="start"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/deepGrey"
                 android:fontFamily="monospace"
                 android:text="Estado:"/>
@@ -59,11 +82,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:layout_gravity="start"
                 android:textColor="@color/deepGrey"
                 android:fontFamily="monospace"
                 android:text="Terminada"
                 android:id="@+id/textview_estado"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_gravity="start"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:text="ID:"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_gravity="start"
+                android:textColor="@color/deepGrey"
+                android:fontFamily="monospace"
+                android:text="1"
+                android:id="@+id/textview_id"/>
 
 
         </TableRow>
