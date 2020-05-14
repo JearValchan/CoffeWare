@@ -59,8 +59,7 @@ class manejarCategoria : AppCompatActivity() {
         adaptador!!.notifyDataSetChanged()
     }
 
-    fun eliminarCategoria(view: View){
-        val categoria = adaptador!!.getItem(view.verticalScrollbarPosition) as Categoria
+    fun eliminarCategoria(categoria: Categoria){
 
         val url = "http://192.168.1.74:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
 
@@ -112,6 +111,10 @@ class manejarCategoria : AppCompatActivity() {
 
             vista.btn_editarCategoria.setOnClickListener {
                 actualizarCategoria(categoria)
+            }
+
+            vista.btn_eliminarCategpria.setOnClickListener {
+                eliminarCategoria(categoria)
             }
 
             return vista
