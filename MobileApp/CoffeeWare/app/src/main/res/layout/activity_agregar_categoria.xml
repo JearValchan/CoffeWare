@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".agregarCategoria">
     <TextView
-        android:id="@+id/textview_titulo"
+        android:id="@+id/textview_tituloCategoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

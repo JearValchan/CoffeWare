@@ -62,7 +62,7 @@ class manejarCategoria : AppCompatActivity() {
     fun eliminarCategoria(view: View){
         val categoria = adaptador!!.getItem(view.verticalScrollbarPosition) as Categoria
 
-        val url = "http://192.168.1.74:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.id.toString()
+        val url = "http://192.168.1.74:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
             if (response.trim().equals("elimina", true)){
@@ -86,7 +86,13 @@ class manejarCategoria : AppCompatActivity() {
 
     }
 
-    class adaptadorCategoria:BaseAdapter{
+    fun actualizarCategoria(categoria: Categoria){
+        val intent = Intent(this, agregarCategoria::class.java)
+        intent.putExtra("categoria", categoria)
+        startActivity(intent)
+    }
+
+    inner class adaptadorCategoria:BaseAdapter{
 
         var categorias = ArrayList<Categoria>()
         var context: Context? = null
@@ -102,7 +108,12 @@ class manejarCategoria : AppCompatActivity() {
             var vista = inflater.inflate(R.layout.viewcategoria,null)
 
             vista.textview_nombrecategoria.setText(categoria.nombre)
-            vista.textview_categoriaid.setText(categoria.id.toString())
+            vista.textview_categoriaid.setText(categoria.ID.toString())
+
+            vista.btn_editarCategoria.setOnClickListener {
+                actualizarCategoria(categoria)
+            }
+
             return vista
         }
 
