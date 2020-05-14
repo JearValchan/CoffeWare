@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_agregar_producto.*
 import org.json.JSONObject
@@ -23,11 +24,9 @@ class agregarProducto : AppCompatActivity() {
             edtTipo.setText(producto!!.producto_type)
             edtNombre.setText(producto!!.nombre)
             edtPrecioBase.setText(producto!!.preciobase.toString())
-            edtCategoria.setText(producto!!.categoria.id)
+            edtCategoria.setText(producto!!.categoria.ID)
             btn_aceptaragregar.setText("Actualizar producto")
             textview_titulo.setText("Actualizar producto")
-
-            
         }
 
 
@@ -43,8 +42,6 @@ class agregarProducto : AppCompatActivity() {
     }
 
     fun agregarProducto(){
-
-
         var url: String="http://192.168.1.74:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.toString()
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
@@ -62,22 +59,11 @@ class agregarProducto : AppCompatActivity() {
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
     }
+
     fun actualizarProducto(){
 
-
         var url: String="http://192.168.1.74:80/coffeeware/wsJSONActualizarProducto.php"
-
-
-        val jsonObject = JSONObject()
-        jsonObject.put("ID", edtId.text.toString())
-        jsonObject.put("producto_type", edtTipo.text.toString())
-        jsonObject.put("nombre", edtNombre.text.toString())
-        jsonObject.put("preciobase", edtPrecioBase.text.toString())
-        jsonObject.put("id_categoria", edtCategoria.toString())
-
-
-
-        val req = JsonObjectRequest(Request.Method.POST, url, jsonObject, Response.Listener {response ->
+        val req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().trim().equals("actualiza", true)){
                 Toast.makeText(applicationContext, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
                 edtId.setText("")
@@ -88,10 +74,19 @@ class agregarProducto : AppCompatActivity() {
             }else{
                 Toast.makeText(applicationContext, "No se ha actualizado", Toast.LENGTH_SHORT).show()
             }
-
         }, Response.ErrorListener {
-            Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
-        })
+            Toast.makeText(applicationContext, "No se ha podido conectar a la Base de datos", Toast.LENGTH_SHORT)
+        }){
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["ID"] = edtId.text.toString()
+                params["producto_type"] = edtTipo.text.toString()
+                params["nombre"] = edtNombre.text.toString()
+                params["preciobase"] = edtPrecioBase.text.toString()
+                params["id_categoria"] = edtCategoria.text.toString()
+                return params
+            }
+        }
 
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(req)
