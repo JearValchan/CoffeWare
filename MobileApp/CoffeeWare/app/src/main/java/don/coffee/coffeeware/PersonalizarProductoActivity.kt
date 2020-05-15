@@ -10,8 +10,11 @@ import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.view.isGone
 import kotlinx.android.synthetic.main.activity_personalizar_producto.*
+import kotlinx.android.synthetic.main.ingredient_view.view.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.*
+import kotlinx.android.synthetic.main.producto_orden.view.*
 
 
 class PersonalizarProductoActivity : AppCompatActivity() {
@@ -51,10 +54,15 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         list_extras.adapter = adaptadorExtra
 
         btn_anadirOrden.setOnClickListener {
-            val intent = Intent(this, paymentActivity::class.java)
-            intent.putExtra("productoPersonalizado",productoPersonalizado)
+            SessionData.ordenActual.add(productoPersonalizado)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        if(!SessionData.ordenActual.isEmpty()){
+            ordenActual.adapter = AdaptadorOrden(this, SessionData.ordenActual)
+        }
+
     }
 
     inner class AdaptadorIngsBase : BaseAdapter {
@@ -138,6 +146,66 @@ class PersonalizarProductoActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             return extras.size
+        }
+
+    }
+
+    class AdaptadorOrden: BaseAdapter{
+        lateinit var mContext:Context
+        var ordenActual = ArrayList<ProductoPersonalizado>()
+
+        constructor(mContext:Context, ordenActual:ArrayList<ProductoPersonalizado>){
+            this.mContext = mContext
+            this.ordenActual = ordenActual
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var productoPersonalizado = ordenActual[position]
+            var inflater = mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var vista = inflater.inflate(R.layout.producto_orden, null)
+
+            var ingredientesBase = productoPersonalizado.ingredientesBasePersonalizado
+            var ingredientesExtra = productoPersonalizado.ingredientesExtraPersonalizado
+
+            vista.list_ingredients.isGone = true
+            vista.product_name.text = productoPersonalizado.nombrePersonalizado
+            vista.precio.text = (productoPersonalizado.preciobase+productoPersonalizado.precioExtra).toString()
+            var listaIngredientes = vista.list_ingredients
+
+            for (ing in ingredientesBase){
+                var vistaIngrediente = inflater.inflate(R.layout.ingredient_view, null)
+                vistaIngrediente.nombreIngrediente.text = ing.ingrediente.nombre
+                vistaIngrediente.cantidadIngrediente.text = ing.cantidad.toString()
+
+                listaIngredientes.addView(vistaIngrediente)
+            }
+
+            for (ing in ingredientesExtra){
+                var vistaIngrediente = inflater.inflate(R.layout.ingredient_view, null)
+                vistaIngrediente.nombreIngrediente.text = ing.nombreExtra
+                vistaIngrediente.cantidadIngrediente.text = 1.toString()
+
+                listaIngredientes.addView(vistaIngrediente)
+            }
+
+            vista.product_name.setOnClickListener {
+                vista.list_ingredients.isGone = !vista.list_ingredients.isGone
+            }
+
+            return vista
+
+        }
+
+        override fun getItem(position: Int): Any {
+            return ordenActual[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return -1
+        }
+
+        override fun getCount(): Int {
+            return ordenActual.size
         }
 
     }

@@ -113,7 +113,7 @@ class manejarCategoria : AppCompatActivity() {
                 actualizarCategoria(categoria)
             }
 
-            vista.btn_eliminarCategpria.setOnClickListener {
+            vista.btn_eliminarCategoria.setOnClickListener {
                 eliminarCategoria(categoria)
             }
 

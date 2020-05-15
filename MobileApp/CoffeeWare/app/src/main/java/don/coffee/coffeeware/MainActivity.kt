@@ -62,8 +62,7 @@ class MainActivity : AppCompatActivity() {
         adaptador!!.notifyDataSetChanged()
 
         btn_ordenactual.setOnClickListener {
-            val intent = Intent(this, PersonalizarProductoActivity::class.java)
-            intent.putExtra("producto",producto)
+            val intent = Intent(this, paymentActivity::class.java)
             startActivity(intent)
         }
 
