@@ -2,20 +2,30 @@ package don.coffee.coffeeware
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_personalizar_producto.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.*
+
 
 class PersonalizarProductoActivity : AppCompatActivity() {
 
     var adaptador: AdaptadorIngsBase? = null
     var adaptadorExtra: AdaptadorIngsExtra? = null
+    var extra = IngredienteExtra("Valentina", 5.0)
+    var extras = ArrayList<IngredienteExtra>()
+    var ing = IngredienteBase("papas")
+    var porcionIngre = PorcionIngredienteBase(20, ing)
+    var porciones = ArrayList<PorcionIngredienteBase>()
+    var ingredientes = ArrayList<PorcionIngredienteBase>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +38,18 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         precioBase.text = ""+productoPersonalizado.preciobase
         precioTotal.text = ""+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra)
 
+        //Agregando ingredientes
+        porciones.add(porcionIngre)
+        extras.add(extra);
+        productoPersonalizado.ingredientesBasePersonalizado = porciones;
+        productoPersonalizado.ingredientesExtraPersonalizado = extras;
+
+        //Adapters
+        adaptador = AdaptadorIngsBase(this, ingredientes)
+        list_ingredientes.adapter = adaptador
+        adaptadorExtra = AdaptadorIngsExtra(this, extras)
+        list_extras.adapter = adaptadorExtra
+
         btn_anadirOrden.setOnClickListener {
             val intent = Intent(this, paymentActivity::class.java)
             intent.putExtra("productoPersonalizado",productoPersonalizado)
@@ -38,9 +60,13 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     inner class AdaptadorIngsBase : BaseAdapter {
         var ingredientes = ArrayList<PorcionIngredienteBase>()
         var contexto: Context? = null
+        var ing = IngredienteBase("papas")
+        var porcionIngre = PorcionIngredienteBase(20, ing)
+
 
         constructor(contexto: Context, ingredientes: ArrayList<PorcionIngredienteBase>?) {
             this.contexto = contexto
+            this.ingredientes.add(porcionIngre)
             if (!ingredientes.isNullOrEmpty()) {
                 this.ingredientes = ingredientes
             }
@@ -77,9 +103,12 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     class AdaptadorIngsExtra : BaseAdapter {
         var extras = ArrayList<IngredienteExtra>()
         var contexto: Context? = null
+        var extra = IngredienteExtra("Valentina", 5.0)
+
 
         constructor(contexto: Context, extras: ArrayList<IngredienteExtra>?) {
             this.contexto = contexto
+            this.extras.add(extra)
             if (!extras.isNullOrEmpty()) {
                 this.extras = extras
             }

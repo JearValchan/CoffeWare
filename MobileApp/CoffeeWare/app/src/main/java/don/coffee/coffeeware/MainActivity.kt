@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.0.6:80/coffeeware/wsJSONConsultarListaCategorias.php")
 
         adaptador!!.notifyDataSetChanged()
 
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
-            cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
+            cargarAlimentos("http://192.168.0.6/coffeeware/wsJSONConsultarListaProductos.php")
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })

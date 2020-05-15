@@ -38,6 +38,7 @@
                     android:padding="5dp"/>
 
                 <ListView
+                    android:id="@+id/list_ingredientes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
@@ -58,9 +59,11 @@
                     android:fontFamily="monospace"
                     android:textColor="@color/deepGrey"
                     android:textStyle="bold"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:gravity="center_horizontal" />
 
                 <ListView
+                    android:id="@+id/list_extras"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
