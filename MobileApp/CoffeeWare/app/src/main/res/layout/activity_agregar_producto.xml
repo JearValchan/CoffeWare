@@ -28,7 +28,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID del producto"
+            android:hint="ID del producto"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
@@ -36,7 +36,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tipo del producto"
+            android:hint="Tipo del producto"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
@@ -44,7 +44,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre del producto"
+            android:hint="Nombre del producto"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
@@ -52,7 +52,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Precio base del producto"
+            android:hint="Precio base del producto"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
@@ -60,38 +60,24 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID de categoria"
+            android:hint="ID de categoria"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/edtCategoria"/>
 
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-
-
-
-    </LinearLayout>
-
-
-
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TableRow>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancelar"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
             android:background="@drawable/round_button_red"/>
         <Button
@@ -103,8 +89,7 @@
             android:background="@drawable/round_button_green"
             android:id="@+id/btn_aceptaragregar"/>
 
-    </TableRow>
-</TableLayout>
+    </LinearLayout>
 
 
 </LinearLayout>
