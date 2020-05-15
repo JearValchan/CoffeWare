@@ -159,7 +159,12 @@ class MainActivity : AppCompatActivity() {
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
-            cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
+
+            if(!categorias.isNullOrEmpty()){
+                categoriaActual = categorias[0].ID
+                cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
+            }
+
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
