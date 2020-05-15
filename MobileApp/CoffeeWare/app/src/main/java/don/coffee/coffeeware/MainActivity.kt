@@ -49,20 +49,17 @@ class MainActivity : AppCompatActivity() {
 
         var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
-
-
-
         adaptador = AdaptadorProductos(this, productos)
         gridview_productos.adapter = adaptador
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.1.77:80/coffeeware/wsJSONConsultarListaCategorias.php")
 
         adaptador!!.notifyDataSetChanged()
 
         btn_ordenactual.setOnClickListener {
-            val intent = Intent(this, PersonalizarProductoActivity::class.java)
+            val intent = Intent(this, ConfirmOrder::class.java)
             intent.putExtra("producto",producto)
             startActivity(intent)
         }
@@ -157,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
-            cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
+            cargarAlimentos("http://192.168.1.77/coffeeware/wsJSONConsultarListaProductos.php")
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })

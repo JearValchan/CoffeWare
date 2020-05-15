@@ -11,15 +11,29 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.BaseAdapter
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_agregar_categoria.*
+import kotlinx.android.synthetic.main.activity_agregar_categoria.edtId
+import kotlinx.android.synthetic.main.activity_agregar_categoria.edtNombre
+import kotlinx.android.synthetic.main.activity_agregar_producto.*
 import kotlinx.android.synthetic.main.activity_confirm_order.*
 import kotlinx.android.synthetic.main.producto_orden.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
+import org.json.JSONObject
 
 class ConfirmOrder : AppCompatActivity() {
 
     var productosPersonalizados = ArrayList<ProductoPersonalizado>()
     var ingredientesBase = ArrayList<IngredienteBase>()
     var ingredientesExtra = ArrayList<IngredienteExtra>()
+
+    var orden: Orden = Orden(1,"Ramon","Pendiente",45.60)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +55,27 @@ class ConfirmOrder : AppCompatActivity() {
         list_orden.setOnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
             if (list_ingredients.visibility == VISIBLE) list_ingredients.visibility = GONE else list_ingredients.visibility = VISIBLE
         }
+
+        btn_enviarorden.setOnClickListener{
+            enviarOrden()
+        }
+    }
+
+    fun enviarOrden(){
+
+        var url: String = "http://192.168.1.77/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        val jsonobject= JsonObjectRequest(
+            Request.Method.POST,url,null,
+            Response.Listener<JSONObject?> {
+                Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
+            },
+            Response.ErrorListener {
+                Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()
+            }
+        )
+        var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(jsonobject)
+
     }
 
     private class AdapterConfirmar:BaseAdapter {
