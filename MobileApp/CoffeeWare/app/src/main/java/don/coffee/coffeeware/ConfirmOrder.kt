@@ -33,7 +33,7 @@ class ConfirmOrder : AppCompatActivity() {
     var ingredientesBase = ArrayList<IngredienteBase>()
     var ingredientesExtra = ArrayList<IngredienteExtra>()
 
-    var orden: Orden = Orden(1,"Ramon","Pendiente",45.60)
+    var orden: Orden = Orden(10000,"no cliente","pendiente",0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,8 @@ class ConfirmOrder : AppCompatActivity() {
         list_orden.adapter = adaptador
 
         var intentMenu = Intent(this, MainActivity::class.java)
+
+        precioTotal.text = obtenerPrecioFinal().toString()
 
         menuBtn.setOnClickListener{
             startActivity(intentMenu)
@@ -57,11 +59,32 @@ class ConfirmOrder : AppCompatActivity() {
         }
 
         btn_enviarorden.setOnClickListener{
+            llenarDatos()
             enviarOrden()
         }
     }
 
+    fun llenarDatos(){
+        orden.cliente = edit_consumidor.text.toString()
+        orden.ESTADO = "Pendiente"
+        SessionData.ordenes.add(orden)
+        val rnds = (0..100000).random()
+        orden.ID = rnds
+        orden.preciofinal = obtenerPrecioFinal()
+    }
+
+    fun obtenerPrecioFinal(): Double{
+        var total: Double = 0.0
+
+        for(x in SessionData.ordenActual){
+            total += x.preciobase
+        }
+
+        return total
+    }
+
     fun enviarOrden(){
+        Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
         var url: String = "http://192.168.1.77/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(

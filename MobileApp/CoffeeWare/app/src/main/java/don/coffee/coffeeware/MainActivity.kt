@@ -219,6 +219,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             mostrarCategoriaActual(categoriaActual)
+            actualizarNumeroProductos()
             adaptador!!.notifyDataSetChanged()
 
         },Response.ErrorListener { error ->
@@ -227,6 +228,12 @@ class MainActivity : AppCompatActivity() {
 
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
+    }
+
+    fun actualizarNumeroProductos(){
+        if(!SessionData.ordenActual.isNullOrEmpty()){
+            textview_numeroproductos.text = SessionData.ordenActual.size.toString()
+        }
     }
 
     fun mostrarCategoriaActual(idcategoria: Int){
