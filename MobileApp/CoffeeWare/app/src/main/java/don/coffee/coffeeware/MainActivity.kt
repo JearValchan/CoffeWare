@@ -118,26 +118,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-        //btn_producto.setOnClickListener{
-        //    var nombre = textview_nombre.text
-        //    val iterator = productos.iterator()
-
-        //    iterator.forEach {
-        //        println("The element is ${it.nombre}")
-
-        //        if(it.nombre.equals(nombre)){
-
-        //            var producto: Producto = it
-        //            val intent = Intent(this, PersonalizarProductoActivity::class.java)
-        //            intent.putExtra("producto",producto)
-        //            startActivity(intent)
-        //        }
-        //    }
-
-        //}
-
-
-
     fun desplegarTitulo(index: Int) {
         textview_titulo.text = categorias[index].nombre
     }
@@ -164,6 +144,16 @@ class MainActivity : AppCompatActivity() {
         adaptador!!.notifyDataSetChanged()
     }
 
+    fun obtenerCategoria(ID: Int): Categoria{
+        for(x in categorias){
+            if(x.ID == ID){
+                return x
+            }
+        }
+
+        return Categoria("NULL",-1)
+    }
+
     fun cargarAlimentos(URL:String) {
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
             Toast.makeText(applicationContext, categorias.toString(), Toast.LENGTH_SHORT).show()
@@ -175,15 +165,20 @@ class MainActivity : AppCompatActivity() {
                var productoJson = JSON[i].toString()
 
                     var ultimo:Int = (productoJson.lastIndex)-2
-                    var categoria:Categoria =Categoria("Alimentos",0)
 
-                    when (productoJson[ultimo].toInt()){
-                        0 ->  categoria = Categoria("Alimentos",0)
-                        1 ->  categoria = Categoria("Bebidas",1)
-                        2 ->  categoria = Categoria("Postres",2)
-                    }
+                    // ------------------------------------------------------
+                    var index = productoJson.indexOf("id_categoria")
+                    var idcategoria: Int = Integer.valueOf(productoJson.substring(index+15,index+16))
+                    var categoria: Categoria = obtenerCategoria(idcategoria)
+
                     val productoTemp:Producto = gson.fromJson(productoJson,Producto::class.java)
-                    productoTemp.categoria = categoria
+
+                    if (categoria.ID != -1){
+                        productoTemp.categoria = categoria
+                    }else{
+                        Toast.makeText(this,"ERROR en categoria de producto",Toast.LENGTH_LONG).show()
+                    }
+
                     productoTemp.image = R.drawable.image_icon
                     productoTemp.descripcion="Descripcion"
                     productoTemp.ingredientesBase = porciones
@@ -204,146 +199,6 @@ class MainActivity : AppCompatActivity() {
     fun mostrarCategorias(){
 
     }
-
-/*
-    fun cargarBebidas() {
-        productos.add(
-            Producto(
-                "Caffe Americano",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Caffe Late",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Malteada",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Frappe",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Licuado",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Chocomilk",
-                categorias.get(1),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-    }
-
-    fun cargarPostres() {
-        productos.add(
-            Producto(
-                "Brownie",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Dona",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Galletass",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Muffin",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Pan Dulce",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-        productos.add(
-            Producto(
-                "Rebanada de pastel",
-                categorias.get(2),
-                R.drawable.image_icon,
-                "Descripcion producto",
-                25.50,
-                porciones,
-                extras
-            )
-        )
-    }
-*/
 
     inner class AdaptadorProductos : BaseAdapter {
         var productos = ArrayList<Producto>()
