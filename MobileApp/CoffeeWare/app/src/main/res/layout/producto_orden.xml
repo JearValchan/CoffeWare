@@ -11,8 +11,9 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="3.5"
             android:textSize="18sp"
             android:id="@+id/product_name"
             android:textColor="@color/defaultText"
@@ -20,8 +21,9 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.5"
             android:textSize="18dp"
             android:id="@+id/precio"
             android:textColor="@color/defaultText"

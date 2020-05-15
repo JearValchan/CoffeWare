@@ -6,15 +6,17 @@
 
     <TextView
         android:id="@+id/nombreIngrediente"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="3.5"
         android:textSize="18sp"
         android:text="Ejemplo nombre ingrediente" />
 
     <TextView
         android:id="@+id/cantidadIngrediente"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1.5"
         android:textSize="18sp"
         android:text="2" />
 
