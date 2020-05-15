@@ -45,7 +45,7 @@
                 android:layout_gravity="end"
                 android:background="@android:color/transparent"
                 android:onClick="eliminarCategoria"
-                android:id="@+id/btn_eliminarCategpria"/>
+                android:id="@+id/btn_eliminarCategoria"/>
 
 
         </TableRow>
