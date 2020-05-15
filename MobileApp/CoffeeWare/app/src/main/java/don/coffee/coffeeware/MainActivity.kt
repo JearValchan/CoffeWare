@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     var JSONarray: JsonArray? = null
     val categorias = ArrayList<Categoria>()
     var productos = ArrayList<Producto>()
+    var productosCategoriaActual = ArrayList<Producto>()
     var adaptador: AdaptadorProductos? = null
     var categoriaActual = 1
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
-        adaptador = AdaptadorProductos(this, productos)
+        adaptador = AdaptadorProductos(this, productosCategoriaActual)
         gridview_productos.adapter = adaptador
 
         adaptador!!.notifyDataSetChanged()
@@ -71,20 +72,40 @@ class MainActivity : AppCompatActivity() {
 
         btn_izquierda.setOnClickListener {
 
-            when (categoriaActual) {
-                0 -> categoriaActual = categorias.size - 1
-                else -> categoriaActual--
+            for(x in categorias){
+                if (x.ID == categoriaActual){
+                    var indexactual = categorias.indexOf(x)
+
+                    if(indexactual == 0){
+                        categoriaActual = categorias[categorias.size -1].ID
+                    }else{
+                        categoriaActual = categorias[indexactual-1].ID
+                    }
+
+                    break
+                }
             }
 
-            desplegarTitulo(categoriaActual)
+            mostrarCategoriaActual(categoriaActual)
         }
 
         btn_derecha.setOnClickListener {
-            when (categoriaActual) {
-                categorias.size - 1 -> categoriaActual = 0
-                else -> categoriaActual++
+
+            for(x in categorias){
+                if (x.ID == categoriaActual){
+                    var indexactual = categorias.indexOf(x)
+
+                    if(indexactual == (categorias.size-1)){
+                        categoriaActual = categorias[0].ID
+                    }else{
+                        categoriaActual = categorias[indexactual+1].ID
+                    }
+
+                    break
+                }
             }
-            desplegarTitulo(categoriaActual)
+
+            mostrarCategoriaActual(categoriaActual)
         }
         btn_productos.setOnClickListener{
 
@@ -118,8 +139,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun desplegarTitulo(index: Int) {
-        textview_titulo.text = categorias[index].nombre
+    fun desplegarTitulo() {
+        for(x in categorias){
+            if(x.ID == categoriaActual){
+                textview_titulo.text = x.nombre
+            }
+        }
     }
 
     fun cargarCategorias(URL:String) {
@@ -134,14 +159,20 @@ class MainActivity : AppCompatActivity() {
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
-            cargarAlimentos("http://192.168.1.77/coffeeware/wsJSONConsultarListaProductos.php")
+
+            if(!categorias.isNullOrEmpty()){
+                categoriaActual = categorias[0].ID
+                cargarAlimentos("http://192.168.1.77/coffeeware/wsJSONConsultarListaProductos.php")
+            }
+
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
-        mostrarCategorias()
+
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonA)
         adaptador!!.notifyDataSetChanged()
+
     }
 
     fun obtenerCategoria(ID: Int): Categoria{
@@ -156,7 +187,7 @@ class MainActivity : AppCompatActivity() {
 
     fun cargarAlimentos(URL:String) {
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
-            Toast.makeText(applicationContext, categorias.toString(), Toast.LENGTH_SHORT).show()
+
             var JSON = response.getJSONArray("producto")
             val gson = Gson()
             var tam = JSON.length()-1
@@ -166,7 +197,6 @@ class MainActivity : AppCompatActivity() {
 
                     var ultimo:Int = (productoJson.lastIndex)-2
 
-                    // ------------------------------------------------------
                     var index = productoJson.indexOf("id_categoria")
                     var idcategoria: Int = Integer.valueOf(productoJson.substring(index+15,index+16))
                     var categoria: Categoria = obtenerCategoria(idcategoria)
@@ -183,10 +213,13 @@ class MainActivity : AppCompatActivity() {
                     productoTemp.descripcion="Descripcion"
                     productoTemp.ingredientesBase = porciones
                     productoTemp.ingredientesExtra=extras
+
                     productos.add(productoTemp)
-                adaptador!!.notifyDataSetChanged()
+
             }
 
+            mostrarCategoriaActual(categoriaActual)
+            adaptador!!.notifyDataSetChanged()
 
         },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
@@ -196,8 +229,17 @@ class MainActivity : AppCompatActivity() {
         requestQueue.add(jsonobject)
     }
 
-    fun mostrarCategorias(){
+    fun mostrarCategoriaActual(idcategoria: Int){
+        desplegarTitulo()
+        productosCategoriaActual.clear()
 
+        for(x in productos){
+            if(x.categoria.ID == categoriaActual){
+                productosCategoriaActual.add(x)
+            }
+        }
+
+        adaptador!!.notifyDataSetChanged()
     }
 
     inner class AdaptadorProductos : BaseAdapter {
