@@ -22,7 +22,7 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_personalizar_producto)
 
         val producto = intent.getParcelableExtra<Producto>("producto")
-        val productoPersonalizado = ProductoPersonalizado(producto)
+        val productoPersonalizado = ProductoPersonalizado(producto!!)
         productoPersonalizado.precioExtra = 25.0
         nombreProducto.text = productoPersonalizado.nombrePersonalizado
         precioBase.text = ""+productoPersonalizado.preciobase

@@ -57,13 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarAlimentos("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php")
-        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
 
         adaptador!!.notifyDataSetChanged()
-
-
-
 
         btn_ordenactual.setOnClickListener {
             val intent = Intent(this, PersonalizarProductoActivity::class.java)
@@ -106,18 +102,24 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        fun cargarAuxiliares() {
-            porciones.add(porcionIngre)
-            porciones.add(porcionIngre)
-            porciones.add(porcionIngre)
+    fun personalizar(producto: Producto){
+        val intent = Intent(this, PersonalizarProductoActivity::class.java)
+        intent.putExtra("producto", producto)
+        startActivity(intent)
+    }
 
-            extras.add(extra)
-            extras.add(extra)
-            extras.add(extra)
+    fun cargarAuxiliares() {
+        porciones.add(porcionIngre)
+        porciones.add(porcionIngre)
+        porciones.add(porcionIngre)
 
-            println("Ya se crearon todos los extra")
+        extras.add(extra)
+        extras.add(extra)
+        extras.add(extra)
 
-        }
+        println("Ya se crearon todos los extra")
+
+    }
 
         //btn_producto.setOnClickListener{
         //    var nombre = textview_nombre.text
@@ -149,25 +151,25 @@ class MainActivity : AppCompatActivity() {
             var JSON = response.getJSONArray("categoria")
             val gson = Gson()
             for(i in 0..JSON.length()-1){
-
                     var categoriaJson = JSON[i].toString()
                     var categoriaTemp:Categoria = gson.fromJson(categoriaJson,Categoria::class.java)
                 var id:Int = categoriaTemp.ID
                 var nombre:String = categoriaTemp.nombre
                     categorias.add(Categoria(nombre,id))
                 }
-            Toast.makeText(applicationContext, categorias.toString(), Toast.LENGTH_SHORT).show()
+            cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
             },Response.ErrorListener { error ->
             Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
         })
-       var requestQueue = Volley.newRequestQueue(this)
+        mostrarCategorias()
+        var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonA)
         adaptador!!.notifyDataSetChanged()
     }
 
     fun cargarAlimentos(URL:String) {
         val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null,Response.Listener { response ->
-
+            Toast.makeText(applicationContext, categorias.toString(), Toast.LENGTH_SHORT).show()
             var JSON = response.getJSONArray("producto")
             val gson = Gson()
             var tam = JSON.length()-1
@@ -200,8 +202,12 @@ class MainActivity : AppCompatActivity() {
 
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
+    }
+
+    fun mostrarCategorias(){
 
     }
+
 /*
     fun cargarBebidas() {
         productos.add(
@@ -342,7 +348,7 @@ class MainActivity : AppCompatActivity() {
     }
 */
 
-    class AdaptadorProductos : BaseAdapter {
+    inner class AdaptadorProductos : BaseAdapter {
         var productos = ArrayList<Producto>()
         var contexto: Context? = null
 
@@ -357,9 +363,13 @@ class MainActivity : AppCompatActivity() {
                 contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_view, null)
 
-            vista.textview_nombre.setText(producto.nombre)
+            vista.textview_nombre.text = producto.nombre
             vista.btn_producto.setImageResource(producto.image)
-            vista.textview_descripcion.setText(producto.descripcion)
+            vista.textview_descripcion.text = producto.descripcion
+
+            vista.btn_producto.setOnClickListener {
+                personalizar(producto)
+            }
 
             return vista
         }
