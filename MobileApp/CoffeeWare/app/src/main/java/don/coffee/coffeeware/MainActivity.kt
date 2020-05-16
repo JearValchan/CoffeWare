@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     var JSON: JSONObject? = null
     var JSONarray: JsonArray? = null
-    val categorias = ArrayList<Categoria>()
-    var productos = ArrayList<Producto>()
     var productosCategoriaActual = ArrayList<Producto>()
     var adaptador: AdaptadorProductos? = null
     var categoriaActual = 1
@@ -72,14 +70,14 @@ class MainActivity : AppCompatActivity() {
 
         btn_izquierda.setOnClickListener {
 
-            for(x in categorias){
+            for(x in SessionData.listaCategoria){
                 if (x.ID == categoriaActual){
-                    var indexactual = categorias.indexOf(x)
+                    var indexactual = SessionData.listaCategoria.indexOf(x)
 
                     if(indexactual == 0){
-                        categoriaActual = categorias[categorias.size -1].ID
+                        categoriaActual = SessionData.listaCategoria[SessionData.listaCategoria.size -1].ID
                     }else{
-                        categoriaActual = categorias[indexactual-1].ID
+                        categoriaActual = SessionData.listaCategoria[indexactual-1].ID
                     }
 
                     break
@@ -91,14 +89,14 @@ class MainActivity : AppCompatActivity() {
 
         btn_derecha.setOnClickListener {
 
-            for(x in categorias){
+            for(x in SessionData.listaCategoria){
                 if (x.ID == categoriaActual){
-                    var indexactual = categorias.indexOf(x)
+                    var indexactual = SessionData.listaCategoria.indexOf(x)
 
-                    if(indexactual == (categorias.size-1)){
-                        categoriaActual = categorias[0].ID
+                    if(indexactual == (SessionData.listaCategoria.size-1)){
+                        categoriaActual = SessionData.listaCategoria[0].ID
                     }else{
-                        categoriaActual = categorias[indexactual+1].ID
+                        categoriaActual = SessionData.listaCategoria[indexactual+1].ID
                     }
 
                     break
@@ -140,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun desplegarTitulo() {
-        for(x in categorias){
+        for(x in SessionData.listaCategoria){
             if(x.ID == categoriaActual){
                 textview_titulo.text = x.nombre
             }
@@ -157,11 +155,11 @@ class MainActivity : AppCompatActivity() {
                     var categoriaTemp:Categoria = gson.fromJson(categoriaJson,Categoria::class.java)
                 var id:Int = categoriaTemp.ID
                 var nombre:String = categoriaTemp.nombre
-                    categorias.add(Categoria(nombre,id))
+                SessionData.listaCategoria.add(Categoria(nombre,id))
                 }
 
-            if(!categorias.isNullOrEmpty()){
-                categoriaActual = categorias[0].ID
+            if(!SessionData.listaCategoria.isNullOrEmpty()){
+                categoriaActual = SessionData.listaCategoria[0].ID
                 cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
             }
 
@@ -176,7 +174,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun obtenerCategoria(ID: Int): Categoria{
-        for(x in categorias){
+        for(x in SessionData.listaCategoria){
             if(x.ID == ID){
                 return x
             }
@@ -210,11 +208,10 @@ class MainActivity : AppCompatActivity() {
                     productoTemp.ingredientesBase = porciones
                     productoTemp.ingredientesExtra=extras
 
-                    productos.add(productoTemp)
+                    SessionData.listaProductos.add(productoTemp)
 
             }
             mostrarCategoriaActual(categoriaActual)
-            SessionData.listaProductos.addAll(productos)
             actualizarNumeroProductos()
             adaptador!!.notifyDataSetChanged()
 
@@ -236,7 +233,7 @@ class MainActivity : AppCompatActivity() {
         desplegarTitulo()
         productosCategoriaActual.clear()
 
-        for(x in productos){
+        for(x in SessionData.listaProductos){
             if(x.categoria.ID == idcategoria){
                 productosCategoriaActual.add(x)
             }

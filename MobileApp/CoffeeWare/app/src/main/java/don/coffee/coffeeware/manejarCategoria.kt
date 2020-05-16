@@ -21,15 +21,13 @@ import kotlinx.android.synthetic.main.viewcategoria.view.*
 
 class manejarCategoria : AppCompatActivity() {
     var adaptador:adaptadorCategoria?=null
-    var categorias = ArrayList<Categoria>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manejar_categoria)
 
-        adaptador = adaptadorCategoria(this,categorias)
+        adaptador = adaptadorCategoria(this, SessionData.listaCategoria)
         listview_categorias.adapter = adaptador
         adaptador!!.notifyDataSetChanged()
-        cargarCategorias()
 
         btn_agregarCategoria.setOnClickListener {
 
@@ -39,26 +37,6 @@ class manejarCategoria : AppCompatActivity() {
 
     }
 
-    fun cargarCategorias(){
-        var URL = "http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php"
-        val jsonA = JsonObjectRequest(Request.Method.GET,URL,null, Response.Listener { response ->
-            var JSON = response.getJSONArray("categoria")
-            val gson = Gson()
-            for(i in 0..JSON.length()-1){
-
-                var categoriaJson = JSON[i].toString()
-                var categoriaTemp:Categoria = gson.fromJson(categoriaJson,Categoria::class.java)
-                categorias.add(categoriaTemp)
-                adaptador!!.notifyDataSetChanged()
-            }
-        }, Response.ErrorListener { error ->
-            Toast.makeText(this,error.toString(), Toast.LENGTH_LONG).show()
-        })
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(jsonA)
-        adaptador!!.notifyDataSetChanged()
-    }
-
     fun eliminarCategoria(categoria: Categoria){
 
         val url = "http://192.168.0.13:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
@@ -66,7 +44,7 @@ class manejarCategoria : AppCompatActivity() {
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
             if (response.trim().equals("elimina", true)){
                 Toast.makeText(applicationContext, "ELIMINADO CON EXITO", Toast.LENGTH_SHORT).show()
-                categorias.remove(categoria)
+                SessionData.listaCategoria.remove(categoria)
                 adaptador!!.notifyDataSetChanged()
             }else{
                 if (response.trim().equals("noExiste", true)){
