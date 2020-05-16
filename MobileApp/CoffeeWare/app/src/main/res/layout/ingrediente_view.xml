@@ -21,6 +21,7 @@
         android:layout_gravity="center">
 
         <ImageButton
+            android:id="@+id/remove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/remove_icon"
@@ -46,6 +47,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/add_icon"

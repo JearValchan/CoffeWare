@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_personalizar_producto.*
 import kotlinx.android.synthetic.main.ingredient_view.view.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
+import kotlinx.android.synthetic.main.producto_view.*
 
 
 class PersonalizarProductoActivity : AppCompatActivity() {
@@ -26,7 +27,6 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     var ing = IngredienteBase("papas")
     var porcionIngre = PorcionIngredienteBase(20, ing)
     var porciones = ArrayList<PorcionIngredienteBase>()
-    var ingredientes = ArrayList<PorcionIngredienteBase>()
 
 
 
@@ -48,9 +48,9 @@ class PersonalizarProductoActivity : AppCompatActivity() {
         productoPersonalizado.ingredientesExtraPersonalizado = extras;
 
         //Adapters
-        adaptador = AdaptadorIngsBase(this, ingredientes)
+        adaptador = AdaptadorIngsBase(this, productoPersonalizado)
         list_ingredientes.adapter = adaptador
-        adaptadorExtra = AdaptadorIngsExtra(this, extras)
+        adaptadorExtra = AdaptadorIngsExtra(this, productoPersonalizado)
         list_extras.adapter = adaptadorExtra
 
         btn_anadirOrden.setOnClickListener {
@@ -68,13 +68,11 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     inner class AdaptadorIngsBase : BaseAdapter {
         var ingredientes = ArrayList<PorcionIngredienteBase>()
         var contexto: Context? = null
-        var ing = IngredienteBase("papas")
-        var porcionIngre = PorcionIngredienteBase(20, ing)
 
 
-        constructor(contexto: Context, ingredientes: ArrayList<PorcionIngredienteBase>?) {
+        constructor(contexto: Context, productoPersonalizado: ProductoPersonalizado) {
             this.contexto = contexto
-            this.ingredientes.add(porcionIngre)
+            this.ingredientes = productoPersonalizado.ingredientesBasePersonalizado
             if (!ingredientes.isNullOrEmpty()) {
                 this.ingredientes = ingredientes
             }
@@ -85,11 +83,20 @@ class PersonalizarProductoActivity : AppCompatActivity() {
             var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.ingrediente_view, null)
 
-            var nombreIngrediente: String? = ingBase.ingrediente.nombre
-            var cantidadIngrediente: Int = ingBase.cantidad
+            vista.textview_nombreing.text = ingBase.ingrediente.nombre
+            vista.textview_cantidad.text = ingBase.cantidad.toString()
 
-            vista.textview_nombreing.text = "$nombreIngrediente"
-            vista.textview_cantidad.text = "$cantidadIngrediente"
+            vista.add.setOnClickListener {
+                ingBase.cantidad++
+                vista.textview_cantidad.text = ingBase.cantidad.toString()
+            }
+
+            vista.remove.setOnClickListener {
+                if (ingBase.cantidad > 0){
+                    ingBase.cantidad--
+                    vista.textview_cantidad.text = ingBase.cantidad.toString()
+                }
+            }
 
             return vista
         }
@@ -108,15 +115,14 @@ class PersonalizarProductoActivity : AppCompatActivity() {
 
     }
 
-    class AdaptadorIngsExtra : BaseAdapter {
+    inner class AdaptadorIngsExtra : BaseAdapter {
         var extras = ArrayList<IngredienteExtra>()
         var contexto: Context? = null
-        var extra = IngredienteExtra("Valentina", 5.0)
 
 
-        constructor(contexto: Context, extras: ArrayList<IngredienteExtra>?) {
+        constructor(contexto: Context, productoPersonalizado: ProductoPersonalizado) {
             this.contexto = contexto
-            this.extras.add(extra)
+            this.extras = productoPersonalizado.ingredientesExtraPersonalizado
             if (!extras.isNullOrEmpty()) {
                 this.extras = extras
             }
@@ -127,11 +133,24 @@ class PersonalizarProductoActivity : AppCompatActivity() {
             var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.ingrediente_view, null)
 
-            var nombreIngrediente: String? = extra.nombre
-            var cantidadIngrediente: Int = 0
+            var cantidad = 0
+            for (cont in extras){
+                if (cont.nombreExtra == extra.nombreExtra) cantidad++
+            }
 
-            vista.textview_nombreing.text = "$nombreIngrediente"
-            vista.textview_cantidad.text = "$cantidadIngrediente"
+            vista.textview_nombreing.text = extra.nombreExtra
+
+            vista.add.setOnClickListener {
+                extras.add(extra)
+                notifyDataSetChanged()
+            }
+
+            vista.remove.setOnClickListener {
+                if (cantidad > 1){
+                    extras.remove(extra)
+                    notifyDataSetChanged()
+                }
+            }
 
             return vista
         }
@@ -151,7 +170,7 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     }
 
     class AdaptadorOrden: BaseAdapter{
-        lateinit var mContext:Context
+        var mContext:Context
         var ordenActual = ArrayList<ProductoPersonalizado>()
 
         constructor(mContext:Context, ordenActual:ArrayList<ProductoPersonalizado>){
@@ -161,7 +180,7 @@ class PersonalizarProductoActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var productoPersonalizado = ordenActual[position]
-            var inflater = mContext!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var inflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_orden, null)
 
             var ingredientesBase = productoPersonalizado.ingredientesBasePersonalizado
