@@ -54,7 +54,10 @@ class listaOrdenes : AppCompatActivity() {
 
         var orden =  adaptador!!.getItem(view.verticalScrollbarPosition) as Orden
         var id = orden.ID
+        var estado = orden.ESTADO
         var urlEliminar = "http://192.168.1.74:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
+
+        if(estado =="Pendiente") {
 
             val eliminar = JsonObjectRequest(
                 Request.Method.POST,
@@ -71,7 +74,9 @@ class listaOrdenes : AppCompatActivity() {
                 })
             var requestQueue = Volley.newRequestQueue(this)
             requestQueue.add(eliminar)
-
+        }else{
+            Toast.makeText(this, "No se puede eliminar la orden", Toast.LENGTH_LONG).show()
+        }
 
 
     }
