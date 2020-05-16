@@ -62,6 +62,7 @@ class ConfirmOrder : AppCompatActivity() {
 
         cancelBtn.setOnClickListener{
             productosPersonalizados.clear()
+            adaptador!!.notifyDataSetChanged()
         }
 
         list_orden.setOnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
@@ -69,18 +70,28 @@ class ConfirmOrder : AppCompatActivity() {
         }
 
         btn_enviarorden.setOnClickListener{
-            llenarDatos()
-            enviarOrden()
+            if(llenarDatos()){
+                enviarOrden()
+            }else{
+                Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
-    fun llenarDatos(){
+    fun llenarDatos(): Boolean {
+
+        if(edit_consumidor.text.toString().equals("")){
+            return false
+        }else{
         orden.cliente = edit_consumidor.text.toString()
         orden.ESTADO = "Pendiente"
         SessionData.ordenes.add(orden)
         val rnds = (0..100000).random()
         orden.ID = rnds
         orden.preciofinal = obtenerPrecioFinal()
+        }
+        return true
     }
 
     fun obtenerPrecioFinal(): Double{
@@ -96,11 +107,11 @@ class ConfirmOrder : AppCompatActivity() {
     fun enviarOrden(){
         Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
-        var url: String = "http://192.168.0.13/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        var url: String = "http://192.168.1.74/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
-                Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Orden enviada", Toast.LENGTH_SHORT).show()
             },
             Response.ErrorListener {
                 Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()

@@ -84,6 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/defaultText"
             android:textSize="18sp"
+            android:text=""
             android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
