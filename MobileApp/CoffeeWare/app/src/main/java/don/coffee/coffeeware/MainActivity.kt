@@ -213,8 +213,8 @@ class MainActivity : AppCompatActivity() {
                     productos.add(productoTemp)
 
             }
-
             mostrarCategoriaActual(categoriaActual)
+            SessionData.listaProductos.addAll(productos)
             actualizarNumeroProductos()
             adaptador!!.notifyDataSetChanged()
 

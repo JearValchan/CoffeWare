@@ -24,8 +24,7 @@ import kotlinx.android.synthetic.main.viewlistaproductos.view.*
 class listaProductos : AppCompatActivity() {
 
     var adaptador: adaptadorProducto? = null
-    var productos = ArrayList<Producto>()
-    var urlCargarProductos ="http://192.168.1.74:80/coffeeware/wsJSONConsultarListaProductos.php"
+    var productos = SessionData.listaProductos
 
 
 
@@ -41,11 +40,10 @@ class listaProductos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_productos)
 
-        adaptador = adaptadorProducto(this,productos)
+        adaptador = adaptadorProducto(this, productos)
         listaProductos.adapter = adaptador
 
         cargarAuxiliares()
-        cargarProductos()
 
         btn_agregarProducto.setOnClickListener {
             val intent = Intent(this,agregarProducto::class.java)
@@ -67,43 +65,6 @@ class listaProductos : AppCompatActivity() {
 
     }
 
-    fun cargarProductos(){
-        val jsonobject = JsonObjectRequest(Request.Method.GET,urlCargarProductos,null,Response.Listener { response ->
-
-            var JSON = response.getJSONArray("producto")
-            val gson = Gson()
-            var tam = JSON.length()-1
-
-            for( i in 0..tam) {
-                var productoJson = JSON[i].toString()
-
-                var ultimo:Int = (productoJson.lastIndex)-2
-                var categoria:Categoria =Categoria("Alimentos",0)
-
-                when (productoJson[ultimo].toInt()){
-                    0 ->  categoria = Categoria("Alimentos",0)
-                    1 ->  categoria = Categoria("Bebidas",1)
-                    2 ->  categoria = Categoria("Postres",2)
-                }
-                val productoTemp:Producto = gson.fromJson(productoJson,Producto::class.java)
-                productoTemp.categoria = categoria
-                productoTemp.image = R.drawable.image_icon
-                productoTemp.descripcion="Descripcion"
-                productoTemp.ingredientesBase = porciones
-                productoTemp.ingredientesExtra=extras
-                productos.add(productoTemp)
-                adaptador!!.notifyDataSetChanged()
-            }
-
-
-        },Response.ErrorListener { error ->
-            Toast.makeText(this,error.toString(),Toast.LENGTH_LONG).show()
-        })
-
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(jsonobject)
-    }
-
     fun editarProducto(view:View){
 
 
@@ -120,7 +81,7 @@ class listaProductos : AppCompatActivity() {
         var produc = adaptador!!.getItem(view.verticalScrollbarPosition) as Producto
         var id =produc.ID
 
-        var url:String="http://192.168.1.74:80/coffeeware/wsJSONEliminarProducto.php?ID=" + id
+        var url:String="http://192.168.0.13:80/coffeeware/wsJSONEliminarProducto.php?ID=" + id
 
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->

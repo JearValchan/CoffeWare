@@ -30,7 +30,6 @@ class agregarProducto : AppCompatActivity() {
             textview_titulo.setText("Actualizar producto")
         }
 
-
         btn_aceptaragregar.setOnClickListener {
             if(textview_titulo.text.toString()=="Actualizar producto"){
                 actualizarProducto()
@@ -43,7 +42,7 @@ class agregarProducto : AppCompatActivity() {
     }
 
     fun agregarProducto(){
-        var url: String="http://192.168.1.74:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.toString()
+        var url: String="http://192.168.0.13:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.toString()
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
@@ -52,6 +51,7 @@ class agregarProducto : AppCompatActivity() {
                 edtTipo.setText("")
                 edtNombre.setText("")
                 edtPrecioBase.setText("")
+                edtCategoria.setText("")
 
                 var intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
@@ -67,7 +67,7 @@ class agregarProducto : AppCompatActivity() {
 
     fun actualizarProducto(){
 
-        var url: String="http://192.168.1.74:80/coffeeware/wsJSONActualizarProducto.php"
+        var url: String="http://192.168.0.13:80/coffeeware/wsJSONActualizarProducto.php"
         val req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().trim().equals("actualiza", true)){
                 Toast.makeText(applicationContext, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
@@ -75,6 +75,7 @@ class agregarProducto : AppCompatActivity() {
                 edtTipo.setText("")
                 edtNombre.setText("")
                 edtPrecioBase.setText("")
+                edtCategoria.setText("")
 
             }else{
                 Toast.makeText(applicationContext, "No se ha actualizado", Toast.LENGTH_SHORT).show()

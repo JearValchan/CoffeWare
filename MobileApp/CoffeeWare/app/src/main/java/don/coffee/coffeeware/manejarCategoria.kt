@@ -40,7 +40,7 @@ class manejarCategoria : AppCompatActivity() {
     }
 
     fun cargarCategorias(){
-        var URL = "http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php"
+        var URL = "http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php"
         val jsonA = JsonObjectRequest(Request.Method.GET,URL,null, Response.Listener { response ->
             var JSON = response.getJSONArray("categoria")
             val gson = Gson()
@@ -61,7 +61,7 @@ class manejarCategoria : AppCompatActivity() {
 
     fun eliminarCategoria(categoria: Categoria){
 
-        val url = "http://192.168.1.74:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
             if (response.trim().equals("elimina", true)){
