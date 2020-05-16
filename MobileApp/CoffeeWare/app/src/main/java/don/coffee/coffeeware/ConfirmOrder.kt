@@ -87,7 +87,7 @@ class ConfirmOrder : AppCompatActivity() {
         var total: Double = 0.0
 
         for(x in SessionData.ordenActual){
-            total += x.preciobase
+            total += x.preciobase+x.precioExtra
         }
 
         return total
@@ -147,7 +147,7 @@ class ConfirmOrder : AppCompatActivity() {
             var vista = inflator.inflate(R.layout.producto_orden, null)
 
             vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText("$ "+productoPersonalizado.precioBasePersonalizado.toString())
+            vista.precio.setText("$ "+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra))
 
             return vista
         }
