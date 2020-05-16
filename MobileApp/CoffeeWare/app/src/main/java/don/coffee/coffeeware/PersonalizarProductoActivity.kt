@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.core.view.isGone
 import kotlinx.android.synthetic.main.activity_personalizar_producto.*
+import kotlinx.android.synthetic.main.activity_personalizar_producto.view.*
 import kotlinx.android.synthetic.main.ingredient_view.view.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
@@ -63,6 +64,16 @@ class PersonalizarProductoActivity : AppCompatActivity() {
             ordenActual.adapter = AdaptadorOrden(this, SessionData.ordenActual)
         }
 
+        costoTotal.text = obtenerPrecioFinal().toString()
+
+    }
+
+    fun obtenerPrecioFinal(): Double{
+        var total = 0.0
+        for(x in SessionData.ordenActual){
+            total += x.preciobase+x.precioExtra
+        }
+        return total
     }
 
     inner class AdaptadorIngsBase : BaseAdapter {
@@ -169,7 +180,7 @@ class PersonalizarProductoActivity : AppCompatActivity() {
 
     }
 
-    class AdaptadorOrden: BaseAdapter{
+    inner class AdaptadorOrden: BaseAdapter{
         var mContext:Context
         var ordenActual = ArrayList<ProductoPersonalizado>()
 
