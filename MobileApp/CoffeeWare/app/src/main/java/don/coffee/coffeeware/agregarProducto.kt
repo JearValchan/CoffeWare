@@ -1,5 +1,6 @@
 package don.coffee.coffeeware
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -24,7 +25,7 @@ class agregarProducto : AppCompatActivity() {
             edtTipo.setText(producto!!.producto_type)
             edtNombre.setText(producto!!.nombre)
             edtPrecioBase.setText(producto!!.preciobase.toString())
-            edtCategoria.setText(producto!!.categoria.ID)
+            edtCategoria.setText(producto!!.categoria.ID.toString())
             btn_aceptaragregar.setText("Actualizar producto")
             textview_titulo.setText("Actualizar producto")
         }
@@ -51,6 +52,10 @@ class agregarProducto : AppCompatActivity() {
                 edtTipo.setText("")
                 edtNombre.setText("")
                 edtPrecioBase.setText("")
+
+                var intent = Intent(this,MainActivity::class.java)
+                startActivity(intent)
+
             },
             Response.ErrorListener {
                 Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()

@@ -264,9 +264,15 @@ class MainActivity : AppCompatActivity() {
                 contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.producto_view, null)
 
-            vista.textview_nombre.text = producto.nombre
+
+            if(producto.nombre.length>15){
+             var nombre=  producto.nombre.substring(0,14)+"..."
+                vista.textview_nombre.text = nombre
+            }else{
+                vista.textview_nombre.text = producto.nombre
+            }
             vista.btn_producto.setImageResource(producto.image)
-            vista.textview_descripcion.text = producto.descripcion
+           // vista.textview_descripcion.text = producto.descripcion
 
             vista.btn_producto.setOnClickListener {
                 personalizar(producto)

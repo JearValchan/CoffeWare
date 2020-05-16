@@ -25,6 +25,7 @@
                     android:textColor="@color/deepGrey"
                     android:fontFamily="monospace"
                     android:textSize="15dp"
+                    android:maxLength="15"
                     android:id="@+id/textview_nombreproducto"
                     android:text="Frape"/>
 
