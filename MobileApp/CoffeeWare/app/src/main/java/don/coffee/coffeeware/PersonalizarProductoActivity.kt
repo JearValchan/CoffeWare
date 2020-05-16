@@ -34,19 +34,17 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personalizar_producto)
-
         val producto = intent.getParcelableExtra<Producto>("producto")
         val productoPersonalizado = ProductoPersonalizado(producto!!)
-        productoPersonalizado.precioExtra = 25.0
         nombreProducto.text = productoPersonalizado.nombrePersonalizado
         precioBase.text = ""+productoPersonalizado.preciobase
-        precioTotal.text = ""+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra)
 
         //Agregando ingredientes
         porciones.add(porcionIngre)
         extras.add(extra);
         productoPersonalizado.ingredientesBasePersonalizado = porciones;
         productoPersonalizado.ingredientesExtraPersonalizado = extras;
+        precioExtra(productoPersonalizado)
 
         //Adapters
         adaptador = AdaptadorIngsBase(this, productoPersonalizado)
@@ -74,6 +72,14 @@ class PersonalizarProductoActivity : AppCompatActivity() {
             total += x.preciobase+x.precioExtra
         }
         return total
+    }
+
+    fun precioExtra(productoPersonalizado: ProductoPersonalizado) {
+        productoPersonalizado.precioExtra = 0.0
+        for (extra in productoPersonalizado.ingredientesExtraPersonalizado){
+            productoPersonalizado.precioExtra += extra.precio
+        }
+        precioTotal.text = ""+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra)
     }
 
     inner class AdaptadorIngsBase : BaseAdapter {
@@ -127,12 +133,14 @@ class PersonalizarProductoActivity : AppCompatActivity() {
     }
 
     inner class AdaptadorIngsExtra : BaseAdapter {
+        lateinit var productoPersonalizado:ProductoPersonalizado
         var extras = ArrayList<IngredienteExtra>()
         var contexto: Context? = null
 
 
         constructor(contexto: Context, productoPersonalizado: ProductoPersonalizado) {
             this.contexto = contexto
+            this.productoPersonalizado = productoPersonalizado
             this.extras = productoPersonalizado.ingredientesExtraPersonalizado
             if (!extras.isNullOrEmpty()) {
                 this.extras = extras
@@ -154,12 +162,14 @@ class PersonalizarProductoActivity : AppCompatActivity() {
             vista.add.setOnClickListener {
                 extras.add(extra)
                 notifyDataSetChanged()
+                precioExtra(productoPersonalizado)
             }
 
             vista.remove.setOnClickListener {
                 if (cantidad > 1){
                     extras.remove(extra)
                     notifyDataSetChanged()
+                    precioExtra(productoPersonalizado)
                 }
             }
 
