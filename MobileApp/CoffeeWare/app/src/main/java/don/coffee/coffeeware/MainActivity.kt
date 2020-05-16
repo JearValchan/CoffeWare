@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarCategorias("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.1.83:80/coffeeware/wsJSONConsultarListaCategorias.php")
 
         adaptador!!.notifyDataSetChanged()
 
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
             if(!categorias.isNullOrEmpty()){
                 categoriaActual = categorias[0].ID
-                cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
+                cargarAlimentos("http://192.168.1.83/coffeeware/wsJSONConsultarListaProductos.php")
             }
 
             },Response.ErrorListener { error ->

@@ -39,7 +39,17 @@ class ConfirmOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_order)
 
-        var adaptador = AdapterConfirmar(this, productosPersonalizados, ingredientesBase, ingredientesExtra)
+        productosPersonalizados = SessionData.ordenActual
+
+        /*if(productosPersonalizados.isNullOrEmpty()){
+            Toast.makeText(this,"NULL OR EMPTY",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this,productosPersonalizados.size,Toast.LENGTH_SHORT).show()
+        }*/
+
+        //var adaptador = AdapterConfirmar(this, productosPersonalizados, ingredientesBase, ingredientesExtra)
+        var adaptador = AdapterConfirmar(this, productosPersonalizados)
+
         list_orden.adapter = adaptador
 
         var intentMenu = Intent(this, MainActivity::class.java)
@@ -86,7 +96,7 @@ class ConfirmOrder : AppCompatActivity() {
     fun enviarOrden(){
         Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
-        var url: String = "http://192.168.1.77/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        var url: String = "http://192.168.1.83/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
@@ -105,10 +115,10 @@ class ConfirmOrder : AppCompatActivity() {
 
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()
-        var ingredientesBase = ArrayList<IngredienteBase>()
-        var ingredientesExtra = ArrayList<IngredienteExtra>()
+        //var ingredientesBase = ArrayList<IngredienteBase>()
+        //var ingredientesExtra = ArrayList<IngredienteExtra>()
 
-        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<IngredienteBase>, ingredientesExtra: ArrayList<IngredienteExtra>) {
+        /*constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<IngredienteBase>, ingredientesExtra: ArrayList<IngredienteExtra>) {
             this.context = context
             this.productosPersonalizado = productosPersonalizado
             this.ingredientesBase = ingredientesBase
@@ -123,7 +133,25 @@ class ConfirmOrder : AppCompatActivity() {
             vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBasePersonalizado).toString())
 
             return vista
+        }*/
+
+        // -------------------------------------------------------------------------------------------------------------------
+        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>) {
+            this.context = context
+            this.productosPersonalizado = productosPersonalizado
         }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var productoPersonalizado = productosPersonalizado[position]
+            var inflator = LayoutInflater.from(context)
+            var vista = inflator.inflate(R.layout.producto_orden, null)
+
+            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
+            vista.precio.setText("$ "+productoPersonalizado.precioBasePersonalizado.toString())
+
+            return vista
+        }
+        // -------------------------------------------------------------------------------------------------------------------
 
         override fun getItem(position: Int): Any {
             return productosPersonalizado[position]
