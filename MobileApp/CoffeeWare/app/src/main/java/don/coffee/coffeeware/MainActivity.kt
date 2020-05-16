@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarCategorias("http://192.168.1.83:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
 
         adaptador!!.notifyDataSetChanged()
 
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
             if(!categorias.isNullOrEmpty()){
                 categoriaActual = categorias[0].ID
-                cargarAlimentos("http://192.168.1.83/coffeeware/wsJSONConsultarListaProductos.php")
+                cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
             }
 
             },Response.ErrorListener { error ->
@@ -193,15 +193,11 @@ class MainActivity : AppCompatActivity() {
             var tam = JSON.length()-1
 
             for( i in 0..tam) {
-               var productoJson = JSON[i].toString()
+               var jsonObject = JSON.getJSONObject(i)
 
-                    var ultimo:Int = (productoJson.lastIndex)-2
+                    var categoria: Categoria = obtenerCategoria(jsonObject.optString("id_categoria").toInt())
 
-                    var index = productoJson.indexOf("id_categoria")
-                    var idcategoria: Int = Integer.valueOf(productoJson.substring(index+15,index+16))
-                    var categoria: Categoria = obtenerCategoria(idcategoria)
-
-                    val productoTemp:Producto = gson.fromJson(productoJson,Producto::class.java)
+                    val productoTemp = gson.fromJson(jsonObject.toString(),Producto::class.java)
 
                     if (categoria.ID != -1){
                         productoTemp.categoria = categoria
@@ -241,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         productosCategoriaActual.clear()
 
         for(x in productos){
-            if(x.categoria.ID == categoriaActual){
+            if(x.categoria.ID == idcategoria){
                 productosCategoriaActual.add(x)
             }
         }
