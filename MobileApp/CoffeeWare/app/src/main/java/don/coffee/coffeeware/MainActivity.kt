@@ -53,7 +53,13 @@ class MainActivity : AppCompatActivity() {
 
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
-        cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        if (SessionData.listaCategoria.isEmpty()){
+            cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+        }else{
+            mostrarCategoriaActual(categoriaActual)
+            actualizarNumeroProductos()
+            adaptador!!.notifyDataSetChanged()
+        }
 
         adaptador!!.notifyDataSetChanged()
 
@@ -238,7 +244,6 @@ class MainActivity : AppCompatActivity() {
                 productosCategoriaActual.add(x)
             }
         }
-
         adaptador!!.notifyDataSetChanged()
     }
 
