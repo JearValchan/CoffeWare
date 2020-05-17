@@ -2,31 +2,21 @@ package don.coffee.coffeeware
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_lista_ordenes.*
-import kotlinx.android.synthetic.main.activity_lista_ordenes.view.*
-import kotlinx.android.synthetic.main.viewlistaordenes.*
 import kotlinx.android.synthetic.main.viewlistaordenes.view.*
-import org.json.JSONObject
-import kotlin.math.log
-import don.coffee.coffeeware.Orden as Orden
 
 class listaOrdenes : AppCompatActivity() {
 
@@ -37,71 +27,76 @@ class listaOrdenes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
 
-        adaptador = adaptadorOrdenes(this,ordenes)
+        adaptador = adaptadorOrdenes(this, ordenes)
         listview_ordenes.adapter = adaptador
     }
 
-    fun editarOrden(orden: Orden){
+    fun editarOrden(orden: Orden) {
         SessionData.ordenActual = orden.productos!!
-        var intent = Intent(applicationContext, MainActivity::class.java)
+        var intent = Intent(applicationContext, EditOrder::class.java)
+        intent.putExtra("orden", orden)
         startActivity(intent)
-    fun validacionEliminarOrden(orden: Orden){
+    }
+
+    fun validacionEliminarOrden(orden: Orden) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Importante")
         builder.setMessage("Se eliminará la orden. ¿Desea continuar?")
-        builder.setPositiveButton("OK"){
-                dialog, which ->
+        builder.setPositiveButton("OK") { dialog, which ->
             eliminarOrden(orden)
         }
-        builder.setNegativeButton("Cancelar"){
-                dialog, which ->
-            Toast.makeText(applicationContext, "Se canceló la eliminación. Volviendo a la pantalla principal.", Toast.LENGTH_SHORT).show()
+        builder.setNegativeButton("Cancelar") { dialog, which ->
+            Toast.makeText(
+                applicationContext,
+                "Se canceló la eliminación. Volviendo a la pantalla principal.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         builder.create()
         builder.show()
-
-
     }
 
-    fun eliminarOrden(orden: Orden){
+    fun eliminarOrden(orden: Orden) {
         var id = orden.ID
-        var urlEliminar = "http://192.168.1.78:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
+        var urlEliminar = "http://192.168.0.13:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
 
         val eliminar = StringRequest(
-                Request.Method.GET,
-                urlEliminar,
-                Response.Listener<String> {
-                    Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
-                    ordenes.remove(orden)
-                    adaptador!!.notifyDataSetChanged()
-                },
-                Response.ErrorListener { error ->
-                    Toast.makeText(this, "Error al acceder a la base de datos", Toast.LENGTH_LONG).show()
+            Request.Method.GET,
+            urlEliminar,
+            Response.Listener<String> {
+                Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
+                ordenes.remove(orden)
+                adaptador!!.notifyDataSetChanged()
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, "Error al acceder a la base de datos", Toast.LENGTH_LONG)
+                    .show()
 
-                })
-            var requestQueue = Volley.newRequestQueue(this)
-            requestQueue.add(eliminar)
+            })
+        var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(eliminar)
     }
 
-    fun pagarOrden(orden: Orden){
+    fun pagarOrden(orden: Orden) {
         var intent = Intent(applicationContext, paymentActivity::class.java)
         intent.putExtra("orden", orden)
         startActivity(intent)
     }
 
-    inner class adaptadorOrdenes :BaseAdapter{
-        var ordenes =ArrayList<Orden>()
+    inner class adaptadorOrdenes : BaseAdapter {
+        var ordenes = ArrayList<Orden>()
         var contexto: Context? = null
 
-        constructor(contexto:Context, ordenes:ArrayList<Orden>){
+        constructor(contexto: Context, ordenes: ArrayList<Orden>) {
             this.ordenes = ordenes
             this.contexto = contexto
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-           var orden = ordenes[position]
-            var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            var vista = inflater.inflate(R.layout.viewlistaordenes,null)
+            var orden = ordenes[position]
+            var inflater =
+                contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var vista = inflater.inflate(R.layout.viewlistaordenes, null)
 
             vista.textview_nombreCliente.text = orden.cliente
             vista.textview_costoOrden.text = orden.preciofinal.toString()
@@ -114,7 +109,7 @@ class listaOrdenes : AppCompatActivity() {
                 validacionEliminarOrden(orden)
             }
 
-            vista.btn_editarOrden.setOnClickListener{
+            vista.btn_editarOrden.setOnClickListener {
                 editarOrden(orden)
             }
 
@@ -130,11 +125,11 @@ class listaOrdenes : AppCompatActivity() {
         }
 
         override fun getItemId(position: Int): Long {
-           return position.toLong()
+            return position.toLong()
         }
 
         override fun getCount(): Int {
-           return ordenes.size
+            return ordenes.size
         }
 
     }

@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_confirm_order.*
 import kotlinx.android.synthetic.main.activity_confirm_order.precioTotal
@@ -31,6 +32,8 @@ class ConfirmOrder : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_order)
+
+        val clave = intent.getStringExtra("clave")
 
         productosPersonalizados = SessionData.ordenActual
 
@@ -63,12 +66,18 @@ class ConfirmOrder : AppCompatActivity() {
 
         val intent = Intent(this, MainActivity::class.java)
         btn_enviarorden.setOnClickListener{
-            if(llenarDatos()){
-                enviarOrden()
-                SessionData.ordenActual = ArrayList()
-                startActivity(intent)
+            if (clave.equals("edicion",true)){
+                orden = this.intent.getParcelableExtra<Orden>("orden")!!
+                actualizarOrden()
+                startActivity(intentEditar)
             }else{
-                Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
+                if(llenarDatos()){
+                    enviarOrden()
+                    SessionData.ordenActual = ArrayList()
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -112,6 +121,30 @@ class ConfirmOrder : AppCompatActivity() {
         )
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
+    }
+
+    fun actualizarOrden(){
+        var url = "http://localhost/coffeeware/wsJSONActualizarOrden.php?"
+
+        val request = object:StringRequest(
+            Method.POST, url, Response.Listener { response ->
+                Toast.makeText(this, "Orden actualizada", Toast.LENGTH_SHORT).show()
+            }, Response.ErrorListener {
+                Toast.makeText(this, "No se pudo actualizar", Toast.LENGTH_SHORT).show()
+            }
+        ){
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["ID"] = orden.ID.toString()
+                params["cliente"] = orden.cliente
+                params["ESTADO"] = orden.ESTADO
+                params["preciofinal"] = orden.preciofinal.toString()
+                return params
+            }
+        }
+
+        var requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(request)
 
     }
 
