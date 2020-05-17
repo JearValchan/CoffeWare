@@ -35,6 +35,10 @@ class ConfirmOrder : AppCompatActivity() {
 
         val clave = intent.getStringExtra("clave")
 
+        if (clave != null){
+            btn_enviarorden.text = "Actualizar orden"
+        }
+
         productosPersonalizados = SessionData.ordenActual
 
         var adaptador = AdapterConfirmar(this, productosPersonalizados)
@@ -67,8 +71,8 @@ class ConfirmOrder : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         btn_enviarorden.setOnClickListener{
             if (clave.equals("edicion",true)){
-                orden = this.intent.getParcelableExtra<Orden>("orden")!!
-                actualizarOrden()
+                val ordenEdit = this.intent.getParcelableExtra<Orden>("orden")!!
+//                actualizarOrden(ordenEdit)
                 startActivity(intentEditar)
             }else{
                 if(llenarDatos()){
@@ -121,31 +125,6 @@ class ConfirmOrder : AppCompatActivity() {
         )
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
-    }
-
-    fun actualizarOrden(){
-        var url = "http://localhost/coffeeware/wsJSONActualizarOrden.php?"
-
-        val request = object:StringRequest(
-            Method.POST, url, Response.Listener { response ->
-                Toast.makeText(this, "Orden actualizada", Toast.LENGTH_SHORT).show()
-            }, Response.ErrorListener {
-                Toast.makeText(this, "No se pudo actualizar", Toast.LENGTH_SHORT).show()
-            }
-        ){
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["ID"] = orden.ID.toString()
-                params["cliente"] = orden.cliente
-                params["ESTADO"] = orden.ESTADO
-                params["preciofinal"] = orden.preciofinal.toString()
-                return params
-            }
-        }
-
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(request)
-
     }
 
     private class AdapterConfirmar:BaseAdapter {
