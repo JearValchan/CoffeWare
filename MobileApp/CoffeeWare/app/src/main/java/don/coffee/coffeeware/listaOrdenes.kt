@@ -45,6 +45,22 @@ class listaOrdenes : AppCompatActivity() {
         SessionData.ordenActual = orden.productos!!
         var intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
+    fun validacionEliminarOrden(orden: Orden){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Importante")
+        builder.setMessage("Se eliminará la orden. ¿Desea continuar?")
+        builder.setPositiveButton("OK"){
+                dialog, which ->
+            eliminarOrden(orden)
+        }
+        builder.setNegativeButton("Cancelar"){
+                dialog, which ->
+            Toast.makeText(applicationContext, "Se canceló la eliminación. Volviendo a la pantalla principal.", Toast.LENGTH_SHORT).show()
+        }
+        builder.create()
+        builder.show()
+
+
     }
 
     fun eliminarOrden(orden: Orden){
@@ -95,7 +111,7 @@ class listaOrdenes : AppCompatActivity() {
             if (!orden.ESTADO.equals("en cola", true)) vista.btn_eliminarOrden.isGone = true
 
             vista.btn_eliminarOrden.setOnClickListener {
-                eliminarOrden(orden)
+                validacionEliminarOrden(orden)
             }
 
             vista.btn_editarOrden.setOnClickListener{
