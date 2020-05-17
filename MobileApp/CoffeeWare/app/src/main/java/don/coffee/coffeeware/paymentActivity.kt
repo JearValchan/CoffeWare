@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.BaseAdapter
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_confirm_order.list_orden
 import kotlinx.android.synthetic.main.activity_payment.*
 import kotlinx.android.synthetic.main.activity_personalizar_producto.*
@@ -30,12 +31,46 @@ class paymentActivity : AppCompatActivity() {
 
         precioTotalPago.text = obtenerPrecioFinal().toString()
 
+        txtview_cambio.text = "$ 0.0"
+
         btnCancelar.setOnClickListener{
             startActivity(intentMenu)
         }
 
         btnConfirm.setOnClickListener{
-            
+            mostrarCambio()
+        }
+    }
+
+    fun mostrarCambio(){
+
+        var novalido = false
+
+        for (x in txtview_pago.text.toString()){
+            if(!x.isDigit()){
+                Toast.makeText(this,"Ingrese numeros solamente",Toast.LENGTH_SHORT).show()
+                novalido = true
+                break
+            }
+        }
+
+        if(novalido == false) {
+
+            var total = precioTotalPago.text.toString().toDouble()
+            var pago = txtview_pago.text.toString().toDouble()
+            var cambio = pago - total
+
+            if (cambio < 0) {
+                txtview_pago.hint = ""
+                Toast.makeText(
+                    this,
+                    "No puede pagar con esa cantidad, es menor al total",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                txtview_cambio.text = cambio.toString()
+            }
+
         }
     }
 
