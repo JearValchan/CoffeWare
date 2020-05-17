@@ -1,6 +1,7 @@
 package don.coffee.coffeeware
 
 import android.app.DownloadManager
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -23,14 +24,14 @@ class agregarCategoria : AppCompatActivity() {
 
         var categoria = intent.getParcelableExtra<Categoria>("categoria")
         if (categoria != null){
-            edtId.setText(categoria.ID)
+            edtId.setText(categoria.ID.toString())
             edtNombre.setText(categoria.nombre)
-            textview_tituloCategoria.text = "Actualiar categoria"
+            textview_tituloCategoria.text = "Actualizar categoria"
             btn_categoriaAgregar.text = "Actualizar Categoria"
         }
 
         btn_categoriaAgregar.setOnClickListener {
-            if (textview_tituloCategoria.text.toString().equals("Actualizar producto", true)){
+            if (textview_tituloCategoria.text.toString().equals("Actualizar categoria", true)){
                 actualizarCategoria()
             } else {
                 agregarCategoria()
@@ -41,7 +42,7 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     private fun actualizarCategoria() {
-        val url = "http://192.168.0.13:80/coffeeware/wsJSONActualizaCategoria.php?"
+        val url = "http://192.168.1.65:80/coffeeware/wsJSONActualizaCategoria.php?"
 
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
@@ -51,6 +52,10 @@ class agregarCategoria : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "NO SE HA PODIDO ACTUALIZAR", Toast.LENGTH_SHORT).show()
             }
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+
         }, Response.ErrorListener {
             Toast.makeText(this, "No se ha podido conectar a la Base de datos",Toast.LENGTH_SHORT).show()
         }){

@@ -49,7 +49,7 @@ class listaOrdenes : AppCompatActivity() {
 
     fun eliminarOrden(orden: Orden){
         var id = orden.ID
-        var urlEliminar = "http://192.168.0.13:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
+        var urlEliminar = "http://192.168.1.65:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
 
         val eliminar = StringRequest(
                 Request.Method.GET,
