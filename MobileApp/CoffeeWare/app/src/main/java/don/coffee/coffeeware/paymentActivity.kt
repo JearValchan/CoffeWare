@@ -24,9 +24,9 @@ class paymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        val productoPersonalizado = intent.getParcelableExtra<ProductoPersonalizado>("productoPersonalizado")
+        val orden = intent.getParcelableExtra<Orden>("orden")
 
-        precioTotal.setText(""+(productoPersonalizado.preciobase+productoPersonalizado.precioExtra))
+        productosPersonalizados = orden.productos!!
 
         var adaptador = paymentActivity.paymentAdaptor(this, productosPersonalizados, ingredientesBase, ingredientesExtra
         )
@@ -50,7 +50,6 @@ class paymentActivity : AppCompatActivity() {
     }
 
     private class paymentAdaptor:BaseAdapter{
-
 
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()

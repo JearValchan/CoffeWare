@@ -56,6 +56,36 @@
                 android:textColor="@color/deepGrey"
                 android:layout_gravity="start"
                 android:fontFamily="monospace"
+                android:text="Estado:" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:layout_gravity="start"
+                android:textSize="18dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/deepGrey"
+                android:text="En cola"
+                android:maxLength="15"
+                android:id="@+id/textview_estadoOrden" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/deepGrey"
+                android:layout_gravity="start"
+                android:fontFamily="monospace"
                 android:text="Orden de:" />
 
             <TextView
@@ -110,7 +140,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_weight="25"
-        android:gravity="end">
+        android:gravity="center_vertical">
 
         <ImageButton
             android:layout_width="wrap_content"

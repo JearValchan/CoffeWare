@@ -15,14 +15,9 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_agregar_categoria.*
-import kotlinx.android.synthetic.main.activity_agregar_categoria.edtId
-import kotlinx.android.synthetic.main.activity_agregar_categoria.edtNombre
-import kotlinx.android.synthetic.main.activity_agregar_producto.*
 import kotlinx.android.synthetic.main.activity_confirm_order.*
+import kotlinx.android.synthetic.main.activity_confirm_order.precioTotal
 import kotlinx.android.synthetic.main.producto_orden.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
 import org.json.JSONObject
@@ -33,7 +28,7 @@ class ConfirmOrder : AppCompatActivity() {
     var ingredientesBase = ArrayList<IngredienteBase>()
     var ingredientesExtra = ArrayList<IngredienteExtra>()
 
-    var orden: Orden = Orden(10000,"no cliente","pendiente",0.0)
+    var orden: Orden = Orden(10000,"no cliente","pendiente",0.0, null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,11 +80,12 @@ class ConfirmOrder : AppCompatActivity() {
             return false
         }else{
         orden.cliente = edit_consumidor.text.toString()
-        orden.ESTADO = "Pendiente"
+        orden.ESTADO = "En cola"
         SessionData.ordenes.add(orden)
         val rnds = (0..100000).random()
         orden.ID = rnds
         orden.preciofinal = obtenerPrecioFinal()
+        orden.productos = SessionData.ordenActual
         }
         return true
     }
@@ -107,7 +103,7 @@ class ConfirmOrder : AppCompatActivity() {
     fun enviarOrden(){
         Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
-        var url: String = "http://192.168.1.74/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        var url: String = "http://192.168.0.13/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {

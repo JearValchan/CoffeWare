@@ -1,6 +1,7 @@
 package don.coffee.coffeeware
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
+import androidx.core.view.isGone
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -27,82 +29,50 @@ import don.coffee.coffeeware.Orden as Orden
 
 class listaOrdenes : AppCompatActivity() {
 
-    var ordenes = ArrayList<Orden>()
+    var ordenes = SessionData.ordenes
     var adaptador: adaptadorOrdenes? = null
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_ordenes)
 
-
         adaptador = adaptadorOrdenes(this,ordenes)
         listview_ordenes.adapter = adaptador
-
-        cargarOrdenes("http://192.168.1.74:80/coffeeware/wsJSONConsultarListaOrdenes.php")
-
     }
 
-
-    fun editarOrden(){
-
+    fun editarOrden(orden: Orden){
+        SessionData.ordenActual = orden.productos!!
+        var intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
     }
 
-    fun eliminarOrden(view: View){
-
-
-        var orden =  adaptador!!.getItem(view.verticalScrollbarPosition) as Orden
+    fun eliminarOrden(orden: Orden){
         var id = orden.ID
-        var estado = orden.ESTADO
-        var urlEliminar = "http://192.168.1.74:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
+        var urlEliminar = "http://192.168.0.13:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
 
-        if(estado =="Pendiente") {
-
-            val eliminar = JsonObjectRequest(
+        val eliminar = JsonObjectRequest(
                 Request.Method.POST,
                 urlEliminar,
                 null,
                 Response.Listener<JSONObject?> {
                     Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
-                },
-                Response.ErrorListener { error ->
                     ordenes.remove(orden)
                     adaptador!!.notifyDataSetChanged()
-                    Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
-
+                },
+                Response.ErrorListener { error ->
+                    Toast.makeText(this, "Error al conectar con la base de datos", Toast.LENGTH_LONG).show()
                 })
             var requestQueue = Volley.newRequestQueue(this)
             requestQueue.add(eliminar)
-        }else{
-            Toast.makeText(this, "No se puede eliminar la orden", Toast.LENGTH_LONG).show()
-        }
-
-
-    }
-    fun cargarOrdenes(URL:String){
-
-        val jsonobject = JsonObjectRequest(Request.Method.GET,URL,null, Response.Listener { response ->
-
-            var JSON = response.getJSONArray("orden")
-            val gson = Gson()
-            for(i in 0..(JSON.length()-1)){
-                var lecturaOrdenes = JSON[i].toString()
-
-                var ordenTemp = gson.fromJson(lecturaOrdenes,Orden::class.java)
-                ordenes.add(ordenTemp)
-                adaptador!!.notifyDataSetChanged()
-
-            }
-
-        },Response.ErrorListener { error ->
-            Toast.makeText(this,error.toString(), Toast.LENGTH_LONG).show()
-        })
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(jsonobject)
     }
 
-    class adaptadorOrdenes :BaseAdapter{
+    fun pagarOrden(orden: Orden){
+        var intent = Intent(applicationContext, paymentActivity::class.java)
+        intent.putExtra("orden", orden)
+        startActivity(intent)
+    }
+
+    inner class adaptadorOrdenes :BaseAdapter{
         var ordenes =ArrayList<Orden>()
         var contexto: Context? = null
 
@@ -111,17 +81,29 @@ class listaOrdenes : AppCompatActivity() {
             this.contexto = contexto
         }
 
-
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
            var orden = ordenes[position]
             var inflater = contexto!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var vista = inflater.inflate(R.layout.viewlistaordenes,null)
 
-            vista.textview_nombreCliente.setText(orden.cliente)
-            vista.textview_precioFinal.setText(orden.preciofinal.toString())
-            vista.textview_estado.setText(orden.ESTADO.toString())
-            vista.textview_id.setText(orden.ID.toString())
+            vista.textview_nombreCliente.text = orden.cliente
+            vista.textview_costoOrden.text = orden.preciofinal.toString()
+            vista.textview_estadoOrden.text = orden.ESTADO
+            vista.textview_idOrden.text = orden.ID.toString()
 
+            if (orden.ESTADO.equals("en cola", true)) vista.btn_eliminarOrden.isGone = true
+
+            vista.btn_eliminarOrden.setOnClickListener {
+                eliminarOrden(orden)
+            }
+
+            vista.btn_editarOrden.setOnClickListener{
+                editarOrden(orden)
+            }
+
+            vista.btn_pagarOrden.setOnClickListener {
+                pagarOrden(orden)
+            }
 
             return vista
         }
@@ -139,7 +121,5 @@ class listaOrdenes : AppCompatActivity() {
         }
 
     }
-
-
 
 }
