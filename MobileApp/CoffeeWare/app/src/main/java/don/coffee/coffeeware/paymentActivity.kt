@@ -29,7 +29,7 @@ class paymentActivity : AppCompatActivity() {
 
         var intentMenu = Intent(this, MainActivity::class.java)
 
-        precioTotalPago.text = obtenerPrecioFinal().toString()
+        precioTotalPago.text = orden.preciofinal.toString()
 
         txtview_cambio.text = "$ 0.0"
 
@@ -73,16 +73,7 @@ class paymentActivity : AppCompatActivity() {
 
         }
     }
-
-    fun obtenerPrecioFinal(): Double{
-        var total: Double = 0.0
-
-        for(x in SessionData.ordenActual){
-            total += x.preciobase+x.precioExtra
-        }
-        return total
-    }
-
+    
     private class paymentAdaptor:BaseAdapter{
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()
