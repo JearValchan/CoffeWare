@@ -67,7 +67,7 @@ class agregarProducto : AppCompatActivity() {
 
     fun actualizarProducto(){
 
-        var url: String="http://192.168.0.13:80/coffeeware/wsJSONActualizarProducto.php"
+        var url: String="http://192.168.1.78:80/coffeeware/wsJSONActualizarProducto.php"
         val req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().trim().equals("actualiza", true)){
                 Toast.makeText(applicationContext, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
