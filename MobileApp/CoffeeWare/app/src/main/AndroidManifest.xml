@@ -17,6 +17,7 @@
         <activity android:name=".manejarCategoria" />
         <activity android:name=".listaProductos" />
         <activity android:name=".administrarProducto" />
+        <activity android:name=".EditOrder" />
         <activity android:name=".agregarProducto" />
         <activity android:name=".paymentActivity" />
         <activity android:name=".listaOrdenes" />

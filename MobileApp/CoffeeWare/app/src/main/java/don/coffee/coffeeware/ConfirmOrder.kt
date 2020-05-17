@@ -35,7 +35,6 @@ class ConfirmOrder : AppCompatActivity() {
         productosPersonalizados = SessionData.ordenActual
 
         var adaptador = AdapterConfirmar(this, productosPersonalizados)
-
         list_orden.adapter = adaptador
 
         var intentMenu = Intent(this, MainActivity::class.java)
@@ -46,18 +45,28 @@ class ConfirmOrder : AppCompatActivity() {
             startActivity(intentMenu)
         }
 
+        var intentEditar = Intent(this, EditOrder::class.java)
+        btn_editarorden.setOnClickListener(){
+            startActivity(intentEditar)
+        }
+
         cancelBtn.setOnClickListener{
             productosPersonalizados.clear()
             adaptador!!.notifyDataSetChanged()
+            startActivity(intentMenu)
+            Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
         }
 
         list_orden.setOnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
             if (list_ingredients.visibility == VISIBLE) list_ingredients.visibility = GONE else list_ingredients.visibility = VISIBLE
         }
 
+        val intent = Intent(this, MainActivity::class.java)
         btn_enviarorden.setOnClickListener{
             if(llenarDatos()){
                 enviarOrden()
+                SessionData.ordenActual.clear()
+                startActivity(intent)
             }else{
                 Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
             }
