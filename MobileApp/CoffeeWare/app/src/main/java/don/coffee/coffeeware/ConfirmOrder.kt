@@ -25,8 +25,6 @@ import org.json.JSONObject
 class ConfirmOrder : AppCompatActivity() {
 
     var productosPersonalizados = ArrayList<ProductoPersonalizado>()
-    var ingredientesBase = ArrayList<IngredienteBase>()
-    var ingredientesExtra = ArrayList<IngredienteExtra>()
 
     var orden: Orden = Orden(10000,"no cliente","pendiente",0.0, null)
 
@@ -36,13 +34,6 @@ class ConfirmOrder : AppCompatActivity() {
 
         productosPersonalizados = SessionData.ordenActual
 
-        /*if(productosPersonalizados.isNullOrEmpty()){
-            Toast.makeText(this,"NULL OR EMPTY",Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this,productosPersonalizados.size,Toast.LENGTH_SHORT).show()
-        }*/
-
-        //var adaptador = AdapterConfirmar(this, productosPersonalizados, ingredientesBase, ingredientesExtra)
         var adaptador = AdapterConfirmar(this, productosPersonalizados)
 
         list_orden.adapter = adaptador
@@ -70,7 +61,6 @@ class ConfirmOrder : AppCompatActivity() {
             }else{
                 Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
@@ -96,7 +86,6 @@ class ConfirmOrder : AppCompatActivity() {
         for(x in SessionData.ordenActual){
             total += x.preciobase+x.precioExtra
         }
-
         return total
     }
 
@@ -122,27 +111,7 @@ class ConfirmOrder : AppCompatActivity() {
 
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()
-        //var ingredientesBase = ArrayList<IngredienteBase>()
-        //var ingredientesExtra = ArrayList<IngredienteExtra>()
 
-        /*constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<IngredienteBase>, ingredientesExtra: ArrayList<IngredienteExtra>) {
-            this.context = context
-            this.productosPersonalizado = productosPersonalizado
-            this.ingredientesBase = ingredientesBase
-            this.ingredientesExtra = ingredientesExtra
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var productoPersonalizado = productosPersonalizado[position]
-            var inflator = LayoutInflater.from(context)
-            var vista = inflator.inflate(R.layout.activity_confirm_order, null)
-            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBasePersonalizado).toString())
-
-            return vista
-        }*/
-
-        // -------------------------------------------------------------------------------------------------------------------
         constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>) {
             this.context = context
             this.productosPersonalizado = productosPersonalizado
@@ -158,7 +127,6 @@ class ConfirmOrder : AppCompatActivity() {
 
             return vista
         }
-        // -------------------------------------------------------------------------------------------------------------------
 
         override fun getItem(position: Int): Any {
             return productosPersonalizado[position]

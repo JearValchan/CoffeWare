@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_lista_ordenes.view.*
 import kotlinx.android.synthetic.main.viewlistaordenes.*
 import kotlinx.android.synthetic.main.viewlistaordenes.view.*
 import org.json.JSONObject
+import kotlin.math.log
 import don.coffee.coffeeware.Orden as Orden
 
 class listaOrdenes : AppCompatActivity() {
@@ -50,17 +51,17 @@ class listaOrdenes : AppCompatActivity() {
         var id = orden.ID
         var urlEliminar = "http://192.168.0.13:80/coffeeware/wsJSONEliminarOrden.php?ID=" + id
 
-        val eliminar = JsonObjectRequest(
-                Request.Method.POST,
+        val eliminar = StringRequest(
+                Request.Method.GET,
                 urlEliminar,
-                null,
-                Response.Listener<JSONObject?> {
+                Response.Listener<String> {
                     Toast.makeText(this, "Orden Eliminada", Toast.LENGTH_LONG).show()
                     ordenes.remove(orden)
                     adaptador!!.notifyDataSetChanged()
                 },
                 Response.ErrorListener { error ->
-                    Toast.makeText(this, "Error al conectar con la base de datos", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Error al acceder a la base de datos", Toast.LENGTH_LONG).show()
+
                 })
             var requestQueue = Volley.newRequestQueue(this)
             requestQueue.add(eliminar)
@@ -91,7 +92,7 @@ class listaOrdenes : AppCompatActivity() {
             vista.textview_estadoOrden.text = orden.ESTADO
             vista.textview_idOrden.text = orden.ID.toString()
 
-            if (orden.ESTADO.equals("en cola", true)) vista.btn_eliminarOrden.isGone = true
+            if (!orden.ESTADO.equals("en cola", true)) vista.btn_eliminarOrden.isGone = true
 
             vista.btn_eliminarOrden.setOnClickListener {
                 eliminarOrden(orden)

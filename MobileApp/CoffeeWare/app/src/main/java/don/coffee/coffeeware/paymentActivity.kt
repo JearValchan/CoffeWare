@@ -11,14 +11,11 @@ import android.widget.AdapterView
 import android.widget.BaseAdapter
 import kotlinx.android.synthetic.main.activity_confirm_order.list_orden
 import kotlinx.android.synthetic.main.activity_payment.*
+import kotlinx.android.synthetic.main.activity_personalizar_producto.*
 import kotlinx.android.synthetic.main.producto_orden.*
 import kotlinx.android.synthetic.main.producto_orden.view.*
 
 class paymentActivity : AppCompatActivity() {
-
-    var productosPersonalizados = ArrayList<ProductoPersonalizado>()
-    var ingredientesBase = ArrayList<IngredienteBase>()
-    var ingredientesExtra = ArrayList<IngredienteExtra>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +23,12 @@ class paymentActivity : AppCompatActivity() {
 
         val orden = intent.getParcelableExtra<Orden>("orden")
 
-        productosPersonalizados = orden.productos!!
-
-        var adaptador = paymentActivity.paymentAdaptor(this, productosPersonalizados, ingredientesBase, ingredientesExtra
-        )
+        var adaptador = paymentAdaptor(this, orden.productos!!)
         list_orden.adapter = adaptador
 
         var intentMenu = Intent(this, MainActivity::class.java)
+
+        precioTotalPago.text = obtenerPrecioFinal().toString()
 
         btnCancelar.setOnClickListener{
             startActivity(intentMenu)
@@ -41,34 +37,32 @@ class paymentActivity : AppCompatActivity() {
         btnConfirm.setOnClickListener{
             
         }
+    }
 
-        list_orden.setOnItemClickListener{ adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-            if (list_ingredients.visibility == View.VISIBLE) list_ingredients.visibility =
-                View.GONE else list_ingredients.visibility = View.VISIBLE
+    fun obtenerPrecioFinal(): Double{
+        var total: Double = 0.0
+
+        for(x in SessionData.ordenActual){
+            total += x.preciobase+x.precioExtra
         }
-
+        return total
     }
 
     private class paymentAdaptor:BaseAdapter{
-
         var context: Context? = null
         var productosPersonalizado = ArrayList<ProductoPersonalizado>()
-        var ingredientesBase = ArrayList<IngredienteBase>()
-        var ingredientesExtra = ArrayList<IngredienteExtra>()
 
-        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>, ingredientesBase: ArrayList<IngredienteBase>, ingredientesExtra: ArrayList<IngredienteExtra>) {
+        constructor(context: Context, productosPersonalizado: ArrayList<ProductoPersonalizado>) {
             this.context = context
             this.productosPersonalizado = productosPersonalizado
-            this.ingredientesBase = ingredientesBase
-            this.ingredientesExtra = ingredientesExtra
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var productoPersonalizado = productosPersonalizado[position]
             var inflator = LayoutInflater.from(context)
-            var vista = inflator.inflate(R.layout.activity_confirm_order, null)
-            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText((productoPersonalizado.precioExtra + productoPersonalizado.precioBasePersonalizado).toString())
+            var vista = inflator.inflate(R.layout.producto_orden, null)
+            vista.product_name.text = productoPersonalizado.nombrePersonalizado
+            vista.precio.text = (productoPersonalizado.precioExtra + productoPersonalizado.preciobase).toString()
 
             return vista
         }
