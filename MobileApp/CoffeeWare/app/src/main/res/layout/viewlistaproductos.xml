@@ -58,7 +58,6 @@
                     android:layout_marginHorizontal="5dp"
                     android:layout_gravity="end"
                     android:background="@android:color/transparent"
-                    android:onClick="editarProducto"
                     android:id="@+id/btn_editarProducto"/>
 
                 <ImageButton
