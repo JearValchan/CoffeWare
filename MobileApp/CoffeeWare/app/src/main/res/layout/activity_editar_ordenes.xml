@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirmation"
+        android:text="@string/editarOrden"
         android:textSize="22sp"
         android:textColor="@color/deepGrey"
         android:gravity="center"
@@ -25,10 +25,9 @@
         android:paddingHorizontal="5dp">
 
         <ListView
-
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:id="@+id/list_orden" />
+            android:id="@+id/list_ordenEdit" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -78,7 +77,7 @@
             android:text="@string/consumidor"
             android:textColor="@color/deepGrey"
             />
-        
+
         <EditText
             android:id="@+id/edit_consumidor"
             android:layout_width="match_parent"
@@ -89,33 +88,25 @@
             android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingHorizontal="25dp"
-        android:layout_marginTop="45dp">
-        
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:id="@+id/btn_enviarorden"
-            android:textSize="11sp"
-            android:background="@drawable/round_button_green"
-            android:textColor="@color/defaultText"
-            android:text="@string/enviarOrden"
-            android:layout_marginRight="25dp"/>
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center_horizontal">
+
 
         <Button
-            android:id="@+id/btn_editarorden"
+            android:id="@+id/btn_guardarcambios"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:textSize="11sp"
             android:background="@drawable/round_button_green"
             android:backgroundTint="#edff0f"
+            android:text="@string/guardarCambios"
             android:textColor="@color/defaultText"
-            android:text="@string/editarOrden"/>
+            android:textSize="11sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -127,7 +118,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <Button
                 android:id="@+id/menuBtn"
@@ -136,16 +128,17 @@
                 android:textSize="11sp"
                 android:textColor="@color/defaultText"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/ic_arrow_back_black_24dp"
+                android:background="@drawable/ic_add_circle_outline_black_24dp"
+                android:layout_gravity="center_vertical"
                 />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:layout_width="86dp"
+                android:layout_height="39dp"
                 android:fontFamily="monospace"
+                android:text="@string/añadirProductos"
                 android:textColor="@color/deepGrey"
-                android:text="@string/volverMenu"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -172,7 +165,6 @@
                 android:textAlignment="textEnd"
                 android:textColor="@color/deepGrey"
                 android:fontFamily="monospace"
-
                 android:text="@string/cancelarOrden"/>
         </LinearLayout>
     </LinearLayout>
