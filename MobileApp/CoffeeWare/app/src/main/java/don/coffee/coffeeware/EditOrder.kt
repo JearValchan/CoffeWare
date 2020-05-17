@@ -52,7 +52,10 @@ class EditOrder : AppCompatActivity() {
                 actualizarOrden(orden)
                 startActivity(intentMain)
                 for (ord in SessionData.ordenes){
-                    if (ord.ID == orden.ID) ord.preciofinal = orden!!.preciofinal
+                    if (ord.ID == orden.ID){
+                        ord.preciofinal = orden!!.preciofinal
+                        ord.productos = orden.productos
+                    }
                 }
             } else {
                 var intent = Intent(this, ConfirmOrder::class.java)
