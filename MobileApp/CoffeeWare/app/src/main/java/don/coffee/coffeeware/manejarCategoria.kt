@@ -25,16 +25,19 @@ class manejarCategoria : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manejar_categoria)
-
         adaptador = adaptadorCategoria(this, SessionData.listaCategoria)
         listview_categorias.adapter = adaptador
         adaptador!!.notifyDataSetChanged()
 
+        btn_agregarCategoria.setOnClickListener{
+            val intent = Intent(this, agregarCategoria::class.java)
+            startActivity(intent)
+        }
     }
 
     fun eliminarCategoria(categoria: Categoria){
 
-        val url = "http://192.168.1.78:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
             if (response.trim().equals("elimina", true)){
