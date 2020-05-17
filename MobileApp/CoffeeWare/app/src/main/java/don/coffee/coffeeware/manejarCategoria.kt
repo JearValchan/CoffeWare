@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_lista_ordenes.*
 import kotlinx.android.synthetic.main.activity_manejar_categoria.*
+import kotlinx.android.synthetic.main.viewcategoria.*
 import kotlinx.android.synthetic.main.viewcategoria.view.*
 
 class manejarCategoria : AppCompatActivity() {
@@ -28,12 +29,6 @@ class manejarCategoria : AppCompatActivity() {
         adaptador = adaptadorCategoria(this, SessionData.listaCategoria)
         listview_categorias.adapter = adaptador
         adaptador!!.notifyDataSetChanged()
-
-        btn_agregarCategoria.setOnClickListener {
-
-            val intent = Intent(this,agregarCategoria::class.java)
-            startActivity(intent)
-        }
 
     }
 
