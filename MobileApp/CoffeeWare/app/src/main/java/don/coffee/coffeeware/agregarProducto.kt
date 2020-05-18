@@ -46,6 +46,8 @@ class agregarProducto : AppCompatActivity() {
             }else{
                 if(comprobación()){
                     agregarProducto()
+                    var intent = Intent(this,listaProductos::class.java)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(applicationContext, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
                 }
@@ -75,15 +77,15 @@ class agregarProducto : AppCompatActivity() {
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
                 Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
+                val producto = Producto(edtId.text.toString().toInt(), edtTipo.text.toString(),edtNombre.text.toString(),edtPrecioBase.toString().toDouble(),SessionData.listaCategoria.first {
+                    it.ID == edtCategoria.text.toString().toInt()
+                })
+                SessionData.listaProductos.add(producto)
                 edtId.setText("")
                 edtTipo.setText("")
                 edtNombre.setText("")
                 edtPrecioBase.setText("")
                 edtCategoria.setText("")
-
-                var intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
-
             },
             Response.ErrorListener {
                 Toast.makeText(applicationContext, it.toString(), Toast.LENGTH_SHORT).show()

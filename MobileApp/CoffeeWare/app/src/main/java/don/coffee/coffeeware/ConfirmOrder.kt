@@ -88,8 +88,6 @@ class ConfirmOrder : AppCompatActivity() {
 //                actualizarOrden(ordenEdit)
                 startActivity(intentEditar)
             }else{
-
-
                 if(llenarDatos() && !(SessionData.ordenActual.isEmpty())){
                     enviarOrden()
                     SessionData.ordenActual = ArrayList()
