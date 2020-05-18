@@ -16,13 +16,14 @@
         android:id="@+id/textview_nombre"
         android:textAlignment="center"
         android:gravity="center"
-        android:text="Producto"/>
+        android:text="Producto"
+        android:background="@color/colorFondo"/>
 
     <ImageButton
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/btn_producto"
-        android:src="@drawable/image_icon"
-        android:background="@color/lightGrey"/>
+        android:src="@drawable/vasito"
+        android:background="@color/colorFondo"/>
 
 </LinearLayout>

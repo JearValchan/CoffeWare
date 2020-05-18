@@ -62,9 +62,17 @@ class PersonalizarProductoActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else {
-                SessionData.ordenActual.add(productoPersonalizado)
-                val intent = Intent(this, EditOrder::class.java)
-                startActivity(intent)
+                val orden = intent.getParcelableExtra<Orden>("orden")
+                if (orden != null){
+                    orden.preciofinal = productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra
+                    val intent = Intent(this, EditOrder::class.java)
+                    intent.putExtra("ordenEdit", orden)
+                    startActivity(intent)
+                }else{
+                    SessionData.ordenActual.add(productoPersonalizado)
+                    val intent = Intent(this, EditOrder::class.java)
+                    startActivity(intent)
+                }
             }
         }
 

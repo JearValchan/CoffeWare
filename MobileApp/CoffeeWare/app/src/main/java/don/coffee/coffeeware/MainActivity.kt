@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -34,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     var adaptador: AdaptadorProductos? = null
     var categoriaActual = 1
 
-
     //Auxiliares
     var ing = IngredienteBase("Pastel")
     var porcionIngre = PorcionIngredienteBase(2, ing)
@@ -46,6 +46,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Personalizando la action bar
+        var actionBar = supportActionBar
+
+        if (actionBar != null) {
+            actionBar.setIcon(R.drawable.logofinal)
+        }
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true)
+        }
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
         var producto = Producto(1, "Hamburguesa", "Suiza", 55.0, categoria = Categoria("Alimento", 1), image = 1, descripcion = "Ta rica", ingredientesBase = ArrayList(), ingredientesExtra = ArrayList())
 
         adaptador = AdaptadorProductos(this, productosCategoriaActual)
@@ -54,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
         if (SessionData.listaCategoria.isEmpty()){
-            cargarCategorias("http://192.168.1.78:80/coffeeware/wsJSONConsultarListaCategorias.php")
+            cargarCategorias("http://192.168.1.65:80/coffeeware/wsJSONConsultarListaCategorias.php")
         }else{
             mostrarCategoriaActual(categoriaActual)
             actualizarNumeroProductos()
@@ -167,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
             if(!SessionData.listaCategoria.isNullOrEmpty()){
                 categoriaActual = SessionData.listaCategoria[0].ID
-                cargarAlimentos("http://192.168.1.78/coffeeware/wsJSONConsultarListaProductos.php")
+                cargarAlimentos("http://192.168.1.65/coffeeware/wsJSONConsultarListaProductos.php")
             }
 
             },Response.ErrorListener { error ->
@@ -270,7 +283,7 @@ class MainActivity : AppCompatActivity() {
             }else{
                 vista.textview_nombre.text = producto.nombre
             }
-            vista.btn_producto.setImageResource(producto.image)
+            vista.btn_producto.setImageResource(R.drawable.vasito)
            // vista.textview_descripcion.text = producto.descripcion
 
             vista.btn_producto.setOnClickListener {

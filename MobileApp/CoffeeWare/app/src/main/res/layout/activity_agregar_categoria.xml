@@ -23,21 +23,56 @@
         android:orientation="vertical"
         android:layout_marginVertical="15dp">
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID de la categoria"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:id="@+id/edtId"/>
-        <EditText
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ID categoria:"
+                android:layout_weight="1.5"
+                android:textAlignment="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="198237"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:textAlignment="center"
+                android:id="@+id/edtId"
+                android:background="@drawable/boton_redondo_blanco"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre de la categoria"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="ID categoria:"
+                android:layout_weight="1.5"
+                android:textAlignment="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Postres"
             android:layout_weight="1"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="20dp"
-            android:id="@+id/edtNombre"/>
+            android:id="@+id/edtNombre"
+            android:textAlignment="center"
+            android:background="@drawable/boton_redondo_blanco"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -46,11 +81,13 @@
         android:orientation="vertical">
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Agregar Categoria"
-            android:layout_marginHorizontal="5dp"
+            android:layout_marginHorizontal="7dp"
+            android:paddingHorizontal="10dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:background="@drawable/round_button_green"
             android:id="@+id/btn_categoriaAgregar"/>
     </LinearLayout>

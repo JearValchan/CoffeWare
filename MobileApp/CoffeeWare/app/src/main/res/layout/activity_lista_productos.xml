@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".listaProductos">
+    tools:context=".listaProductos"
+    android:background="@color/colorFondo">
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -19,19 +20,18 @@
             android:layout_gravity="center"
             android:text="Manejar Producto"
             android:textColor="@color/deepGrey"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             app:fontFamily="monospace" />
 
-
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Agregar Producto"
-            android:layout_marginVertical="5dp"
-            android:layout_marginHorizontal="5dp"
-            android:backgroundTint="@color/lightGreen"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/round_button_green"
             android:id="@+id/btn_agregarProducto"/>
 </LinearLayout>
 
@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="15dp">
+        android:layout_marginVertical="20dp">
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

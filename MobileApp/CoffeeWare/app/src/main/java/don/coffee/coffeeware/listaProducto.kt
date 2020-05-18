@@ -26,8 +26,6 @@ class listaProductos : AppCompatActivity() {
     var adaptador: adaptadorProducto? = null
     var productos = SessionData.listaProductos
 
-
-
     //Auxiliares
     var ing = IngredienteBase("Pastel")
     var porcionIngre = PorcionIngredienteBase(2, ing)

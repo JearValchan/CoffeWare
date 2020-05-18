@@ -33,7 +33,24 @@ class ConfirmOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_order)
 
+        //Personalizando la action bar
+        var actionBar = supportActionBar
+
+        if (actionBar != null) {
+            actionBar.setIcon(R.drawable.logofinal)
+        }
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true)
+        }
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
         val clave = intent.getStringExtra("clave")
+
+        if (clave != null){
+            btn_enviarorden.text = "Actualizar orden"
+        }
 
         productosPersonalizados = SessionData.ordenActual
 
@@ -67,8 +84,8 @@ class ConfirmOrder : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         btn_enviarorden.setOnClickListener{
             if (clave.equals("edicion",true)){
-                orden = this.intent.getParcelableExtra<Orden>("orden")!!
-                actualizarOrden()
+                val ordenEdit = this.intent.getParcelableExtra<Orden>("orden")!!
+//                actualizarOrden(ordenEdit)
                 startActivity(intentEditar)
             }else{
                 if(llenarDatos()){
@@ -109,7 +126,7 @@ class ConfirmOrder : AppCompatActivity() {
     fun enviarOrden(){
         Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
-        var url: String = "http://192.168.0.13/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        var url: String = "http://192.168.1.65/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
@@ -121,31 +138,6 @@ class ConfirmOrder : AppCompatActivity() {
         )
         var requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(jsonobject)
-    }
-
-    fun actualizarOrden(){
-        var url = "http://localhost/coffeeware/wsJSONActualizarOrden.php?"
-
-        val request = object:StringRequest(
-            Method.POST, url, Response.Listener { response ->
-                Toast.makeText(this, "Orden actualizada", Toast.LENGTH_SHORT).show()
-            }, Response.ErrorListener {
-                Toast.makeText(this, "No se pudo actualizar", Toast.LENGTH_SHORT).show()
-            }
-        ){
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["ID"] = orden.ID.toString()
-                params["cliente"] = orden.cliente
-                params["ESTADO"] = orden.ESTADO
-                params["preciofinal"] = orden.preciofinal.toString()
-                return params
-            }
-        }
-
-        var requestQueue = Volley.newRequestQueue(this)
-        requestQueue.add(request)
-
     }
 
     private class AdapterConfirmar:BaseAdapter {
