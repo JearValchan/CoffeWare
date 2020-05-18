@@ -11,8 +11,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_agregar_categoria.*
-import kotlinx.android.synthetic.main.activity_agregar_categoria.edtId
-import kotlinx.android.synthetic.main.activity_agregar_categoria.edtNombre
 import kotlinx.android.synthetic.main.activity_agregar_producto.*
 import kotlinx.android.synthetic.main.activity_manejar_categoria.*
 
@@ -24,25 +22,41 @@ class agregarCategoria : AppCompatActivity() {
 
         var categoria = intent.getParcelableExtra<Categoria>("categoria")
         if (categoria != null){
-            edtId.setText(categoria.ID.toString())
-            edtNombre.setText(categoria.nombre)
+            edtIdCat.setText(categoria.ID.toString())
+            edtNombreCat.setText(categoria.nombre)
             textview_tituloCategoria.text = "Actualizar categoria"
             btn_categoriaAgregar.text = "Actualizar Categoria"
         }
 
         btn_categoriaAgregar.setOnClickListener {
             if (textview_tituloCategoria.text.toString().equals("Actualizar categoria", true)){
-                actualizarCategoria()
+                if(comprobar()){
+                    actualizarCategoria()
+                }else{
+                    Toast.makeText(this, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
+                }
+
             } else {
-                agregarCategoria()
+                if(comprobar()){
+                    agregarCategoria()
+                }else{
+                    Toast.makeText(this, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
+                }
             }
-
         }
-
+    }
+    fun comprobar():Boolean{
+        var id = edtIdCat.text.toString()
+        var nombre = edtNombreCat.text.toString()
+        if(id.equals("") || nombre.equals("")){
+            return false
+        }
+        return true
     }
 
+
     private fun actualizarCategoria() {
-        val url = "http://192.168.0.13:80/coffeeware/wsJSONActualizaCategoria.php?"
+        val url = "http://192.168.1.74:80/coffeeware/wsJSONActualizaCategoria.php?"
 
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
@@ -72,11 +86,11 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     fun agregarCategoria(){
-        val url = "http://192.168.0.13:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtId.text.toString()+"&nombre="+edtNombre.text.toString()
+        val url = "http://192.168.1.74:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtIdCat.text.toString()+"&nombre="+edtNombreCat.text.toString()
 
         val agg = JsonObjectRequest(Request.Method.POST,url,null, Response.Listener { response ->
             Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
-            edtId.setText("")
+            edtIdCat.setText("")
             edtNombre.setText("")
         },Response.ErrorListener { error ->
             Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_SHORT).show()
