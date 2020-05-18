@@ -42,7 +42,7 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     private fun actualizarCategoria() {
-        val url = "http://192.168.1.65:80/coffeeware/wsJSONActualizaCategoria.php?"
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONActualizaCategoria.php?"
 
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
@@ -72,7 +72,7 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     fun agregarCategoria(){
-        val url = "http://192.168.1.65:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtId.text.toString()+"&nombre="+edtNombre.text.toString()
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtId.text.toString()+"&nombre="+edtNombre.text.toString()
 
         val agg = JsonObjectRequest(Request.Method.POST,url,null, Response.Listener { response ->
             Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
