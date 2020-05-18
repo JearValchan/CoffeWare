@@ -37,6 +37,11 @@ class agregarCategoria : AppCompatActivity() {
             if (textview_tituloCategoria.text.toString().equals("Actualizar categoria", true)){
                 if(comprobar()){
                     actualizarCategoria()
+                    for (cat in SessionData.listaCategoria){
+                        if (cat.ID == edtIdCat.text.toString().toInt()){
+                            cat.nombre = edtNombreCat.text.toString()
+                        }
+                    }
                 }else{
                     Toast.makeText(this, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
                 }
@@ -61,13 +66,13 @@ class agregarCategoria : AppCompatActivity() {
 
 
     private fun actualizarCategoria() {
-        val url = "http://192.168.1.74:80/coffeeware/wsJSONActualizaCategoria.php?"
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONActualizaCategoria.php?"
 
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
                 Toast.makeText(this, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
-                edtId.setText("")
-                edtNombre.setText("")
+                edtIdCat.setText("")
+                edtNombreCat.setText("")
             } else {
                 Toast.makeText(this, "NO SE HA PODIDO ACTUALIZAR", Toast.LENGTH_SHORT).show()
             }
@@ -80,8 +85,8 @@ class agregarCategoria : AppCompatActivity() {
         }){
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
-                params["ID"] = edtId.text.toString()
-                params["nombre"] = edtNombre.text.toString()
+                params["ID"] = edtIdCat.text.toString()
+                params["nombre"] = edtNombreCat.text.toString()
                 return params
             }
         }
@@ -91,7 +96,7 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     fun agregarCategoria(){
-        val url = "http://192.168.1.74:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtIdCat.text.toString()+"&nombre="+edtNombreCat.text.toString()
+        val url = "http://192.168.0.13:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtIdCat.text.toString()+"&nombre="+edtNombreCat.text.toString()
 
         val agg = JsonObjectRequest(Request.Method.POST,url,null, Response.Listener { response ->
             Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
