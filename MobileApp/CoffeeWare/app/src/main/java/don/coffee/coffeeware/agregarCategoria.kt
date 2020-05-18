@@ -37,11 +37,6 @@ class agregarCategoria : AppCompatActivity() {
             if (textview_tituloCategoria.text.toString().equals("Actualizar categoria", true)){
                 if(comprobar()){
                     actualizarCategoria()
-                    for (cat in SessionData.listaCategoria){
-                        if (cat.ID == edtIdCat.text.toString().toInt()){
-                            cat.nombre = edtNombreCat.text.toString()
-                        }
-                    }
                 }else{
                     Toast.makeText(this, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
                 }
@@ -49,6 +44,8 @@ class agregarCategoria : AppCompatActivity() {
             } else {
                 if(comprobar()){
                     agregarCategoria()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
                 }
@@ -71,6 +68,11 @@ class agregarCategoria : AppCompatActivity() {
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
                 Toast.makeText(this, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
+                for (cat in SessionData.listaCategoria){
+                    if (cat.ID == edtIdCat.text.toString().toInt()){
+                        cat.nombre = edtNombreCat.text.toString()
+                    }
+                }
                 edtIdCat.setText("")
                 edtNombreCat.setText("")
             } else {
@@ -100,6 +102,8 @@ class agregarCategoria : AppCompatActivity() {
 
         val agg = JsonObjectRequest(Request.Method.POST,url,null, Response.Listener { response ->
             Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
+            val categoria = Categoria(edtNombreCat.text.toString(), edtIdCat.text.toString().toInt())
+            SessionData.listaCategoria.add(categoria)
             edtIdCat.setText("")
             edtNombre.setText("")
         },Response.ErrorListener { error ->
