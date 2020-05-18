@@ -88,12 +88,16 @@ class ConfirmOrder : AppCompatActivity() {
 //                actualizarOrden(ordenEdit)
                 startActivity(intentEditar)
             }else{
-                if(llenarDatos()){
+
+
+                if(llenarDatos() && !(SessionData.ordenActual.isEmpty())){
                     enviarOrden()
                     SessionData.ordenActual = ArrayList()
                     startActivity(intent)
-                }else{
-                    Toast.makeText(applicationContext, "Indicar el nombre de el consumidor", Toast.LENGTH_SHORT).show()
+                }else if (llenarDatos() && SessionData.ordenActual.isEmpty()){
+                    Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
+                }else if(!(llenarDatos()) && SessionData.ordenActual.isEmpty()){
+                    Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -126,7 +130,7 @@ class ConfirmOrder : AppCompatActivity() {
     fun enviarOrden(){
         Toast.makeText(this,"${orden.ID} ${orden.preciofinal} ${orden.ESTADO} ${orden.cliente}",Toast.LENGTH_SHORT).show()
 
-        var url: String = "http://192.168.1.65/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
+        var url: String = "http://192.168.1.74/coffeeware/wsJSONRegistroOrdenes.php?ID="+orden.ID.toString()+"&cliente="+orden.cliente+"&ESTADO="+orden.ESTADO+"&preciofinal="+orden.preciofinal
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
             Response.Listener<JSONObject?> {
