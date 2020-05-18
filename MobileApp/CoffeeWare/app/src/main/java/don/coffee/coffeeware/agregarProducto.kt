@@ -39,7 +39,12 @@ class agregarProducto : AppCompatActivity() {
 
         btn_aceptaragregar.setOnClickListener {
             if(textview_titulo.text.toString()=="Actualizar producto"){
-                actualizarProducto()
+                if(comprobación()){
+                    actualizarProducto()
+                }else{
+                    Toast.makeText(applicationContext, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
+                }
+
             }else{
                 if(comprobación()){
                     agregarProducto()
