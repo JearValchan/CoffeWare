@@ -74,22 +74,33 @@
             android:layout_marginHorizontal="20dp"
             android:id="@+id/edtNombreCat"
             android:textAlignment="center"
-            android:background="@drawable/boton_redondo_blanco"/>
+            android:background="@drawable/boton_redondo_blanco"
+            android:gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_weight="1"
+            android:background="@drawable/round_button_red"
+            android:textFontWeight="1"
+            android:layout_marginHorizontal="10dp"
+            android:id="@+id/btn_Cancelar_categoria"/>
+
+        <Button
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Agregar Categoria"
-            android:layout_marginHorizontal="7dp"
             android:paddingHorizontal="10dp"
             android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
             android:layout_gravity="center"
             android:background="@drawable/round_button_green"
             android:id="@+id/btn_categoriaAgregar"/>

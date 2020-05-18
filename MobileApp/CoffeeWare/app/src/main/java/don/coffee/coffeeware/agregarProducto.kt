@@ -31,11 +31,9 @@ class agregarProducto : AppCompatActivity() {
         }
 
         btn_Cancelar_producto.setOnClickListener {
-            val intent = Intent(this,listaProductos::class.java)
+            val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
-
         }
-
 
         btn_aceptaragregar.setOnClickListener {
             if(textview_titulo.text.toString()=="Actualizar producto"){
@@ -53,9 +51,7 @@ class agregarProducto : AppCompatActivity() {
                 }
 
             }
-
         }
-
     }
 
     fun comprobación():Boolean{

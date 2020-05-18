@@ -28,6 +28,11 @@ class agregarCategoria : AppCompatActivity() {
             btn_categoriaAgregar.text = "Actualizar Categoria"
         }
 
+        btn_Cancelar_categoria.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         btn_categoriaAgregar.setOnClickListener {
             if (textview_tituloCategoria.text.toString().equals("Actualizar categoria", true)){
                 if(comprobar()){
