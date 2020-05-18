@@ -96,7 +96,8 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="20dp"
             android:background="@drawable/round_button_red"
-            android:textFontWeight="1"/>
+            android:textFontWeight="1"
+            android:id="@+id/btn_Cancelar_producto"/>
 
         <Button
             android:layout_width="match_parent"

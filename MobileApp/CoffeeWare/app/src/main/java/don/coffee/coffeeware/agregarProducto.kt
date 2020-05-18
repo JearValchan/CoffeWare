@@ -30,6 +30,13 @@ class agregarProducto : AppCompatActivity() {
             textview_titulo.setText("Actualizar producto")
         }
 
+        btn_Cancelar_producto.setOnClickListener {
+            val intent = Intent(this,listaProductos::class.java)
+            startActivity(intent)
+
+        }
+
+
         btn_aceptaragregar.setOnClickListener {
             if(textview_titulo.text.toString()=="Actualizar producto"){
                 actualizarProducto()
