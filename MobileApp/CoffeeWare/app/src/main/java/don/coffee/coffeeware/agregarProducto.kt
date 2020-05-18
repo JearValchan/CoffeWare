@@ -34,15 +34,34 @@ class agregarProducto : AppCompatActivity() {
             if(textview_titulo.text.toString()=="Actualizar producto"){
                 actualizarProducto()
             }else{
-                agregarProducto()
+                if(comprobación()){
+                    agregarProducto()
+                }else{
+                    Toast.makeText(applicationContext, "Llenar campo vacio", Toast.LENGTH_SHORT).show()
+                }
+
             }
 
         }
 
     }
 
+    fun comprobación():Boolean{
+
+        var id = edtId.text.toString()
+        var nombre = edtNombre.text.toString()
+        var tipo = edtTipo.text.toString()
+        var idCat = edtCategoria.text.toString()
+        var precio = edtPrecioBase.text.toString()
+
+        if(id.equals("") || nombre.equals("") || tipo.equals("") || idCat.equals("")||precio.equals("")){
+            return false
+        }
+        return true
+    }
+
     fun agregarProducto(){
-        var url: String="http://192.168.0.13:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.text.toString()
+        var url: String="http://192.168.1.74:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.text.toString()
         url=url.replace(" ","%20")
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
@@ -68,7 +87,7 @@ class agregarProducto : AppCompatActivity() {
 
     fun actualizarProducto(){
 
-        var url: String="http://192.168.0.13:80/coffeeware/wsJSONActualizarProducto.php"
+        var url: String="http://192.168.1.74:80/coffeeware/wsJSONActualizarProducto.php"
         val req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().trim().equals("actualiza", true)){
                 Toast.makeText(applicationContext, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
