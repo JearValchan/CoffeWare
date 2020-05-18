@@ -69,7 +69,7 @@ class agregarProducto : AppCompatActivity() {
     }
 
     fun agregarProducto(){
-        var url: String="http://192.168.1.74:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.text.toString()
+        var url: String="http://192.168.0.13:80/coffeeware/wsJSONRegistroProducto.php?ID="+edtId.text.toString()+"&producto_type="+edtTipo.text.toString()+"&nombre="+edtNombre.text.toString()+"&preciobase="+edtPrecioBase.text.toString()+"&id_categoria="+edtCategoria.text.toString()
         url=url.replace(" ","%20")
         val jsonobject= JsonObjectRequest(
             Request.Method.POST,url,null,
@@ -95,19 +95,30 @@ class agregarProducto : AppCompatActivity() {
 
     fun actualizarProducto(){
 
-        var url: String="http://192.168.1.74:80/coffeeware/wsJSONActualizarProducto.php"
+        var url: String="http://192.168.0.13:80/coffeeware/wsJSONActualizarProducto.php"
         val req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().trim().equals("actualiza", true)){
                 Toast.makeText(applicationContext, "ACTUALIZADO CON EXITO", Toast.LENGTH_SHORT).show()
+                for (prod in SessionData.listaProductos){
+                    if (prod.ID == edtId.text.toString().toInt()){
+                        prod.producto_type = edtTipo.text.toString()
+                        prod.nombre = edtNombre.text.toString()
+                        prod.preciobase = edtPrecioBase.text.toString().toDouble()
+                        prod.categoria = SessionData.listaCategoria.first {
+                            it.ID == edtCategoria.text.toString().toInt()
+                        }
+                    }
+                }
                 edtId.setText("")
                 edtTipo.setText("")
                 edtNombre.setText("")
                 edtPrecioBase.setText("")
                 edtCategoria.setText("")
-
             }else{
                 Toast.makeText(applicationContext, "No se ha actualizado", Toast.LENGTH_SHORT).show()
             }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }, Response.ErrorListener {
             Toast.makeText(applicationContext, "No se ha podido conectar a la Base de datos", Toast.LENGTH_SHORT)
         }){
