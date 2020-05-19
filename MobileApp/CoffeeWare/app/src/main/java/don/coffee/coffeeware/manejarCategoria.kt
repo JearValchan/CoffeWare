@@ -21,7 +21,9 @@ import kotlinx.android.synthetic.main.viewcategoria.*
 import kotlinx.android.synthetic.main.viewcategoria.view.*
 
 class manejarCategoria : AppCompatActivity() {
+
     var adaptador:adaptadorCategoria?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manejar_categoria)
@@ -31,13 +33,14 @@ class manejarCategoria : AppCompatActivity() {
 
         btn_agregarCategoria.setOnClickListener{
             val intent = Intent(this, agregarCategoria::class.java)
+            intent.putExtra("categoria", Categoria("null",-1))
             startActivity(intent)
         }
     }
 
     fun eliminarCategoria(categoria: Categoria){
 
-        val url = "http://192.168.1.74:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
+        val url = "http://192.168.1.65:80/coffeeware/wsJSONEliminarCategoria.php?ID="+categoria.ID.toString()
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
             if (response.trim().equals("elimina", true)){
@@ -63,6 +66,7 @@ class manejarCategoria : AppCompatActivity() {
 
     fun actualizarCategoria(categoria: Categoria){
         val intent = Intent(this, agregarCategoria::class.java)
+
         intent.putExtra("categoria", categoria)
         startActivity(intent)
     }

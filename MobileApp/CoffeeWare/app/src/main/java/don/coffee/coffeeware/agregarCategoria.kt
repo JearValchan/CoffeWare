@@ -21,7 +21,8 @@ class agregarCategoria : AppCompatActivity() {
         setContentView(R.layout.activity_agregar_categoria)
 
         var categoria = intent.getParcelableExtra<Categoria>("categoria")
-        if (categoria != null){
+
+        if (categoria.ID != -1 && !categoria.nombre.equals("null")){
             edtIdCat.setText(categoria.ID.toString())
             edtIdCat.isEnabled = false
             edtNombreCat.setText(categoria.nombre)
@@ -53,6 +54,7 @@ class agregarCategoria : AppCompatActivity() {
             }
         }
     }
+
     fun comprobar():Boolean{
         var id = edtIdCat.text.toString()
         var nombre = edtNombreCat.text.toString()
@@ -61,10 +63,9 @@ class agregarCategoria : AppCompatActivity() {
         }
         return true
     }
-
-
+    
     private fun actualizarCategoria() {
-        val url = "http://192.168.0.13:80/coffeeware/wsJSONActualizaCategoria.php?"
+        val url = "http://192.168.1.65:80/coffeeware/wsJSONActualizaCategoria.php?"
 
         var req = object:StringRequest(Request.Method.POST, url, Response.Listener { response ->
             if (response.toString().equals("actualiza", true)) {
@@ -99,14 +100,14 @@ class agregarCategoria : AppCompatActivity() {
     }
 
     fun agregarCategoria(){
-        val url = "http://192.168.0.13:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtIdCat.text.toString()+"&nombre="+edtNombreCat.text.toString()
+        val url = "http://192.168.1.65:80/coffeeware/wsJSONRegistroCategorias.php?ID="+edtIdCat.text.toString()+"&nombre="+edtNombreCat.text.toString()
 
         val agg = JsonObjectRequest(Request.Method.POST,url,null, Response.Listener { response ->
             Toast.makeText(applicationContext, "OPERACIÓN EXITOSA", Toast.LENGTH_SHORT).show()
             val categoria = Categoria(edtNombreCat.text.toString(), edtIdCat.text.toString().toInt())
             SessionData.listaCategoria.add(categoria)
             edtIdCat.setText("")
-            edtNombre.setText("")
+            edtNombreCat.setText("")
         },Response.ErrorListener { error ->
             Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_SHORT).show()
         })

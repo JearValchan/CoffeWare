@@ -75,7 +75,7 @@ class listaProductos : AppCompatActivity() {
 
         var id =producto.ID
 
-        var url:String="http://192.168.0.13:80/coffeeware/wsJSONEliminarProducto.php?ID=" + id
+        var url:String="http://192.168.1.65:80/coffeeware/wsJSONEliminarProducto.php?ID=" + id
 
 
         var stringRequest = StringRequest(url, Response.Listener<String> { response ->
