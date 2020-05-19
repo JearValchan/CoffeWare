@@ -23,6 +23,7 @@ class agregarCategoria : AppCompatActivity() {
         var categoria = intent.getParcelableExtra<Categoria>("categoria")
         if (categoria != null){
             edtIdCat.setText(categoria.ID.toString())
+            edtIdCat.isEnabled = false
             edtNombreCat.setText(categoria.nombre)
             textview_tituloCategoria.text = "Actualizar categoria"
             btn_categoriaAgregar.text = "Actualizar Categoria"

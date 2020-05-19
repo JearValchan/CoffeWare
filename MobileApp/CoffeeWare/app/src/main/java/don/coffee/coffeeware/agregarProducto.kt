@@ -22,6 +22,7 @@ class agregarProducto : AppCompatActivity() {
          producto = intent.getParcelableExtra<Producto>("producto")
         if(producto!=null){
             edtId.setText(producto!!.ID.toString())
+            edtId.isEnabled = false
             edtTipo.setText(producto!!.producto_type)
             edtNombre.setText(producto!!.nombre)
             edtPrecioBase.setText(producto!!.preciobase.toString())
