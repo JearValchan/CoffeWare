@@ -79,7 +79,7 @@ class EditOrder : AppCompatActivity() {
     }
 
     fun actualizarOrden(orden: Orden){
-        var url = "http://192.168.0.13/coffeeware/wsJSONActualizarOrden.php?"
+        var url = "http://192.168.1.65/coffeeware/wsJSONActualizarOrden.php?"
 
         val request = object: StringRequest(
             Method.POST, url, Response.Listener { response ->

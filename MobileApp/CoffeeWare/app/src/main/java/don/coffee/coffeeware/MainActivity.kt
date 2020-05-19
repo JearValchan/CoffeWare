@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         adaptador!!.notifyDataSetChanged()
         cargarAuxiliares()
         if (SessionData.listaCategoria.isEmpty()){
-            cargarCategorias("http://192.168.0.13:80/coffeeware/wsJSONConsultarListaCategorias.php")
+            cargarCategorias("http://192.168.1.65:80/coffeeware/wsJSONConsultarListaCategorias.php")
         }else{
             mostrarCategoriaActual(categoriaActual)
             actualizarNumeroProductos()
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
             if(!SessionData.listaCategoria.isNullOrEmpty()){
                 categoriaActual = SessionData.listaCategoria[0].ID
-                cargarAlimentos("http://192.168.0.13/coffeeware/wsJSONConsultarListaProductos.php")
+                cargarAlimentos("http://192.168.1.65/coffeeware/wsJSONConsultarListaProductos.php")
             }
 
             },Response.ErrorListener { error ->
