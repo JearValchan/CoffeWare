@@ -13,7 +13,7 @@
         android:text="Ingrediente"
         android:textSize="11sp"
         android:textAlignment="center"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:background="@color/colorFondo"/>
 
     <LinearLayout
@@ -27,30 +27,28 @@
             android:id="@+id/remove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_gravity="center_vertical"
             android:src="@drawable/remove_icon"
-            android:background="@color/colorFondo"
+            android:background="@android:color/transparent"
             android:layout_weight="1"
             android:padding="1dp"/>
 
         <LinearLayout
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/circulocantidad"
-            android:padding="1dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/textview_cantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingLeft="5dp"
                 android:text="1"
                 android:textAlignment="center"
-                android:textSize="11sp"
-                android:background="@color/colorFondo"/>
+                android:textSize="10sp"
+                android:background="@android:color/transparent"
+                android:gravity="center_horizontal" />
 
         </LinearLayout>
 
@@ -61,7 +59,8 @@
             android:src="@drawable/add_icon"
             android:layout_weight="1"
             android:padding="1dp"
-            android:background="@color/colorFondo"/>
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
