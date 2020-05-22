@@ -129,8 +129,8 @@ class EditOrder : AppCompatActivity() {
             var inflator = LayoutInflater.from(contexto)
             var vista = inflator.inflate(R.layout.producto_editar_orden, null)
 
-            vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText(productoPersonalizado.precioBasePersonalizado.toString())
+            vista.product_name.text = productoPersonalizado.nombrePersonalizado
+            vista.precio.text = (productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra).toString()
 
 
             //botonEliminarProductoP
