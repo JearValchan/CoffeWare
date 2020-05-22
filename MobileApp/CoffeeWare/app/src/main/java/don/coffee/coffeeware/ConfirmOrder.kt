@@ -92,13 +92,14 @@ class ConfirmOrder : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
             }else if(!(llenarDatos()) && SessionData.ordenActual.isEmpty()){
                 Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Introduzca el nombre del cliente", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun llenarDatos(): Boolean {
         if(edit_consumidor.text.toString().equals("")){
-            Toast.makeText(applicationContext, "Proporcione el nombre del cliente", Toast.LENGTH_SHORT).show()
             return false
         }else{
             orden.cliente = edit_consumidor.text.toString()
