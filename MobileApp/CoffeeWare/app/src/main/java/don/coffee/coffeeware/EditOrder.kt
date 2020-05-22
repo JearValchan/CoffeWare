@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_confirm_order.*
 import kotlinx.android.synthetic.main.activity_editar_ordenes.*
+import kotlinx.android.synthetic.main.activity_editar_ordenes.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.*
 import kotlinx.android.synthetic.main.ingrediente_view.view.remove
@@ -33,6 +34,7 @@ class EditOrder : AppCompatActivity() {
 
         val orden = intent.getParcelableExtra<Orden>("ordenEdit")
 
+
         if(orden != null){
             productosPersonalizados = orden.productos!!
         }else{
@@ -40,11 +42,15 @@ class EditOrder : AppCompatActivity() {
         }
 
 
+
+
         //Adaptador
         var adaptador = AdaptadorProductosPersonalizados(this, productosPersonalizados)
         list_ordenEdit.adapter = adaptador
         var intentMain = Intent(this, MainActivity::class.java)
 
+
+        precioTotalEdit.text = obtenerPrecioFinal().toString()
         //Botón para confirmar edición
         //No lo envía a la base de datos
         btn_guardarcambios.setOnClickListener(){
@@ -111,8 +117,14 @@ class EditOrder : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun obtenerPrecioFinal(): Double{
+        var total: Double = 0.0
 
-
+        for(x in SessionData.ordenActual){
+            total += x.preciobase+x.precioExtra
+        }
+        return total
+    }
 
     inner class AdaptadorProductosPersonalizados : BaseAdapter {
         var productosPersonalizados = ArrayList<ProductoPersonalizado>()
@@ -137,6 +149,7 @@ class EditOrder : AppCompatActivity() {
             vista.remove.setOnClickListener {
             productosPersonalizados.remove(productosPersonalizados[position])
                 this.notifyDataSetChanged()
+                obtenerPrecioFinal()
             }
 
             //botonEditarProductoP

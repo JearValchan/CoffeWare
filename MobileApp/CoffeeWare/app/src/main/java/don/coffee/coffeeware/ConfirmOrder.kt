@@ -100,6 +100,7 @@ class ConfirmOrder : AppCompatActivity() {
 
     fun llenarDatos(): Boolean {
         if(edit_consumidor.text.toString().equals("")){
+            Toast.makeText(applicationContext, "Nombre vacío", Toast.LENGTH_SHORT).show()
             return false
         }else{
             orden.cliente = edit_consumidor.text.toString()
