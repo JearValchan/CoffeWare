@@ -6,5 +6,6 @@ class SessionData {
         var ordenes = ArrayList<Orden>()
         var listaProductos = ArrayList<Producto>()
         var listaCategoria = ArrayList<Categoria>()
+        var ordenEdit = Orden()
     }
 }

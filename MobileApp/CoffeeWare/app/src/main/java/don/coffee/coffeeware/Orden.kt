@@ -7,4 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class Orden(
     var ID:Int, var cliente: String, var ESTADO: String,
     var preciofinal: Double, var productos: ArrayList<ProductoPersonalizado>?
-): Parcelable
+): Parcelable{
+    constructor():this(0, "", "", 0.0, ArrayList<ProductoPersonalizado>())
+}

@@ -32,11 +32,16 @@ class EditOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_ordenes)
 
-        val orden = intent.getParcelableExtra<Orden>("ordenEdit")
+        var orden = intent.getParcelableExtra<Orden>("orden")
 
 
         if(orden != null){
             productosPersonalizados = orden.productos!!
+        }else if (SessionData.ordenEdit.ID != 0){
+            SessionData.ordenEdit.productos = SessionData.ordenActual
+            SessionData.ordenEdit.preciofinal = obtenerPrecioFinal()
+            orden = SessionData.ordenEdit
+            productosPersonalizados = SessionData.ordenActual
         }else{
             productosPersonalizados = SessionData.ordenActual
         }
@@ -62,6 +67,7 @@ class EditOrder : AppCompatActivity() {
                         ord.productos = orden.productos
                     }
                 }
+                SessionData.ordenEdit = Orden()
                 startActivity(intentMain)
             } else {
                 var intent = Intent(this, ConfirmOrder::class.java)
@@ -71,12 +77,16 @@ class EditOrder : AppCompatActivity() {
 
         //Botón para añadir más productos
         btn_añadirproducto.setOnClickListener(){
+            if(orden != null){
+                SessionData.ordenEdit = orden
+            }
             startActivity(intentMain)
         }
 
         //Botón para cancelar orden
         btn_cancelar.setOnClickListener(){
             productosPersonalizados.clear()
+            SessionData.ordenEdit = Orden()
             startActivity(intentMain)
             adaptador!!.notifyDataSetChanged()
         }

@@ -25,6 +25,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.StringBuilder
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_personalizar_producto.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,9 +79,13 @@ class MainActivity : AppCompatActivity() {
 
 
         btn_ordenactual.setOnClickListener {
+            if (SessionData.ordenEdit.ID != 0){
+                val intent = Intent(this, EditOrder::class.java)
+                startActivity(intent)
+            }else{
             val intent = Intent(this, ConfirmOrder::class.java)
-            intent.putExtra("producto",producto)
             startActivity(intent)
+            }
         }
 
         btn_ordenes.setOnClickListener{
