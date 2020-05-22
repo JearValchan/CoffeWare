@@ -82,28 +82,23 @@ class ConfirmOrder : AppCompatActivity() {
         }
 
         val intent = Intent(this, MainActivity::class.java)
+
         btn_enviarorden.setOnClickListener{
-            if (clave.equals("edicion",true)){
-                val ordenEdit = this.intent.getParcelableExtra<Orden>("orden")!!
-//                actualizarOrden(ordenEdit)
-                startActivity(intentEditar)
-            }else{
-                if(llenarDatos() && !(SessionData.ordenActual.isEmpty())){
-                    enviarOrden()
-                    SessionData.ordenActual = ArrayList()
-                    startActivity(intent)
-                }else if (llenarDatos() && SessionData.ordenActual.isEmpty()){
-                    Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
-                }else if(!(llenarDatos()) && SessionData.ordenActual.isEmpty()){
-                    Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
-                }
+            if(llenarDatos() && !(SessionData.ordenActual.isEmpty())){
+                enviarOrden()
+                SessionData.ordenActual = ArrayList()
+                startActivity(intent)
+            }else if (llenarDatos() && SessionData.ordenActual.isEmpty()){
+                Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
+            }else if(!(llenarDatos()) && SessionData.ordenActual.isEmpty()){
+                Toast.makeText(applicationContext, "Orden vacia", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun llenarDatos(): Boolean {
-
         if(edit_consumidor.text.toString().equals("")){
+            Toast.makeText(applicationContext, "Proporcione el nombre del cliente", Toast.LENGTH_SHORT).show()
             return false
         }else{
             orden.cliente = edit_consumidor.text.toString()
@@ -158,7 +153,7 @@ class ConfirmOrder : AppCompatActivity() {
             var vista = inflator.inflate(R.layout.producto_orden, null)
 
             vista.product_name.setText(productoPersonalizado.nombrePersonalizado)
-            vista.precio.setText("$ "+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra))
+            vista.precio.text = "$ "+(productoPersonalizado.precioBasePersonalizado+productoPersonalizado.precioExtra)
 
             return vista
         }
