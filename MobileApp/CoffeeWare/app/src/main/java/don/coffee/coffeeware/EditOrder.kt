@@ -50,13 +50,13 @@ class EditOrder : AppCompatActivity() {
         btn_guardarcambios.setOnClickListener(){
             if (orden != null) {
                 actualizarOrden(orden)
-                startActivity(intentMain)
                 for (ord in SessionData.ordenes){
                     if (ord.ID == orden.ID){
                         ord.preciofinal = orden!!.preciofinal
                         ord.productos = orden.productos
                     }
                 }
+                startActivity(intentMain)
             } else {
                 var intent = Intent(this, ConfirmOrder::class.java)
                 startActivity(intent)
