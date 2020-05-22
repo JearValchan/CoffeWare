@@ -14,4 +14,5 @@
     <string name="cancelarPago">Cancelar pago</string>
     <string name="pagarOrden">Pagar Orden</string>
     <string name="agregarProducto">Agregar Producto</string>
+    <string name="Ordenes">Lista de ordenes</string>
 </resources>
